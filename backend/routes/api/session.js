@@ -57,4 +57,24 @@ router.delete('/', (_req, res) => {
     return res.json({ message: 'Successfully logged out' });
 });
 
+// Restore session user
+router.get('/', (req, res) => {
+    const { user } = req;
+    if (user) {
+      // If a user exists in the session, create a safeUser object containing selected user properties
+      const safeUser = {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      };
+      // Return the safeUser JSON in the response
+      return res.json({
+        user: safeUser
+      });
+    } else {
+      // If no user exists in the session, return null in the user JSON response
+      return res.json({ user: null });
+    }
+  });
+
 module.exports = router;

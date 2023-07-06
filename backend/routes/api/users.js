@@ -37,20 +37,28 @@ const validateSignup = [
       .exists({ checkFalsy: true }) // Check if the field exists and is not falsy
       .isLength({ min: 6 }) // Check if the field has a minimum length of 6 characters
       .withMessage('Password must be 6 characters or more.'), // Set a validation error message if the checks fail
+    check('firstName')
+      .exists({ checkFalsy: true }) // Checks if the 'firstName' field exists and is not falsy (e.g., empty, null, undefined)
+      .withMessage('Please provide a first name.'), // Sets an error message if the 'firstName' field doesn't exist or is falsy
+    check('firstName')
+      .exists({ checkFalsy: true }) // Checks if the 'firstName' field exists and is not falsy (e.g., empty, null, undefined)
+      .withMessage('Please provide a last name.'), // Sets an error message if the 'firstName' field doesn't exist or is falsy
     handleValidationErrors // Custom middleware for handling validation errors
-  ];
+];
 
 
 router.post('/', validateSignup, async (req, res) => {
     // Extract email, password, and username from the request body
-    const { email, password, username } = req.body;
+    const { email, firstName, lastName, password, username } = req.body;
     // Hash the password using bcrypt
     const hashedPassword = bcrypt.hashSync(password);
     // Create a new user with the provided email, username, and hashed password
-    const user = await User.create({ email, username, hashedPassword });
+    const user = await User.create({ firstName, lastName, email, username, hashedPassword });
     // Create a safeUser object containing selected user properties
     const safeUser = {
       id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       username: user.username,
     };

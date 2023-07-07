@@ -25,6 +25,10 @@ module.exports = {
       stars: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        validate: {
+          max: 5,
+          min: 0,
+        }
       },
       createdAt: {
         allowNull: false,

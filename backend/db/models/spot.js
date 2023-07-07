@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Spot.belongsToMany(models.Spot, {
+      Spot.belongsToMany(models.User, {
         through: models.Booking,
         foreignKey: 'spotId',
         otherKey: 'userId'
       })
-      Spot.belongsToMany(models.Spot, {
+      Spot.belongsToMany(models.User, {
         through: models.Review,
         foreignKey: 'spotId',
         otherKey: 'userId'

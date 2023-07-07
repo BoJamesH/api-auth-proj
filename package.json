@@ -1,11 +1,13 @@
 {
-  "dependencies": {
-    "express-validator": "^7.0.1"
-  },
   "name": "api-auth-proj",
-  "description": "## Database Schema Design",
   "version": "1.0.0",
+  "description": "## Database Schema Design",
   "main": "index.js",
+  "dependencies": {
+    "express-validator": "^7.0.1",
+    "lodash": "^4.17.21",
+    "validator": "^13.9.0"
+  },
   "devDependencies": {},
   "scripts": {
     "install": "npm --prefix backend install backend",

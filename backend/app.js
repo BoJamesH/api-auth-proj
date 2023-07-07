@@ -13,7 +13,9 @@ const isProduction = environment === 'production';
 
 const app = express();
 
+// Logging middleware, print info about requests
 app.use(morgan('dev'));
+// Allows us to access CSRF/JWTs
 app.use(cookieParser());
 app.use(express.json());
 
@@ -21,13 +23,14 @@ if (!isProduction) {
     app.use(cors());
 };
 
-
+// Ensures a variety of headers is added to our application
 app.use(
     helmet.crossOriginResourcePolicy({
         policy: 'cross-origin'
     })
 );
 
+// More web security stuff
 app.use(
     csurf({
         cookie: {
@@ -40,7 +43,7 @@ app.use(
 
 app.use(routes); // Connect all the routes
 
-// Catch unhandled requests and forward to error handler.
+// Catch unhandled requests (404 errors) and forward to error handler.
 app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
     err.title = "Resource Not Found";
@@ -64,8 +67,10 @@ app.use((err, _req, _res, next) => {
 });
 
 app.use((err, _req, res, _next) => {
+    // Catch all errors //assigns 'server error' if it doesn't have a status
     res.status(err.status || 500);
     console.error(err);
+    // Responds to client with relevant error
     res.json({
       title: err.title || 'Server Error',
       message: err.message,

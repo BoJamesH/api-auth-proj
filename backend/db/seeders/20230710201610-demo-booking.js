@@ -1,5 +1,7 @@
 'use strict';
 
+const { Booking } = require('../models');
+
 let options = {}
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -11,68 +13,69 @@ module.exports = {
     await Booking.bulkCreate([
       {
         spotId: 1,
-        userId: 1,
-        startDate: new Date('2023-07-11'),
-        endDate: new Date('2023-07-15'),
+        userId: 2,
+        startDate: new Date('2023-09-01'),
+        endDate: new Date('2023-09-07'),
       },
       {
         spotId: 3,
-        userId: 2,
-        startDate: new Date('2023-07-12'),
-        endDate: new Date('2023-07-17'),
+        userId: 1,
+        startDate: new Date('2023-09-03'),
+        endDate: new Date('2023-09-10'),
       },
       {
         spotId: 5,
         userId: 3,
-        startDate: new Date('2023-07-15'),
-        endDate: new Date('2023-07-19'),
+        startDate: new Date('2023-09-05'),
+        endDate: new Date('2023-09-12'),
       },
       {
         spotId: 7,
         userId: 4,
-        startDate: new Date('2023-07-18'),
-        endDate: new Date('2023-07-22'),
-
+        startDate: new Date('2023-09-07'),
+        endDate: new Date('2023-09-14'),
       },
       {
         spotId: 10,
         userId: 1,
-        startDate: new Date('2023-07-21'),
-        endDate: new Date('2023-07-25'),
+        startDate: new Date('2023-09-10'),
+        endDate: new Date('2023-09-17'),
       },
       {
         spotId: 13,
         userId: 2,
-        startDate: new Date('2023-07-25'),
-        endDate: new Date('2023-07-30'),
+        startDate: new Date('2023-09-13'),
+        endDate: new Date('2023-09-20'),
       },
       {
         spotId: 15,
         userId: 3,
-        startDate: new Date('2023-07-28'),
-        endDate: new Date('2023-08-02'),
+        startDate: new Date('2023-09-15'),
+        endDate: new Date('2023-09-22'),
       },
       {
-        spotId: 18,
+        spotId: 9,
         userId: 4,
-        startDate: new Date('2023-08-02'),
-        endDate: new Date('2023-08-06'),
+        startDate: new Date('2023-09-17'),
+        endDate: new Date('2023-09-24'),
       },
       {
-        spotId: 20,
+        spotId: 17,
         userId: 1,
-        startDate: new Date('2023-08-05'),
-        endDate: new Date('2023-08-09'),
+        startDate: new Date('2023-09-20'),
+        endDate: new Date('2023-09-27'),
       },
       {
-        spotId: 22,
+        spotId: 12,
         userId: 2,
-        startDate: new Date('2023-08-08'),
-        endDate: new Date('2023-08-12'),
+        startDate: new Date('2023-09-22'),
+        endDate: new Date('2023-09-29'),
       }
     ], options)
   },
   async down (queryInterface, Sequelize) {
+    // options.tableName = 'Bookings';
     await queryInterface.bulkDelete('Bookings', null, options)
-  }
+  },
+  // order: 4,
 };

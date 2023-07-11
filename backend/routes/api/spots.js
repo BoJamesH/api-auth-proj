@@ -6,6 +6,14 @@ const { requireAuth } = require('../../utils/auth.js')
 
 const router = express.Router()
 
+function starAverage(stars) {
+    return stars.reduce((a, b) => a + b) / stars.length;
+}
+
+function reviewAmount(stars) {
+  return stars.length;
+}
+
 router.get('/current', async (req, res) => {
       // Get the current user's ID from the authenticated user's data
       const userId = req.user.id;
@@ -19,8 +27,40 @@ router.get('/current', async (req, res) => {
 
 
 router.get('/:spotId', async (req, res, next) => {
-  const spotById = await Spot.findByPk(req.params.spotId);
-  res.json(spotById);
+  const thisSpot = req.params.spotId;
+  const reviewStars = await Review.findAll({
+    where: {
+      spotId: thisSpot,
+    },
+    attributes: ['stars'],
+  });
+  const starsArray = reviewStars.map(review => review.stars);
+  const avgRating = {
+    avgStarRating: starAverage(starsArray),
+  }
+  const numReviews = {
+    numReviews: reviewAmount(starsArray)
+  }
+  const spotById = await Spot.findByPk(thisSpot, {
+    include: [
+      {
+        model: SpotImage,
+        attributes: ['id', 'url', 'preview'],
+      },
+      {
+        model: User,
+        as: 'Owner',
+        attributes: ['id', 'firstName', 'lastName'],
+      },
+    ],
+  });
+  if (!spotById) res.status(404).json('That property could not be found')
+  const response = {
+    ...spotById.toJSON(),
+    ...avgRating,
+    ...numReviews,
+  };
+  res.json(response);
 })
 
 router.post('/', requireAuth, async (req, res, next) => {
@@ -35,6 +75,8 @@ router.post('/', requireAuth, async (req, res, next) => {
   if (!name) res.status(400).json('Please provide a name for your property.')
   if (!description) res.status(400).json('Please provide a description for your property.')
   if (!price) res.status(400).json('Please provide a price for your property.')
+  if (!lat) res.status(400).json('Please provide a latitude for your property.')
+  if (!lng) res.status(400).json('Please provide a longitude for your property.')
   const newSpot = await Spot.create({
     ownerId: userId,
     address,
@@ -52,12 +94,6 @@ router.post('/', requireAuth, async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     const allSpots = await Spot.findAll({
-        // include: {
-        //     // model: {
-        //     //     SpotImage,
-        //     //     Review
-        //     // }
-        // },
     });
     res.json({
       Spots: allSpots});

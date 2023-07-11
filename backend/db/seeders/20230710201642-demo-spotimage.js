@@ -100,7 +100,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('SpotImages', null, options)
+    options.tableName = 'SpotImages'
+    await queryInterface.bulkDelete(options)
   },
   // order: 5,
 };

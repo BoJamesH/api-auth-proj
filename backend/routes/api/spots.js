@@ -10,37 +10,92 @@ function starAverage(stars) {
     return stars.reduce((a, b) => a + b) / stars.length;
 }
 
-function reviewAmount(stars) {
-  return stars.length;
-}
+// router.get('/current', async (req, res) => {
+//   const userId = req.user.id;
+//   const spots = await Spot.findAll({
+//     where: { ownerId: userId },
+//   });
+
+//   const reviewStars = [];
+//   await Promise.all(
+//     spots.map(async (spot) => {
+//       const reviews = await Review.findAll({
+//         where: { spotId: spot.id },
+//         attributes: ['stars'],
+//       });
+//       reviewStars.push(...reviews);
+//     })
+//   );
+//   const starsArray = reviewStars.map(review => review.stars);
+//   const avgRating = {
+//     avgStarRating: starAverage(starsArray),
+//   }
+//   // Get the current user's ID from the authenticated user's data
+//   // Retrieve all spots owned by the current user using the userId
+//   // Send the spots as the response
+//   const response = {
+//     ...spots.toJSON(),
+//     ...avgRating,
+//   };
+//   res.json(response);
+// });
 
 router.get('/current', async (req, res) => {
-      // Get the current user's ID from the authenticated user's data
-      const userId = req.user.id;
-      // Retrieve all spots owned by the current user using the userId
-      const spots = await Spot.findAll({
-        where: { ownerId: userId },
+  const userId = req.user.id;
+  const spots = await Spot.findAll({
+    where: { ownerId: userId },
+  });
+
+  const reviewStars = [];
+  await Promise.all(
+    spots.map(async (spot) => {
+      const reviews = await Review.findAll({
+        where: { spotId: spot.id },
+        attributes: ['stars'],
       });
-      // Send the spots as the response
-      res.status(200).json({ Spots: spots });
+      reviewStars.push(...reviews);
+    })
+  );
+  const starsArray = reviewStars.map(review => review.stars);
+  const avgRating = starAverage(starsArray);
+
+  const response = {
+    Spots: await Promise.all(spots.map(async (spot) => {
+      const spotImages = await SpotImage.findAll({
+        where: {
+          spotId: spot.id,
+          preview: true,
+        },
+        limit: 1,
+      });
+
+      const imageUrl = spotImages.length > 0 ? spotImages[0].url : null;
+
+      return {
+        id: spot.id,
+        ownerId: spot.ownerId,
+        address: spot.address,
+        city: spot.city,
+        state: spot.state,
+        country: spot.country,
+        lat: spot.lat,
+        lng: spot.lng,
+        name: spot.name,
+        description: spot.description,
+        price: spot.price,
+        createdAt: spot.createdAt,
+        updatedAt: spot.updatedAt,
+        avgRating: avgRating,
+        previewImage: imageUrl,
+      };
+    }))
+  };
+  res.json(response);
 });
 
 
 router.get('/:spotId', async (req, res, next) => {
   const thisSpot = req.params.spotId;
-  const reviewStars = await Review.findAll({
-    where: {
-      spotId: thisSpot,
-    },
-    attributes: ['stars'],
-  });
-  const starsArray = reviewStars.map(review => review.stars);
-  const avgRating = {
-    avgStarRating: starAverage(starsArray),
-  }
-  const numReviews = {
-    numReviews: reviewAmount(starsArray)
-  }
   const spotById = await Spot.findByPk(thisSpot, {
     include: [
       {
@@ -54,7 +109,26 @@ router.get('/:spotId', async (req, res, next) => {
       },
     ],
   });
-  if (!spotById) res.status(404).json('That property could not be found')
+  if (!spotById) {
+    const error = new Error();
+    error.message = `That property couldn't be found`,
+    error.status = 404;
+    throw error;
+  }
+  const reviewStars = await Review.findAll({
+    where: {
+      spotId: thisSpot,
+    },
+    attributes: ['stars'],
+  });
+
+  const starsArray = reviewStars.map(review => review.stars);
+  const avgRating = {
+    avgStarRating: starAverage(starsArray),
+  }
+  const numReviews = {
+    numReviews: starsArray.length
+  }
   const response = {
     ...spotById.toJSON(),
     ...avgRating,
@@ -93,10 +167,59 @@ router.post('/', requireAuth, async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
-    const allSpots = await Spot.findAll({
-    });
-    res.json({
-      Spots: allSpots});
-})
+  const allSpots = await Spot.findAll({
+    include: [
+      {
+        model: SpotImage,
+        attributes: ['url'],
+        where: { preview: true },
+        required: false,
+        limit: 1,
+      },
+    ],
+  });
+
+  const spotIds = allSpots.map(spot => spot.id);
+
+  const reviewStars = await Review.findAll({
+    where: { spotId: spotIds },
+    attributes: ['spotId', 'stars'],
+  });
+
+  for (const review of reviewStars) {
+    if (!spotAverageRatings[review.spotId]) {
+      spotAverageRatings[review.spotId] = { totalStars: 0, count: 0 };
+    }
+    spotAverageRatings[review.spotId].totalStars += review.stars;
+    spotAverageRatings[review.spotId].count++;
+  }
+
+  const response = {
+    Spots: allSpots.map(spot => {
+      const spotId = spot.id;
+      const avgRating = spotAverageRatings[spotId] ? spotAverageRatings[spotId].totalStars / spotAverageRatings[spotId].count : null;
+      const imageUrl = spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null;
+
+      return {
+        id: spot.id,
+        ownerId: spot.ownerId,
+        address: spot.address,
+        city: spot.city,
+        state: spot.state,
+        country: spot.country,
+        lat: spot.lat,
+        lng: spot.lng,
+        name: spot.name,
+        description: spot.description,
+        price: spot.price,
+        createdAt: spot.createdAt,
+        updatedAt: spot.updatedAt,
+        avgRating: avgRating,
+        previewImage: imageUrl,
+      };
+    }),
+  };
+  res.json(response);
+});
 
 module.exports = router;

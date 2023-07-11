@@ -40,7 +40,7 @@ function starAverage(stars) {
 //   res.json(response);
 // });
 
-router.get('/current', async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
   const userId = req.user.id;
   const spots = await Spot.findAll({
     where: { ownerId: userId },
@@ -137,20 +137,61 @@ router.get('/:spotId', async (req, res, next) => {
   res.json(response);
 })
 
+router.put('/:spotId', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const userId = req.user.id;
+  const {address, city, state, country, lat, lng, name, description, price } = req.body;
+  const editSpot = await Spot.findByPk(spotId);
+  if (!editSpot) return res.status(404).json({'message': "That property could not be found"})
+  if (editSpot.ownerId !== userId) {
+    const err = new Error();
+    err.status = 403;
+    err.message = 'You are forbidden from editing properties that do not belong to you.'
+    throw err;
+  };
+
+  const errors = {};
+  if (!address) errors.address = 'Street address is required.';
+  if (!city) errors.city = 'City is required.';
+  if (!state) errors.state = 'State is required.';
+  if (!country) errors.country = 'Country is required.';
+  if (name.toString().length > 50) errors.name = 'Name must be less than 50 characters.';
+  if (!description) errors.description = 'Description is required.';
+  if (!price) errors.price = 'Price per day is required.';
+  if (!lat) errors.lat = 'Latitude is not valid.';
+  if (!lng) errors.lng = 'Longitude is not valid.';
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({
+      message: 'Bad Request',
+      errors: errors,
+  });
+  }
+
+  editSpot.address = address;
+  editSpot.city = city;
+  editSpot.country = country;
+  editSpot.name = name;
+  editSpot.description = description;
+  editSpot.price = price;
+  editSpot.lat = lat;
+  editSpot.lng = lng;
+  res.json(editSpot)
+})
+
 router.post('/', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   console.log(req.user.id)
   const {address, city, state, country, lat, lng, name, description, price } = req.body;
-  if (!address) res.status(400).json('Please provide an address for your property.')
-  if (!city) res.status(400).json('Please provide a city for your property.')
-  if (!state) res.status(400).json('Please provide a state for your property.')
-  if (!state) res.status(400).json('Please provide a state for your property.')
-  if (!country) res.status(400).json('Please provide a country for your property.')
-  if (!name) res.status(400).json('Please provide a name for your property.')
-  if (!description) res.status(400).json('Please provide a description for your property.')
-  if (!price) res.status(400).json('Please provide a price for your property.')
-  if (!lat) res.status(400).json('Please provide a latitude for your property.')
-  if (!lng) res.status(400).json('Please provide a longitude for your property.')
+  if (!address) return res.status(400).json('Please provide an address for your property.')
+  if (!city) return res.status(400).json('Please provide a city for your property.')
+  if (!state) return res.status(400).json('Please provide a state for your property.')
+  if (!country) return res.status(400).json('Please provide a country for your property.')
+  if (!name) return res.status(400).json('Please provide a name for your property.')
+  if (!description) return res.status(400).json('Please provide a description for your property.')
+  if (!price) return res.status(400).json('Please provide a price for your property.')
+  if (!lat) return res.status(400).json('Please provide a latitude for your property.')
+  if (!lng) return res.status(400).json('Please provide a longitude for your property.')
   const newSpot = await Spot.create({
     ownerId: userId,
     address,
@@ -185,6 +226,8 @@ router.get('/', async (req, res, next) => {
     where: { spotId: spotIds },
     attributes: ['spotId', 'stars'],
   });
+
+  const spotAverageRatings = {};
 
   for (const review of reviewStars) {
     if (!spotAverageRatings[review.spotId]) {

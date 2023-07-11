@@ -19,7 +19,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'Users' },
-        onDelete: 'cascade',
       },
       address: {
         type: Sequelize.STRING(100),
@@ -38,14 +37,23 @@ module.exports = {
         allowNull: false,
       },
       lat: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
+        validate: {
+          len: [4, 14],
+        },
       },
       lng: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
+        validate: {
+          len: [4, 14],
+        },
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        validate: {
+          len: [1, 50],
+        },
       },
       description: {
         type: Sequelize.TEXT,

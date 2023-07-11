@@ -74,8 +74,8 @@ module.exports = {
     ], options)
   },
   async down (queryInterface, Sequelize) {
-    // options.tableName = 'Bookings';
-    await queryInterface.bulkDelete('Bookings', null, options)
+    options.tableName = 'Bookings';
+    await queryInterface.bulkDelete(options)
   },
   // order: 4,
 };

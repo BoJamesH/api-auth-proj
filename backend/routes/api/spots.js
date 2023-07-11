@@ -16,6 +16,11 @@ router.get('/current', async (req, res) => {
       res.status(200).json({ Spots: spots });
 });
 
+router.get('/:spotId', async (req, res, next) => {
+  const spotById = await Spot.findByPk(req.params.spotId);
+  res.json(spotById);
+})
+
 router.get('/', async (req, res, next) => {
     const allSpots = await Spot.findAll({
         // include: {

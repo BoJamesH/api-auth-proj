@@ -93,6 +93,26 @@ router.get('/current', requireAuth, async (req, res) => {
   res.json(response);
 });
 
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const userId = req.user.id;
+  const { url, preview } = req.body;
+  const addImageSpot = await Spot.findByPk(spotId);
+  if (!addImageSpot) return res.status(404).json({ message: "That property could not be found" })
+  if (addImageSpot.ownerId !== userId) {
+    const err = new Error();
+    err.status = 403;
+    err.message = 'You are forbidden from adding pictures to properties that do not belong to you.'
+    throw err;
+  };
+  if (!url) return res.status(404).json({ message: "Must provide photo url to add photo" })
+  const newImage = SpotImage.create({
+    url,
+    preview,
+  })
+  res.json(newImage)
+})
+
 
 router.get('/:spotId', async (req, res, next) => {
   const thisSpot = req.params.spotId;
@@ -111,8 +131,8 @@ router.get('/:spotId', async (req, res, next) => {
   });
   if (!spotById) {
     const error = new Error();
-    error.message = `That property couldn't be found`,
     error.status = 404;
+    error.message = 'That property could not be found';
     throw error;
   }
   const reviewStars = await Review.findAll({
@@ -142,7 +162,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   const {address, city, state, country, lat, lng, name, description, price } = req.body;
   const editSpot = await Spot.findByPk(spotId);
-  if (!editSpot) return res.status(404).json({'message': "That property could not be found"})
+  if (!editSpot) return res.status(404).json({ message : "That property could not be found"})
   if (editSpot.ownerId !== userId) {
     const err = new Error();
     err.status = 403;
@@ -179,19 +199,44 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
   res.json(editSpot)
 })
 
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const userId = req.user.id;
+  const deleteSpot = await Spot.findByPk(spotId);
+  if (!deleteSpot) return res.status(404).json({message: "That property could not be found"})
+  if (deleteSpot.ownerId !== userId) {
+    const err = new Error();
+    err.status = 403;
+    err.message = 'You are forbidden from deleting properties that do not belong to you.'
+    throw err;
+  };
+
+  await deleteSpot.destroy();
+  res.status(200).json({message: "Successfully deleted"})
+})
+
 router.post('/', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   console.log(req.user.id)
   const {address, city, state, country, lat, lng, name, description, price } = req.body;
-  if (!address) return res.status(400).json('Please provide an address for your property.')
-  if (!city) return res.status(400).json('Please provide a city for your property.')
-  if (!state) return res.status(400).json('Please provide a state for your property.')
-  if (!country) return res.status(400).json('Please provide a country for your property.')
-  if (!name) return res.status(400).json('Please provide a name for your property.')
-  if (!description) return res.status(400).json('Please provide a description for your property.')
-  if (!price) return res.status(400).json('Please provide a price for your property.')
-  if (!lat) return res.status(400).json('Please provide a latitude for your property.')
-  if (!lng) return res.status(400).json('Please provide a longitude for your property.')
+  const errors = {};
+  if (!address) errors.address = 'Street address is required.';
+  if (!city) errors.city = 'City is required.';
+  if (!state) errors.state = 'State is required.';
+  if (!country) errors.country = 'Country is required.';
+  if (name.toString().length > 50) errors.name = 'Name must be less than 50 characters.';
+  if (!description) errors.description = 'Description is required.';
+  if (!price) errors.price = 'Price per day is required.';
+  if (!lat) errors.lat = 'Latitude is not valid.';
+  if (!lng) errors.lng = 'Longitude is not valid.';
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({
+      message: 'Bad Request',
+      errors: errors,
+  });
+  }
+
   const newSpot = await Spot.create({
     ownerId: userId,
     address,

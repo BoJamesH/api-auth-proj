@@ -16,23 +16,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Review.init({
-<<<<<<< HEAD
-=======
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
->>>>>>> non-spot-routes
     spotId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-<<<<<<< HEAD
-    userID: {
-=======
     userId: {
->>>>>>> non-spot-routes
       type: DataTypes.INTEGER,
       allowNull: false,
     },

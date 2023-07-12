@@ -222,11 +222,13 @@ router.post('/', requireAuth, async (req, res, next) => {
   console.log(req.user.id)
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const errors = {};
+  console.log(name)
   if (!address) errors.address = 'Street address is required.';
   if (!city) errors.city = 'City is required.';
   if (!state) errors.state = 'State is required.';
   if (!country) errors.country = 'Country is required.';
-  if (name.toString().length > 50) errors.name = 'Name must be less than 50 characters.';
+  if (!name) errors.country = 'Name must be less than 50 characters.';
+  if (name.length > 49) errors.name = 'Name must be less than 50 characters.';
   if (!description) errors.description = 'Description is required.';
   if (!price) errors.price = 'Price per day is required.';
   if (!lat) errors.lat = 'Latitude is not valid.';
@@ -251,7 +253,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     description,
     price,
   })
-  res.json(newSpot)
+  res.status(201).json(newSpot)
 })
 
 router.get('/', async (req, res, next) => {

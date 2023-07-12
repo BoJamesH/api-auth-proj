@@ -111,7 +111,32 @@ router.get('/:spotId/reviews', async (req, res, next) => {
       ],
     });
     res.json({ 'Reviews': reviewsBySpotId })
-})
+});
+
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const userId = req.user.id;
+  const { review, stars } = req.body;
+  const errors = {};
+  if (!review) errors.review = 'Review text is required.';
+  if (!stars) errors.starsRequired = 'Star rating is required.';
+  if (stars) {
+    if (!Number.isInteger(stars) || stars < 1 || stars > 5) errors.stars = 'Stars must be an integer from 1 to 5';
+  }
+  if (Object.keys(errors).length > 0) {
+    return res.status(404).json({
+      message: 'Bad Request',
+      errors: errors,
+  });
+  }
+  const newReview = await Review.create({
+    userId,
+    spotId,
+    review,
+    stars,
+  })
+  res.json(newReview);
+});
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;

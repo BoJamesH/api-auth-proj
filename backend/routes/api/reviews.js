@@ -77,6 +77,36 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     res.json(newReviewImageData);
 })
 
-// router.get('/')
+router.put('/:reviewId', requireAuth, async (req, res, next) => {
+    const userId = req.user.id;
+    const reviewId = req.params.reviewId;
+    const { review, stars } = req.body;
+
+    const errors = {};
+    if (!review) errors.review = 'Review text is required.';
+    if (!stars) errors.starsRequired = 'Star rating is required.';
+    if (stars) {
+      if (!Number.isInteger(stars) || stars < 1 || stars > 5) errors.stars = 'Stars must be an integer from 1 to 5';
+    }
+    if (Object.keys(errors).length > 0) {
+      return res.status(404).json({
+        message: 'Bad Request',
+        errors: errors,
+    });
+    }
+
+    const existingReview = await Review.findByPk(reviewId)
+    if (!existingReview) return res.status(404).json({ message: "Review could not be found" })
+    if (existingReview.userId !== userId) {
+        const err = new Error();
+        err.status = 403;
+        err.message = 'You are forbidden from editing properties that do not belong to you.'
+        throw err;
+    };
+
+    existingReview.review = review;
+    existingReview.stars = stars;
+    res.json(existingReview)
+})
 
 module.exports = router;

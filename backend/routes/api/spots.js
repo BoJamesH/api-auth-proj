@@ -106,11 +106,13 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     throw err;
   };
   if (!url) return res.status(404).json({ message: "Must provide photo url to add photo" })
-  const newImage = SpotImage.create({
+  const newImage = await SpotImage.create({
+    spotId,
     url,
     preview,
   })
-  res.json(newImage)
+  const response = { "id": newImage.id, "url": url, "preview": preview }
+  res.json(response)
 })
 
 

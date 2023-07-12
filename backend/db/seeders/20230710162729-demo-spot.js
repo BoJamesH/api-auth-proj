@@ -133,7 +133,7 @@ module.exports = {
         ownerId: 3,
         address: 'Mandalore',
         city: 'Mandalore',
-        state: 'Outer Rim Territories',
+        state: 'Outer Rim',
         country: 'Star Wars Galaxy',
         lat: -28.0167,
         lng: 153.4000,

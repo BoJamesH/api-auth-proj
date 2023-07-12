@@ -1,4 +1,4 @@
-// backend/routes/api/spots.js
+// backend/routes/api/review-images.js
 const express = require('express');
 const { Spot, User, ReviewImage, Booking, Review } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
@@ -12,7 +12,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     console.log(imageId)
     const deleteReviewImage = await ReviewImage.findByPk(imageId);
     console.log(deleteReviewImage)
-    console.log(deleteReviewImage['reviewId'])
+    console.log(deleteReviewImage.reviewId)
     const reviewInQuestion = await Review.findByPk(deleteReviewImage.reviewId)
     console.log(reviewInQuestion)
     if (!deleteReviewImage) return res.status(404).json({message: "That image could not be found"})

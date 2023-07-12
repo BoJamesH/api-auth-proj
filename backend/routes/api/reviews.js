@@ -109,4 +109,21 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
     res.json(existingReview)
 })
 
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    const userId = req.user.id;
+    const reviewId = req.params.reviewId;
+
+    const reviewToDelete = await Review.findByPk(reviewId)
+    if (!reviewToDelete) return res.status(404).json({ message: "Review could not be found" })
+    if (reviewToDelete.userId !== userId) {
+        const err = new Error();
+        err.status = 403;
+        err.message = 'You are forbidden from editing properties that do not belong to you.'
+        throw err;
+    };
+
+    await reviewToDelete.destroy();
+    res.json({ message: "Successfully deleted"})
+})
+
 module.exports = router;

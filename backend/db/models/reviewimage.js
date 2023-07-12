@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ReviewImage.init({
+<<<<<<< HEAD
     reviewID: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -24,6 +25,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+=======
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    reviewId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    url: DataTypes.STRING
+>>>>>>> non-spot-routes
   }, {
     sequelize,
     modelName: 'ReviewImage',

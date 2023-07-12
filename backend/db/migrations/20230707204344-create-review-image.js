@@ -15,7 +15,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      reviewID: {
+      reviewId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'Reviews' },

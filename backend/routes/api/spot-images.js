@@ -14,7 +14,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     if (spotInQuestion.ownerId !== userId) {
       const err = new Error();
       err.status = 403;
-      err.message = 'You are forbidden from deleting properties that do not belong to you.'
+      err.message = 'You are forbidden from deleting images that do not belong to your properties.'
       throw err;
     };
 

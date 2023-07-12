@@ -1,7 +1,7 @@
 // backend/routes/api/spots.js
 // Import the express package
 const express = require('express');
-const { Spot, User, SpotImage, Booking, Review } = require('../../db/models');
+const { Spot, User, SpotImage, Booking, Review, ReviewImage } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js')
 
 const router = express.Router()
@@ -92,6 +92,26 @@ router.get('/current', requireAuth, async (req, res) => {
   };
   res.json(response);
 });
+
+router.get('/:spotId/reviews', async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const spotInQuestion = await Spot.findByPk(spotId)
+  if (!spotInQuestion) return res.status(404).json({ message: "That property could not be found" })
+  const reviewsBySpotId = await Review.findAll({
+      where: { spotId },
+      include: [
+          {
+              model: User,
+              attributes: ['id', 'firstName', 'lastName']
+          },
+          {
+            model: ReviewImage,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] },
+          },
+      ],
+    });
+    res.json({ 'Reviews': reviewsBySpotId })
+})
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;

@@ -220,7 +220,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 router.post('/', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   console.log(req.user.id)
-  const {address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const errors = {};
   if (!address) errors.address = 'Street address is required.';
   if (!city) errors.city = 'City is required.';

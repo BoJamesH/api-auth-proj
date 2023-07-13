@@ -290,8 +290,14 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
   }
   if (!description) errors.description = 'Description is required.';
   if (!price) errors.price = 'Price per day is required.';
-  if (!lat) errors.lat = 'Latitude is not valid.';
-  if (!lng) errors.lng = 'Longitude is not valid.';
+  if (lat) {
+    if (lat > -90 || lat > 90) errors.lat = 'Latitude is not valid.';
+  }
+  if (!lat) errors.latReq = 'Latitude is required'
+  if (lng) {
+    if (lng > -180 || lng > 180) errors.lat = 'Longitude is not valid.';
+  }
+  if (!lng) errors.lngReq = 'Longitude is required'
 
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({
@@ -343,8 +349,14 @@ router.post('/', requireAuth, async (req, res, next) => {
   }
   if (!description) errors.description = 'Description is required.';
   if (!price) errors.price = 'Price per day is required.';
-  if (!lat) errors.lat = 'Latitude is not valid.';
-  if (!lng) errors.lng = 'Longitude is not valid.';
+  if (lat) {
+    if (lat > -90 || lat > 90) errors.lat = 'Latitude is not valid.';
+  }
+  if (!lat) errors.latReq = 'Latitude is required'
+  if (lng) {
+    if (lng > -180 || lng > 180) errors.lat = 'Longitude is not valid.';
+  }
+  if (!lng) errors.lngReq = 'Longitude is required'
 
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({

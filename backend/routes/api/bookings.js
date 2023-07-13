@@ -118,7 +118,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
   if (bookingToDelete.userId !== userId) return res.status(403).json({ message: "You are not allowed to delete another user's booking" })
   const currentDate = new Date();
   const bookingStartDate = new Date(bookingToDelete.startDate)
-  if (bookingStartDate < currentDate) return res.status.json({ message: "Bookings that have already started cannot be deleted" })
+  if (bookingStartDate < currentDate) return res.status(403).json({ message: "Bookings that have already started cannot be deleted" })
   await bookingToDelete.destroy();
   res.status(200).json({ message: "Successfully deleted" })
 })

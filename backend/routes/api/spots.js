@@ -2,7 +2,8 @@
 // Import the express package
 const express = require('express');
 const { Spot, User, SpotImage, Booking, Review, ReviewImage } = require('../../db/models');
-const { requireAuth } = require('../../utils/auth.js')
+const { requireAuth } = require('../../utils/auth.js');
+const { Op } = require('sequelize')
 // const { check } = require('express-validator');
 // const { handleValidationErrors } = require('../utils/validations.js')
 
@@ -368,7 +369,89 @@ router.post('/', requireAuth, async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const size = parseInt(req.query.size) || 20;
+  const minLat = parseFloat(req.query.minLat);
+  const maxLat = parseFloat(req.query.maxLat);
+  const minLng = parseFloat(req.query.minLng);
+  const maxLng = parseFloat(req.query.maxLng);
+  const minPrice = parseFloat(req.query.minPrice);
+  const maxPrice = parseFloat(req.query.maxPrice);
+
+  const queryOptions = {};
+  const pagination = {}
+
+  if (size < 1) errors.size = 'Size must be greater than or equal to one';
+  pagination.limit = size;
+
+  if (page < 1) errors.page = 'Page must be greater than or equal to one';
+  pagination.offset = (page - 1) * size;
+
+  if (maxLat && minLat) {
+    if (maxLat < -90 || maxLat > 90) errors.maxLat = 'Maximum latitude is invalid';
+    if (minLat < -90 || minLat > 90) errors.minLat = 'Minimum latitude is invalid'
+    queryOptions.lat = { [Op.between]: [minLat, maxLat] };
+  } else if (maxLat && !minLat) {
+    if (maxLat < -90 || maxLat > 90) errors.maxLat = 'Maximum latitude is invalid';
+    queryOptions.lat = { [Op.lte]: maxLat, };
+  } else if (minLat && !maxLat) {
+    if (minLat < -90 || minLat > 90) errors.minLat = 'Minimum latitude is invalid'
+    queryOptions.lat = { [Op.gte]: minLat, };
+  }
+  if (maxLng && minLng) {
+    if (maxLng < -90 || maxLng > 90) errors.maxLng = 'Maximum longitude is invalid';
+    if (minLng < -90 || minLng > 90) errors.minLng = 'Minimum longitude is invalid'
+    queryOptions.lng = { [Op.between]: [minLng, maxLng] };
+  } else if (maxLng && !minLng) {
+    if (maxLng < -90 || maxLng > 90) errors.maxLng = 'Maximum longitude is invalid';
+    queryOptions.lng = { [Op.lte]: maxLng, };
+  } else if (minLng && !maxLng) {
+    if (minLng < -90 || minLng > 90) errors.minLng = 'Minimum longitude is invalid'
+    queryOptions.lng = { [Op.gte]: minLng, };
+  }
+  if (maxPrice && minPrice) {
+    if (maxPrice < 0) errors.maxPrice = 'Maximum price must be greater than or equal to 0d';
+    if (minPrice < 0) errors.minPrice = 'Minimum price must be greater than or equal to 0'
+    queryOptions.price = { [Op.between]: [minPrice, maxPrice] };
+  } else if (maxPrice && !minPrice) {
+    if (maxPrice < 0) errors.maxPrice = 'Maximum price must be greater than or equal to 0';
+    queryOptions.price = { [Op.lte]: maxPrice, };
+  } else if (minPrice && !maxPrice) {
+    if (minPrice < 0) errors.minPrice = 'Minimum price must be greater than or equal to 0'
+    queryOptions.price = { [Op.gte]: minPrice, };
+  }
+
+  if (!minLat) errors.minLat = 'Minimum latitude is invalid';
+  if (!maxLng) errors.maxLng = 'Maximum longitude is invalid';
+  if (!minLng) errors.minLng = 'Size must be greater than or equal to one';
+  if (size < 1) errors.size = 'Size must be greater than or equal to one';
+  if (size < 1) errors.size = 'Size must be greater than or equal to one';
+  if (Object.keys(errors).length > 0) {
+    return res.status(404).json({
+      message: 'Bad Request',
+      errors: errors,
+  });
+  }
+
+  const filteredSpots = await Spot.findAll({
+    where: {
+      lat: {
+        [Op.between]: [minLat, maxLat]
+      },
+      lng: {
+        [Op.between]: [minLng, maxLng],
+      },
+      price: {
+        [Op.between]: [minPrice, maxPrice],
+      },
+    },
+    attributes: ['id'],
+  });
+
   const allSpots = await Spot.findAll({
+    where: {
+      id: spotIds.map(spot => spot.id)
+    },
     include: [
       {
         model: SpotImage,
@@ -378,6 +461,7 @@ router.get('/', async (req, res, next) => {
         limit: 1,
       },
     ],
+    ...pagination,
   });
 
   const spotIds = allSpots.map(spot => spot.id);

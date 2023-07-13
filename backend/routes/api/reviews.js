@@ -55,12 +55,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const review = await Review.findByPk(thisReviewId);
 
     if (!review) return res.status(404).json({ message: 'Review could not be found' })
-    if (review.userId !== userId) {
-        const err = new Error();
-        err.status = 403;
-        err.message = 'You are not allowed to add pictures to reviews that do not belong to you.'
-        throw err;
-    };
+    if (review.userId !== userId) return res.status(403).json({ message: 'You are not allowed to add pictures to reviews that do not belong to you' })
 
     const imageCount = await ReviewImage.count({
         where: {
@@ -97,12 +92,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
     const existingReview = await Review.findByPk(reviewId)
     if (!existingReview) return res.status(404).json({ message: "Review could not be found" })
-    if (existingReview.userId !== userId) {
-        const err = new Error();
-        err.status = 403;
-        err.message = 'You are forbidden from editing properties that do not belong to you.'
-        throw err;
-    };
+    if (existingReview.userId !== userId) return res.status(403).json({ message: 'You are not allowed to edit reviews that do not belong to you' })
 
     existingReview.review = review;
     existingReview.stars = stars;
@@ -115,12 +105,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
 
     const reviewToDelete = await Review.findByPk(reviewId)
     if (!reviewToDelete) return res.status(404).json({ message: "Review could not be found" })
-    if (reviewToDelete.userId !== userId) {
-        const err = new Error();
-        err.status = 403;
-        err.message = 'You are forbidden from editing properties that do not belong to you.'
-        throw err;
-    };
+    if (reviewToDelete.userId !== userId) res.status(403).json({ message: 'You are not allowed to delete reviews that do not belong to you'})
 
     await reviewToDelete.destroy();
     res.json({ message: "Successfully deleted"})

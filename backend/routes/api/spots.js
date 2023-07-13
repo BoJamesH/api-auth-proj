@@ -128,12 +128,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
   const { url, preview } = req.body;
   const addImageSpot = await Spot.findByPk(spotId);
   if (!addImageSpot) return res.status(404).json({ message: "That property could not be found" })
-  if (addImageSpot.ownerId !== userId) {
-    const err = new Error();
-    err.status = 403;
-    err.message = 'You are forbidden from adding pictures to properties that do not belong to you.'
-    throw err;
-  };
+  if (addImageSpot.ownerId !== userId) return res.status(300).json({ message: 'You are not allowed to add pictures to properties that do not belong to you' })
   if (!url) return res.status(404).json({ message: "Must provide photo url to add photo" })
   const newImage = await SpotImage.create({
     spotId,
@@ -196,14 +191,13 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
   const spotToBook = await Spot.findByPk(spotId);
   // console.log(spotToBook)
-  if (!spotToBook) return res.status(403).json({ message: "The property you are trying to book could not be found" })
+  if (!spotToBook) return res.status(404).json({ message: "The property you are trying to book could not be found" })
   if (spotToBook.ownerId === userId) return res.status(403).json({ message: 'The owner of a property is not allowed to book that property'})
   // TAKE CARE OF BOOKING CONFLICT ERRORS HERE
   const existingBookings = await Booking.findAll({
     where: { spotId },
     attributes: ['id', 'startDate', 'endDate']
   });
-  console.log(existingBookings)
 
   for (let existingBooking of existingBookings) {
     const existingStartDate = new Date(existingBooking.startDate);
@@ -251,12 +245,8 @@ router.get('/:spotId', requireAuth, async (req, res, next) => {
       },
     ],
   });
-  if (!spotById) {
-    const error = new Error();
-    error.status = 404;
-    error.message = 'That property could not be found';
-    throw error;
-  }
+  if (!spotById) return res.status(404).json({ message: 'That property could not be found' })
+
   const reviewStars = await Review.findAll({
     where: {
       spotId: thisSpot,
@@ -286,12 +276,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
   const {address, city, state, country, lat, lng, name, description, price } = req.body;
   const editSpot = await Spot.findByPk(spotId);
   if (!editSpot) return res.status(404).json({ message : "That property could not be found"})
-  if (editSpot.ownerId !== userId) {
-    const err = new Error();
-    err.status = 403;
-    err.message = 'You are forbidden from editing properties that do not belong to you.'
-    throw err;
-  };
+  if (editSpot.ownerId !== userId) return res.status(403).json({ message: 'You are not allowed to edit properties that do not belong to you' })
 
   const errors = {};
   if (!address) errors.address = 'Street address is required.';
@@ -332,13 +317,9 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
   const deleteSpot = await Spot.findByPk(spotId);
 
-  if (!deleteSpot) {
-    return res.status(404).json({ message: "That property could not be found" });
-  }
+  if (!deleteSpot) return res.status(404).json({ message: "That property could not be found" });
 
-  if (deleteSpot.ownerId !== userId) {
-    return res.status(403).json({ message: 'You are forbidden from deleting properties that do not belong to you.' });
-  }
+  if (deleteSpot.ownerId !== userId) return res.status(403).json({ message: 'You are not allowed to delete properties that do not belong to you.' });
 
   await deleteSpot.destroy();
   res.status(200).json({ message: "Successfully deleted" });

@@ -57,9 +57,8 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
       errors: errors,
     });
   }
-  if (new Date(endDate) < new Date(startDate)) {
-    errors.endDate = 'End date cannot come before start date';
-  }
+  if (new Date(endDate) < new Date(startDate)) errors.endDate = 'End date cannot come before start date';
+
   if (Object.keys(errors).length > 0) {
     return res.status(404).json({
       message: 'Bad Request',
@@ -118,7 +117,10 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
   if (!bookingToDelete) return res.status(404).json({ message: "Booking could not be found" })
   if (bookingToDelete.userId !== userId) return res.status(403).json({ message: "You are not allowed to delete another user's booking" })
   const currentDate = new Date();
-  if (bookingToDelete.startDate < currentDate) return res.status.json({ message: "Bookings that have already started cannot be deleted" })
+  const bookingStartDate = new Date(bookingToDelete.startDate)
+  if (bookingStartDate < currentDate) return res.status.json({ message: "Bookings that have already started cannot be deleted" })
+  await bookingToDelete.destroy();
+  res.status(200).json({ message: "Successfully deleted" })
 })
 
 module.exports = router;

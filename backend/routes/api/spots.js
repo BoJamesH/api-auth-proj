@@ -329,18 +329,20 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;
   const userId = req.user.id;
+
   const deleteSpot = await Spot.findByPk(spotId);
-  if (!deleteSpot) return res.status(404).json({message: "That property could not be found"})
+
+  if (!deleteSpot) {
+    return res.status(404).json({ message: "That property could not be found" });
+  }
+
   if (deleteSpot.ownerId !== userId) {
-    const err = new Error();
-    err.status = 403;
-    err.message = 'You are forbidden from deleting properties that do not belong to you.'
-    throw err;
-  };
+    return res.status(403).json({ message: 'You are forbidden from deleting properties that do not belong to you.' });
+  }
 
   await deleteSpot.destroy();
-  res.status(200).json({message: "Successfully deleted"})
-})
+  res.status(200).json({ message: "Successfully deleted" });
+});
 
 
 router.post('/', requireAuth, async (req, res, next) => {

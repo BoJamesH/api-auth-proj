@@ -489,8 +489,11 @@ router.get('/', async (req, res, next) => {
         previewImage: imageUrl,
       };
     }),
+    page: page,
+    size: size,
   };
-  res.json(response);
+  // const resPag = {page: page, size: size}
+  res.status(200).json(response);
 });
 
 

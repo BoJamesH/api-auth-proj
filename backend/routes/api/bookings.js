@@ -110,4 +110,15 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
   res.json(bookingToEdit);
 });
 
+
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+  const bookingId = req.params.bookingId;
+  const userId = req.user.id;
+  const bookingToDelete = await Booking.findByPk(bookingId)
+  if (!bookingToDelete) return res.status(404).json({ message: "Booking could not be found" })
+  if (bookingToDelete.userId !== userId) return res.status(403).json({ message: "You are not allowed to delete another user's booking" })
+  const currentDate = new Date();
+  if (bookingToDelete.startDate < currentDate) return res.status.json({ message: "Bookings that have already started cannot be deleted" })
+})
+
 module.exports = router;

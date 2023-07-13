@@ -118,7 +118,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     review,
     stars,
   })
-  res.json(newReview);
+  res.status(201).json(newReview);
 });
 
 
@@ -141,7 +141,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     preview,
   })
   const response = { "id": newImage.id, "url": url, "preview": preview }
-  res.json(response)
+  res.status(201).json(response)
 })
 
 
@@ -232,7 +232,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     startDate,
     endDate,
   })
-  res.json(newBooking);
+  res.status(201).json(newBooking);
 });
 
 

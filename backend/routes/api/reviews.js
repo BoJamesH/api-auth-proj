@@ -58,7 +58,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     if (review.userId !== userId) {
         const err = new Error();
         err.status = 403;
-        err.message = 'You are forbidden from adding pictures to reviews that do not belong to you.'
+        err.message = 'You are not allowed to add pictures to reviews that do not belong to you.'
         throw err;
     };
 
@@ -74,7 +74,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     });
 
     const { createdAt, updatedAt, reviewId, ...newReviewImageData } = newReviewImage.toJSON();
-    res.json(newReviewImageData);
+    res.status(201).json(newReviewImageData);
 })
 
 router.put('/:reviewId', requireAuth, async (req, res, next) => {

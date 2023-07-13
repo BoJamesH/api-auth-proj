@@ -169,6 +169,30 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
   res.json(response)
 })
 
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const userId = req.user.id;
+  const spotInQuestion = await Spot.findByPk(spotId)
+  if (!spotInQuestion) return res.status(404).json({ message: "That property could not be found" })
+  if (spotInQuestion.ownerId === userId) {
+    const ownerBookingsBySpotId = await Booking.findAll({
+        where: { spotId },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+        ],
+      });
+    res.json({ 'Bookings': ownerBookingsBySpotId })
+  }
+  const bookingsBySpotId = await Booking.findAll({
+    where: { spotId },
+    attributes: ['spotId', 'startDate', 'endDate']
+  })
+  res.json({ 'Bookings': bookingsBySpotId})
+});
+
 
 router.get('/:spotId', async (req, res, next) => {
   const thisSpot = req.params.spotId;

@@ -193,6 +193,45 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
   res.json({ 'Bookings': bookingsBySpotId})
 });
 
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const userId = req.user.id;
+  const { startDate, endDate } = req.body;
+  const errors = {};
+  if (!startDate) errors.startDate = 'Start date is required.';
+  if (!endDate) errors.endDate = 'End date is required.';
+  if (Object.keys(errors).length > 0) {
+    return res.status(404).json({
+      message: 'Bad Request',
+      errors: errors,
+    });
+  }
+  if (new Date(endDate) < new Date(startDate)) {
+    errors.correctDates = 'End date cannot be before start date';
+  }
+  if (Object.keys(errors).length > 0) {
+    return res.status(404).json({
+      message: 'Bad Request',
+      errors: errors,
+    });
+  }
+
+  const spotToBook = await Spot.findOne({
+    where: { spotId },
+  });
+  if (!spotToBook) return res.status(404).json({ message: "The property you are trying to book could not be found" })
+
+  // TAKE CARE OF BOOKING CONFLICT ERRORS HERE
+
+  const newBooking = await Booking.create({
+    userId,
+    spotId,
+    startDate,
+    endDate,
+  })
+  res.json(newBooking);
+});
+
 
 router.get('/:spotId', async (req, res, next) => {
   const thisSpot = req.params.spotId;

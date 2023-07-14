@@ -29,8 +29,17 @@ router.get('/current', requireAuth, async (req, res) => {
       reviewStars.push(...reviews);
     })
   );
-  const starsArray = reviewStars.map(review => review.stars);
-  const avgRating = starAverage(starsArray);
+  if (reviewStars.length > 0) {
+    const starsArray = reviewStars.map(review => review.stars);
+  }
+  let avgRating;
+  if (starArray) {
+    if (starArray.length > 0) {
+      avgRating = starAverage(starsArray);
+    } else {
+      avgRating = null;
+    }
+  }
 
   const response = {
     Spots: await Promise.all(spots.map(async (spot) => {
@@ -113,7 +122,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
       spotId: spotId,
     },
   });
-  if (existingReview) return res.status(500).json({ message: "You have already made a review for this property" })
+  if (existingReview) return res.status(403).json({ message: "You have already made a review for this property" })
 
   const newReview = await Review.create({
     userId,
@@ -259,13 +268,29 @@ router.get('/:spotId', async (req, res, next) => {
     attributes: ['stars'],
   });
 
-  const starsArray = reviewStars.map(review => review.stars);
-  const avgRating = {
-    avgStarRating: starAverage(starsArray),
+  if (reviewStars.length > 0) {
+    const starsArray = reviewStars.map(review => review.stars);
   }
-  const numReviews = {
-    numReviews: starsArray.length
+  let avgRating;
+  if (starArray) {
+    if (starArray.length > 0) {
+      avgRating = starAverage(starsArray);
+    } else {
+      avgRating = null;
+    }
   }
+  if (starArray) {
+    if (starArray.length > 0) {
+      const numReviews = {
+      numReviews: starsArray.length
+      }
+    } else {
+      const numReviews = {
+        numReviews: null,
+      }
+    }
+  }
+
   const response = {
     ...spotById.toJSON(),
     ...avgRating,
@@ -400,8 +425,10 @@ router.get('/', async (req, res, next) => {
 
   if (page !== undefined && page < 1) errors.page = 'Size must be greater than or equal to one';
   if (page === undefined) page = 1;
+  pagination.limit = size;
   if (size !== undefined && size < 1) errors.size = 'Size must be greater than or equal to one';
   if (size === undefined) size = 10;
+  pagination.offset = (page - 1) * size;
 
   if (maxLat && minLat) {
     if (maxLat < -90 || maxLat > 90) errors.maxLat = 'Maximum latitude is invalid';

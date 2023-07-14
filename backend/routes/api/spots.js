@@ -81,20 +81,27 @@ router.get('/:spotId/reviews', async (req, res, next) => {
   const spotId = req.params.spotId;
   const spotInQuestion = await Spot.findByPk(spotId)
   if (!spotInQuestion) return res.status(404).json({ message: "That property could not be found" })
+  // const reviewCheck = await Review.findAll({
+  //   where: {
+  //     spotId,
+  //   }
+  // })
   const reviewsBySpotId = await Review.findAll({
-      where: { spotId },
-      include: [
-          {
-              model: User,
-              attributes: ['id', 'firstName', 'lastName']
-          },
-          {
-            model: ReviewImage,
-            attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] },
-          },
-      ],
-    });
-    res.status(200).json({ 'Reviews': reviewsBySpotId })
+    where: { spotId },
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      },
+      {
+        model: ReviewImage,
+        attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] },
+      },
+    ],
+  });
+  if (reviewsBySpotId.length < 1) return res.status(404).json({ message: 'No reviews for that property could be found' })
+  console.log(reviewsBySpotId)
+  res.status(200).json({ 'Reviews': reviewsBySpotId })
 });
 
 
@@ -168,12 +175,14 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             },
         ],
       });
+    if (ownerBookingsBySpotId.length < 1) return res.status(404).json({ message: 'No bookings found for that spot' })
     res.json({ 'Bookings': ownerBookingsBySpotId })
   }
   const bookingsBySpotId = await Booking.findAll({
     where: { spotId },
     attributes: ['spotId', 'startDate', 'endDate']
   })
+  if (bookingsBySpotId.length < 1) return res.status(404).json({ message: 'No bookings found for that spot' })
   res.status(200).json({ 'Bookings': bookingsBySpotId})
 });
 

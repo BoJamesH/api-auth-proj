@@ -13,9 +13,11 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const deleteReviewImage = await ReviewImage.findByPk(imageId);
     // console.log(deleteReviewImage)
     // console.log(deleteReviewImage.reviewId)
-    const reviewInQuestion = await Review.findByPk(deleteReviewImage.reviewId)
     // console.log(reviewInQuestion)
     if (!deleteReviewImage) return res.status(404).json({message: "That image could not be found"})
+    if (deleteReviewImage) {
+    const reviewInQuestion = await Review.findByPk(deleteReviewImage.reviewId)
+    }
     if (reviewInQuestion.userId !== userId) return res.status(403).json({ message: 'You are not allowed to delete images that do not belong to your reviews' })
 
     await deleteReviewImage.destroy();

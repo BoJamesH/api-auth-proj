@@ -509,7 +509,6 @@ router.get('/', async (req, res, next) => {
     page: page,
     size: size,
   };
-  // const resPag = {page: page, size: size}
   res.status(200).json(response);
 });
 

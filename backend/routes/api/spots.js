@@ -29,8 +29,9 @@ router.get('/current', requireAuth, async (req, res) => {
       reviewStars.push(...reviews);
     })
   );
+  let starArray
   if (reviewStars.length > 0) {
-    const starsArray = reviewStars.map(review => review.stars);
+    starsArray = reviewStars.map(review => review.stars);
   }
   let avgRating;
   if (starArray) {

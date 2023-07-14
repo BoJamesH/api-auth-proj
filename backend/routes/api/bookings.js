@@ -25,7 +25,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ],
     });
 
-    if (!userBookings) return res.status(404).json({ message: "No reviews by the current user could be found" })
+    if (!userBookings) return res.status(404).json({ message: "No bookings by the current user could be found" })
     // Map the userBookings and modify the Spot object
     const formattedBookings = userBookings.map((booking) => {
         const formattedBooking = booking.toJSON();
@@ -38,6 +38,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         }
         return formattedBooking;
       });
+      formattedBooking.Spot.price = Number(formattedBooking.Spot.price)
     // console.log(formattedBookings)
 
     res.status(200).json( {"Bookings": formattedBookings} )

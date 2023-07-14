@@ -486,6 +486,7 @@ router.get('/', async (req, res, next) => {
       const spotId = spot.id;
       const avgRating = spotAverageRatings[spotId] ? spotAverageRatings[spotId].totalStars / spotAverageRatings[spotId].count : null;
       const imageUrl = spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null;
+      spot.price = Number(spot.price);
 
       return {
         id: spot.id,

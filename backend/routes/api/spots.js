@@ -280,14 +280,11 @@ router.get('/:spotId', async (req, res, next) => {
       avgRating = null;
     }
   }
+  let numReviews = null;
   if (starArray) {
     if (starArray.length > 0) {
-      const numReviews = {
+      numReviews = {
       numReviews: starArray.length
-      }
-    } else {
-      const numReviews = {
-        numReviews: null,
       }
     }
   }

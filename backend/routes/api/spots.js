@@ -36,7 +36,7 @@ router.get('/current', requireAuth, async (req, res) => {
   let avgRating;
   if (starArray) {
     if (starArray.length > 0) {
-      avgRating = starAverage(starsArray);
+      avgRating = starAverage(starArray);
     } else {
       avgRating = null;
     }
@@ -268,14 +268,14 @@ router.get('/:spotId', async (req, res, next) => {
     },
     attributes: ['stars'],
   });
-
+  let starArray;
   if (reviewStars.length > 0) {
-    const starsArray = reviewStars.map(review => review.stars);
+    starArray = reviewStars.map(review => review.stars);
   }
   let avgRating;
   if (starArray) {
     if (starArray.length > 0) {
-      avgRating = starAverage(starsArray);
+      avgRating = starAverage(starArray);
     } else {
       avgRating = null;
     }
@@ -283,7 +283,7 @@ router.get('/:spotId', async (req, res, next) => {
   if (starArray) {
     if (starArray.length > 0) {
       const numReviews = {
-      numReviews: starsArray.length
+      numReviews: starArray.length
       }
     } else {
       const numReviews = {

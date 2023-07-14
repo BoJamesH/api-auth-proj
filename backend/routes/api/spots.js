@@ -182,6 +182,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
       errors: errors,
     });
   }
+  const rightNow = new Date();
+  if (new Date(startDate) < rightNow) errors.schedule = 'Bookings must start in the future'
   if (new Date(endDate) < new Date(startDate)) {
     errors.endDate = 'End date cannot come before start date';
   }

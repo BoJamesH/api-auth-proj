@@ -38,7 +38,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         }
         return formattedBooking;
       });
-      formattedBooking.Spot.price = Number(formattedBooking.Spot.price)
+      formattedBookings.Spot.price = Number(formattedBookings.Spot.price)
     // console.log(formattedBookings)
 
     res.status(200).json( {"Bookings": formattedBookings} )

@@ -30,6 +30,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const formattedBookings = userBookings.map((booking) => {
         const formattedBooking = booking.toJSON();
         const spot = formattedBooking.Spot;
+        spot.price = Number(spot.price)
         if (spot.SpotImages && spot.SpotImages.length > 0) {
           spot.previewImage = spot.SpotImages[0].url;
           delete spot.SpotImages;
@@ -38,7 +39,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         }
         return formattedBooking;
       });
-      formattedBookings.Spot.price = Number(formattedBookings.Spot.price)
+      // formattedBookings.Spot.price = Number(formattedBookings.Spot.price)
     // console.log(formattedBookings)
 
     res.status(200).json( {"Bookings": formattedBookings} )

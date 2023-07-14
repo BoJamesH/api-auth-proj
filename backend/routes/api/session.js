@@ -6,7 +6,7 @@ const { Op } = require('sequelize');
 // Import the bcryptjs package for password hashing
 const bcrypt = require('bcryptjs');
 // Import authentication utility functions from the auth module
-const { setCookieToken, restoreUser, setTokenCookie } = require('../../utils/auth');
+const { setCookieToken, restoreUser, setTokenCookie, requireAuth } = require('../../utils/auth');
 // Import the User model from the db/models module
 const { User } = require('../../db/models');
 // Import the check function from express-validator for request body validation
@@ -79,7 +79,7 @@ router.delete('/', (_req, res) => {
 });
 
 // Restore session user
-router.get('/', (req, res) => {
+router.get('/', requireAuth, (req, res) => {
     const { user } = req;
     if (user) {
       // If a user exists in the session, create a safeUser object containing selected user properties
@@ -89,12 +89,12 @@ router.get('/', (req, res) => {
         username: user.username,
       };
       // Return the safeUser JSON in the response
-      return res.json({
+      return res.status(200).json({
         user: safeUser
       });
     } else {
       // If no user exists in the session, return null in the user JSON response
-      return res.json({ user: null });
+      return res.status(200).json({ user: null });
     }
   });
 

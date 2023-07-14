@@ -18,7 +18,7 @@ router.get('/current', requireAuth, async (req, res) => {
   const spots = await Spot.findAll({
     where: { ownerId: userId },
   });
-
+  if (!spots) return res.status(404).json({ message: "No reviews by the current user could be found" })
   const reviewStars = [];
   await Promise.all(
     spots.map(async (spot) => {
@@ -63,7 +63,7 @@ router.get('/current', requireAuth, async (req, res) => {
       };
     }))
   };
-  res.json(response);
+  res.status(200).json(response);
 });
 
 
@@ -84,12 +84,14 @@ router.get('/:spotId/reviews', async (req, res, next) => {
           },
       ],
     });
-    res.json({ 'Reviews': reviewsBySpotId })
+    res.status(200).json({ 'Reviews': reviewsBySpotId })
 });
 
 
 router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;
+  const reviewSpot = await Spot.findByPk(spotId)
+  if (!reviewSpot) return res.status(404).json({ message: 'That property could not be found' })
   const userId = req.user.id;
   const { review, stars } = req.body;
   const errors = {};
@@ -99,7 +101,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     if (!Number.isInteger(stars) || stars < 1 || stars > 5) errors.stars = 'Stars must be an integer from 1 to 5';
   }
   if (Object.keys(errors).length > 0) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: 'Bad Request',
       errors: errors,
   });
@@ -111,7 +113,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
       spotId: spotId,
     },
   });
-  if (existingReview) return res.status(500).json({ message: "User already has a review for this property" })
+  if (existingReview) return res.status(500).json({ message: "You have already made a review for this property" })
 
   const newReview = await Review.create({
     userId,
@@ -129,8 +131,8 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
   const { url, preview } = req.body;
   const addImageSpot = await Spot.findByPk(spotId);
   if (!addImageSpot) return res.status(404).json({ message: "That property could not be found" })
-  if (addImageSpot.ownerId !== userId) return res.status(300).json({ message: 'You are not allowed to add pictures to properties that do not belong to you' })
-  if (!url) return res.status(404).json({ message: "Must provide photo url to add photo" })
+  if (addImageSpot.ownerId !== userId) return res.status(403).json({ message: 'You are not allowed to add pictures to properties that do not belong to you' })
+  if (!url) return res.status(400).json({ message: "Must provide photo url to add photo" })
   const newImage = await SpotImage.create({
     spotId,
     url,
@@ -162,7 +164,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     where: { spotId },
     attributes: ['spotId', 'startDate', 'endDate']
   })
-  res.json({ 'Bookings': bookingsBySpotId})
+  res.status(200).json({ 'Bookings': bookingsBySpotId})
 });
 
 
@@ -231,7 +233,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 });
 
 
-router.get('/:spotId', requireAuth, async (req, res, next) => {
+router.get('/:spotId', async (req, res, next) => {
   const thisSpot = req.params.spotId;
   const spotById = await Spot.findByPk(thisSpot, {
     include: [
@@ -267,7 +269,7 @@ router.get('/:spotId', requireAuth, async (req, res, next) => {
     ...avgRating,
     ...numReviews,
   };
-  res.json(response);
+  res.status(200).json(response);
 })
 
 

@@ -96,7 +96,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
     existingReview.review = review;
     existingReview.stars = stars;
-    res.json(existingReview)
+    res.status(200).json(existingReview)
 })
 
 router.delete('/:reviewId', requireAuth, async (req, res, next) => {
@@ -108,7 +108,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     if (reviewToDelete.userId !== userId) res.status(403).json({ message: 'You are not allowed to delete reviews that do not belong to you'})
 
     await reviewToDelete.destroy();
-    res.json({ message: "Successfully deleted"})
+    res.status(200).json({ message: "Successfully deleted"})
 })
 
 module.exports = router;

@@ -40,7 +40,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
       });
     // console.log(formattedBookings)
 
-    res.json( {"Bookings": formattedBookings} )
+    res.status(200).json( {"Bookings": formattedBookings} )
 })
 
 
@@ -60,7 +60,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
   if (new Date(endDate) < new Date(startDate)) errors.endDate = 'End date cannot come before start date';
 
   if (Object.keys(errors).length > 0) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: 'Bad Request',
       errors: errors,
     });
@@ -71,10 +71,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
   if (bookingToEdit.userId !== userId) return res.status(403).json({ message: "You are not allowed to edit another user's booking" })
   const currentDate = new Date();
   if (bookingToEdit.endDate <= currentDate) return res.status(403).json({ message: "Past bookings cannot be modified" })
-
-  const spotToBook = await Spot.findByPk(bookingToEdit.spotId);
-  console.log(spotToBook)
-  if (!spotToBook) return res.status(403).json({ message: "The property you are trying to book could not be found" })
 
   // TAKE CARE OF BOOKING CONFLICT ERRORS HERE
   const existingBookings = await Booking.findAll({

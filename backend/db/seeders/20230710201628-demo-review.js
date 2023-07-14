@@ -238,5 +238,4 @@ module.exports = {
     options.tableName = 'Reviews';
     await queryInterface.bulkDelete(options)
   },
-  // order: 3,
 };

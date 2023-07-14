@@ -219,5 +219,4 @@ module.exports = {
     options.tableName = 'Spots';
     await queryInterface.bulkDelete(options)
   },
-  // order: 2,
 };

@@ -77,5 +77,4 @@ module.exports = {
     options.tableName = 'Bookings';
     await queryInterface.bulkDelete(options)
   },
-  // order: 4,
 };

@@ -51,5 +51,4 @@ module.exports = {
       username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2', 'admin-user', 'BoJamesH'] }
     }, {});
   },
-  // order: 1,
 };

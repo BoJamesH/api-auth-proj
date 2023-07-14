@@ -103,5 +103,4 @@ module.exports = {
     options.tableName = 'SpotImages'
     await queryInterface.bulkDelete(options)
   },
-  // order: 5,
 };

@@ -154,5 +154,4 @@ module.exports = {
     options.tableName = 'ReviewImages'
     await queryInterface.bulkDelete(options)
   },
-  // order: 6,
 };

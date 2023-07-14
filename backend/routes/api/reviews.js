@@ -68,7 +68,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         url,
     });
 
-    const { createdAt, updatedAt, reviewId, ...newReviewImageData } = newReviewImage.toJSON();
+    const { createdAt, updatedAt, preview, reviewId, ...newReviewImageData } = newReviewImage.toJSON();
     res.status(201).json(newReviewImageData);
 })
 

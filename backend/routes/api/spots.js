@@ -29,17 +29,17 @@ router.get('/current', requireAuth, async (req, res) => {
       reviewStars.push(...reviews);
     })
   );
-  let starArray
+  let starArray;
   if (reviewStars.length > 0) {
     starArray = reviewStars.map(review => review.stars);
   }
   let avgRating;
-  if (starArray) {
+  if (Array.isArray(starArray)) {
     if (starArray.length > 0) {
-      avgRating = starAverage(starArray);
-    } else {
-      avgRating = null;
+      avgRating = starAverage(starArray)
     }
+  } else {
+    avgRating = 'No reviews yet for this property';
   }
 
   const response = {

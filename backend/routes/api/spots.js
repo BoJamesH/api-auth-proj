@@ -277,19 +277,24 @@ router.get('/:spotId', async (req, res, next) => {
     },
     attributes: ['stars'],
   });
-  let starArray;
+  let starArray = 0;
   if (reviewStars.length > 0) {
     starArray = reviewStars.map(review => review.stars);
   }
   let avgRating;
-  if (starArray) {
+  if (Array.isArray(starArray)) {
     if (starArray.length > 0) {
-      avgRating = starAverage(starArray);
-    } else {
-      avgRating = null;
-    }
+      avgRating = {
+        avgRating: starAverage(starArray),
+      }
+}
+} else {
+  avgRating = {
+    avgRating: 'No reviews yet for this property',
   }
-  let numReviews = null;
+}
+  console.log(avgRating)
+  let numReviews = {numReviews: 0};
   if (starArray) {
     if (starArray.length > 0) {
       numReviews = {

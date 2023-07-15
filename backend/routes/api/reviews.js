@@ -105,7 +105,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
 
     const reviewToDelete = await Review.findByPk(reviewId)
     if (!reviewToDelete) return res.status(404).json({ message: "Review could not be found" })
-    if (reviewToDelete.userId !== userId) res.status(403).json({ message: 'You are not allowed to delete reviews that do not belong to you'})
+    if (reviewToDelete.userId !== userId) return res.status(403).json({ message: 'You are not allowed to delete reviews that do not belong to you'})
 
     await reviewToDelete.destroy();
     res.status(200).json({ message: "Successfully deleted"})

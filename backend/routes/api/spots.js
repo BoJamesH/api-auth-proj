@@ -19,28 +19,28 @@ router.get('/current', requireAuth, async (req, res) => {
     where: { ownerId: userId },
   });
   if (!spots) return res.status(404).json({ message: "No reviews by the current user could be found" })
-  const reviewStars = [];
-  await Promise.all(
-    spots.map(async (spot) => {
-      const reviews = await Review.findAll({
-        where: { spotId: spot.id },
-        attributes: ['stars'],
-      });
-      reviewStars.push(...reviews);
-    })
-  );
-  let starArray;
-  if (reviewStars.length > 0) {
-    starArray = reviewStars.map(review => review.stars);
-  }
-  let avgRating;
-  if (Array.isArray(starArray)) {
-    if (starArray.length > 0) {
-      avgRating = starAverage(starArray)
-    }
-  } else {
-    avgRating = 'No reviews yet for this property';
-  }
+  // const reviewStars = [];
+  // await Promise.all(
+  //   spots.map(async (spot) => {
+  //     const reviews = await Review.findAll({
+  //       where: { spotId: spot.id },
+  //       attributes: ['stars'],
+  //     });
+  //     reviewStars.push(...reviews);
+  //   })
+  // );
+  // let starArray;
+  // if (reviewStars.length > 0) {
+  //   starArray = reviewStars.map(review => review.stars);
+  // }
+  // let avgRating;
+  // if (Array.isArray(starArray)) {
+  //   if (starArray.length > 0) {
+  //     avgRating = starAverage(starArray)
+  //   }
+  // } else {
+  //   avgRating = 'No reviews yet for this property';
+  // }
 
   const response = {
     Spots: await Promise.all(spots.map(async (spot) => {
@@ -53,6 +53,15 @@ router.get('/current', requireAuth, async (req, res) => {
       });
 
       const imageUrl = spotImages.length > 0 ? spotImages[0].url : null;
+
+      const reviews = await Review.findAll({
+        where: { spotId: spot.id },
+        attributes: ['stars'],
+      });
+
+      const reviewStars = reviews.map(review => review.stars);
+      const avgRating = reviewStars.length > 0 ? starAverage(reviewStars) : 'No reviews yet for this property';
+
 
       return {
         id: spot.id,

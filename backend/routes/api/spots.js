@@ -430,9 +430,13 @@ router.post('/', requireAuth, async (req, res, next) => {
   res.status(201).json(newSpot)
 })
 
+function isValidNumber(value) {
+  return typeof value === 'number' && !isNaN(value);
+}
+
 router.get('/', async (req, res, next) => {
-  const page = parseInt(req.query.page);
-  const size = parseInt(req.query.size);
+  let page = parseInt(req.query.page);
+  let size = parseInt(req.query.size);
   const minLat = parseFloat(req.query.minLat);
   const maxLat = parseFloat(req.query.maxLat);
   const minLng = parseFloat(req.query.minLng);
@@ -444,43 +448,41 @@ router.get('/', async (req, res, next) => {
   const pagination = {};
   const errors = {};
 
-  if (page !== undefined && page < 1) errors.page = 'Size must be greater than or equal to one';
-  if (page === undefined) page = 1;
-  pagination.limit = size;
-  if (size !== undefined && size < 1) errors.size = 'Size must be greater than or equal to one';
-  if (size === undefined) size = 10;
-  pagination.offset = (page - 1) * size;
+  if (isValidNumber(page) && page < 1) errors.page = 'Size must be greater than or equal to one';
+  if (!isValidNumber(page)) page = 1;
+  pagination.limit = isValidNumber(size) && size >= 1 ? size : 10;
+  pagination.offset = (page - 1) * pagination.limit;
 
-  if (maxLat && minLat) {
+  if (isValidNumber(maxLat) && isValidNumber(minLat)) {
     if (maxLat < -90 || maxLat > 90) errors.maxLat = 'Maximum latitude is invalid';
-    if (minLat < -90 || minLat > 90) errors.minLat = 'Minimum latitude is invalid'
+    if (minLat < -90 || minLat > 90) errors.minLat = 'Minimum latitude is invalid';
     queryOptions.lat = { [Op.between]: [minLat, maxLat] };
-  } else if (maxLat && !minLat) {
+  } else if (isValidNumber(maxLat) && !isValidNumber(minLat)) {
     if (maxLat < -90 || maxLat > 90) errors.maxLat = 'Maximum latitude is invalid';
-    queryOptions.lat = { [Op.lte]: maxLat, };
-  } else if (minLat && !maxLat) {
-    if (minLat < -90 || minLat > 90) errors.minLat = 'Minimum latitude is invalid'
-    queryOptions.lat = { [Op.gte]: minLat, };
+    queryOptions.lat = { [Op.lte]: maxLat };
+  } else if (!isValidNumber(maxLat) && isValidNumber(minLat)) {
+    if (minLat < -90 || minLat > 90) errors.minLat = 'Minimum latitude is invalid';
+    queryOptions.lat = { [Op.gte]: minLat };
   }
-  if (maxLng && minLng) {
-    if (maxLng < -180 || maxLng > 180) errors.maxLng = 'Maximum longitude is invalid';
-    if (minLng < -180 || minLng > 180) errors.minLng = 'Minimum longitude is invalid'
-    queryOptions.lng = { [Op.between]: [minLng, maxLng] };
-  } else if (maxLng && !minLng) {
-    if (maxLng < -180 || maxLng > 180) errors.maxLng = 'Maximum longitude is invalid';
-    queryOptions.lng = { [Op.lte]: maxLng, };
-  } else if (minLng && !maxLng) {
-    if (minLng < -180 || minLng > 180) errors.minLng = 'Minimum longitude is invalid'
-    queryOptions.lng = { [Op.gte]: minLng, };
+  if (isValidNumber(maxLng) && isValidNumber(minLng)) {
+    if (maxLng < -90 || maxLng > 90) errors.maxLng = 'Maximum latitude is invalid';
+    if (minLng < -90 || minLng > 90) errors.minLng = 'Minimum latitude is invalid';
+    queryOptions.lat = { [Op.between]: [minLng, maxLng] };
+  } else if (isValidNumber(maxLng) && !isValidNumber(minLng)) {
+    if (maxLng < -90 || maxLng > 90) errors.maxLng = 'Maximum latitude is invalid';
+    queryOptions.lat = { [Op.lte]: maxLng };
+  } else if (!isValidNumber(maxLng) && isValidNumber(minLng)) {
+    if (minLng < -90 || minLng > 90) errors.minLng = 'Minimum latitude is invalid';
+    queryOptions.lat = { [Op.gte]: minLng };
   }
-  if (maxPrice && minPrice) {
+  if (isValidNumber(maxPrice) && isValidNumber(minPrice)) {
     if (maxPrice < 0) errors.maxPrice = 'Maximum price must be greater than or equal to zero';
     if (minPrice < 0) errors.minPrice = 'Minimum price must be greater than or equal to zero'
     queryOptions.price = { [Op.between]: [minPrice, maxPrice] };
-  } else if (maxPrice && !minPrice) {
+  } else if (isValidNumber(maxPrice) && !isValidNumber(minPrice)) {
     if (maxPrice < 0) errors.maxPrice = 'Maximum price must be greater than or equal to zero';
     queryOptions.price = { [Op.lte]: maxPrice, };
-  } else if (minPrice && !maxPrice) {
+  } else if (isValidNumber(minPrice) && !isValidNumber(maxPrice)) {
     if (minPrice < 0) errors.minPrice = 'Minimum price must be greater than or equal to zero'
     queryOptions.price = { [Op.gte]: minPrice, };
   }
@@ -534,7 +536,7 @@ router.get('/', async (req, res, next) => {
       const spotId = spot.id;
       const avgRating = spotAverageRatings[spotId] ? spotAverageRatings[spotId].totalStars / spotAverageRatings[spotId].count : null;
       const imageUrl = spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null;
-      spot.price = Number(spot.price);
+      spot.price = spot.price;
 
       return {
         id: spot.id,

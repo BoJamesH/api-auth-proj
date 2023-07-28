@@ -109,7 +109,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     ],
   });
   if (reviewsBySpotId.length < 1) return res.status(404).json({ message: 'No reviews for that property could be found' })
-  console.log(reviewsBySpotId)
+  // console.log(reviewsBySpotId)
   res.status(200).json({ 'Reviews': reviewsBySpotId })
 });
 
@@ -302,7 +302,7 @@ router.get('/:spotId', async (req, res, next) => {
     avgRating: 'No reviews yet for this property',
   }
 }
-  console.log(avgRating)
+  // console.log(avgRating)
   let numReviews = {numReviews: 0};
   if (starArray) {
     if (starArray.length > 0) {
@@ -385,10 +385,10 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
 router.post('/', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
-  console.log(req.user.id)
+  // console.log(req.user.id)
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const errors = {};
-  console.log(name)
+  // console.log(name)
   if (!address) errors.address = 'Street address is required.';
   if (!city) errors.city = 'City is required.';
   if (!state) errors.state = 'State is required.';

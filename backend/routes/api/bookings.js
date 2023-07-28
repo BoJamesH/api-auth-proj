@@ -82,7 +82,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     },
     attributes: ['id', 'startDate', 'endDate']
   });
-  console.log(existingBookings)
 
   for (let existingBooking of existingBookings) {
     const existingStartDate = new Date(existingBooking.startDate);

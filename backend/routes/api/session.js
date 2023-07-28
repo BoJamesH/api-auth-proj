@@ -79,7 +79,7 @@ router.delete('/', (_req, res) => {
 });
 
 // Restore session user
-router.get('/', requireAuth, (req, res) => {
+router.get('/', (req, res) => {
     const { user } = req;
     if (user) {
       // If a user exists in the session, create a safeUser object containing selected user properties

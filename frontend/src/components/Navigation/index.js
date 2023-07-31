@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import OpenModalButton from "../OpenModalButton";
@@ -8,6 +9,7 @@ import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
 
   let sessionLinks;
@@ -32,14 +34,15 @@ function Navigation({ isLoaded }) {
     );
   }
 
+  const handleLogoClick = () => {
+    history.push('/'); // Navigate to '/'
+  };
+
   return (
     <>
-    <h1>SOJOURN</h1>
-    <ul>
+    <ul className="navbarMain">
       <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
+        <h1 className='homeLogo' onClick={handleLogoClick}>SOJOURN</h1>
       </li>
       {isLoaded && sessionLinks}
     </ul>

@@ -1,3 +1,16 @@
 .hidden {
     display: none;
 }
+
+.navbarMain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+    height: 70px;
+}
+
+.homeLogo {
+    color: rgb(110, 20, 133);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

@@ -3,3 +3,11 @@
     flex-wrap: wrap;
     flex-direction: row;
 }
+
+.locationRatingCard {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

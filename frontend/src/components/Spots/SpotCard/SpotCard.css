@@ -1,18 +1,38 @@
 .spotCard {
-    max-width: 200px;
+    max-width: 220px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin: 10px;
+    margin: 15px;
+    padding-top: 20px;
 }
 
 .spotImageCard {
-    width: 200px;
+    width: 220px;
     height: 200px;
 }
 
 .imgCard {
-    width: 200px;
+    width: 220px;
     height: 200px;
     border-radius: 10px;
+}
+
+.starImg {
+    width: 10px;
+    height: 10px;
+}
+
+/* .priceCard {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+} */
+
+.price {
+    font-weight: 600;
+}
+
+.locationRatingCard {
+    margin-bottom: 20px;
 }

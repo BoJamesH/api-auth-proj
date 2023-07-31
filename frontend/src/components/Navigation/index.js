@@ -33,6 +33,8 @@ function Navigation({ isLoaded }) {
   }
 
   return (
+    <>
+    <h1>SOJOURN</h1>
     <ul>
       <li>
         <NavLink exact to="/">
@@ -41,6 +43,7 @@ function Navigation({ isLoaded }) {
       </li>
       {isLoaded && sessionLinks}
     </ul>
+    </>
   );
 }
 

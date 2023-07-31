@@ -1,0 +1,18 @@
+.spotCard {
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+
+.spotImageCard {
+    width: 200px;
+    height: 200px;
+}
+
+.imgCard {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+}

@@ -19,7 +19,7 @@ module.exports = {
       {
         spotId: 2,
         url: 'https://images.unsplash.com/photo-1559599238-308793637427?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YWlyYm5ifHx8fHx8MTY5MDgzMjg3Nw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080',
-        preview: false
+        preview: true
       },
       {
         spotId: 3,
@@ -34,7 +34,7 @@ module.exports = {
       {
         spotId: 5,
         url: 'https://images.unsplash.com/photo-1533044309907-0fa3413da946?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YWlyYm5ifHx8fHx8MTY5MDgzMjk0OA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080',
-        preview: false
+        preview: true
       },
       {
         spotId: 6,
@@ -44,7 +44,7 @@ module.exports = {
       {
         spotId: 7,
         url: 'https://images.unsplash.com/photo-1564306974309-54efd9b2b008?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YWlyYm5ifHx8fHx8MTY5MDgzMjk4Nw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080',
-        preview: false
+        preview: true
       },
       {
         spotId: 8,
@@ -59,7 +59,7 @@ module.exports = {
       {
         spotId: 10,
         url: 'https://images.unsplash.com/photo-1577910178010-05e9d070b529?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YWlyYm5ifHx8fHx8MTY5MDgzMzAzMQ&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080',
-        preview: false
+        preview: true
       },
       {
         spotId: 11,
@@ -69,7 +69,7 @@ module.exports = {
       {
         spotId: 12,
         url: 'https://images.unsplash.com/photo-1525517710769-9f4fdb9e4099?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YWlyYm5ifHx8fHx8MTY5MDgzMzA2Mg&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080',
-        preview: false
+        preview: true
       },
       {
         spotId: 13,
@@ -84,7 +84,7 @@ module.exports = {
       {
         spotId: 15,
         url: 'https://images.unsplash.com/photo-1591825381767-c7137b8eda0f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YWlyYm5ifHx8fHx8MTY5MDgzMzEyNA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080',
-        preview: false
+        preview: true
       },
       {
         spotId: 16,

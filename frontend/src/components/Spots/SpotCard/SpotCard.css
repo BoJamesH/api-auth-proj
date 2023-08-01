@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     margin: 15px;
     padding-top: 20px;
+    cursor: pointer;
 }
 
 .spotImageCard {

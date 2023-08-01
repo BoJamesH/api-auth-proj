@@ -20,7 +20,7 @@ const SpotCard = ({ spotId }) => {
   // Handle clicking on the SpotCard to navigate to the spot page
   const handleClick = () => {
     if (spot) {
-      history.push(`/api/spots/${spot.id}`);
+      history.push(`/spots/${spot.id}`);
     }
   };
 
@@ -28,7 +28,7 @@ const SpotCard = ({ spotId }) => {
   return (
     <>
       {!isLoading && spot ? (
-        <div className="spotCard" onClick={handleClick}> {/* Add the onClick handler */}
+        <div className="spotCard" title={spot.name} onClick={handleClick}> {/* Add the onClick handler */}
           <div className="spotImgCard">
             <img
               className="imgCard"

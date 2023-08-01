@@ -1,7 +1,7 @@
 
 // Action type constraints
 export const LOAD_SPOTS = 'spots/LOAD_SPOTS'
-export const RECEIVE_SPOT = 'spots/RECEIVE_SPOT'
+export const LOAD_SINGLE_SPOT = 'spots/LOAD_SINGLE_SPOT';
 
 
 // Action creators
@@ -11,10 +11,10 @@ export const loadSpots = (spots) => ({
     spots,
 })
 
-export const receiveSpot = (spot) => ({
-    type: RECEIVE_SPOT,
+export const loadSingleSpot = (spot) => ({
+    type: LOAD_SINGLE_SPOT,
     spot,
-})
+  });
 
 
 // Thunk action creators
@@ -33,30 +33,35 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     if (!response.ok) throw new Error('Failed to fetch spot')
     const spot = await response.json();
     console.log(spot)
-    dispatch(receiveSpot(spot));
+    dispatch(loadSingleSpot(spot));
 }
 
 // Reducer
 
-const initialState = { spots: [], isLoading: true };
+const initialState = {
+    spots: [],
+    singleSpot: null, // New slice of state to hold the single spot information
+    isLoading: true,
+  };
 
-const spotsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOAD_SPOTS:
-      return {
-        ...state,
-        spots: action.spots, // Save all spots into the 'spots' array
-        isLoading: false,
-      };
-    case RECEIVE_SPOT:
-      return {
-        ...state,
-        spots: [...state.spots, action.spot], // Add the received spot to the 'spots' array
-        isLoading: false,
-      };
-    default:
-      return state;
-  }
-};
+  const spotsReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case LOAD_SPOTS:
+        return {
+          ...state,
+          spots: action.spots,
+          isLoading: false,
+        };
+      case LOAD_SINGLE_SPOT:
+        return {
+          ...state,
+          singleSpot: action.spot, // Store the single spot in the new slice of state
+          isLoading: false,
+        };
+      default:
+        return state;
+    }
+  };
+
 
 export default spotsReducer;

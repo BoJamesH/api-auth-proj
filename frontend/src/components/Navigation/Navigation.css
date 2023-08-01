@@ -24,3 +24,16 @@
 button {
     cursor: pointer;
 }
+
+.createAndSession {
+    display: flex;
+}
+
+.createSpot {
+    margin-right: 60px;
+    text-decoration: none;
+}
+
+/* .createSpot {
+    text-decoration: none;
+} */

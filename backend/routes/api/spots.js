@@ -356,14 +356,18 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
   });
   }
 
-  editSpot.address = address;
-  editSpot.city = city;
-  editSpot.country = country;
-  editSpot.name = name;
-  editSpot.description = description;
-  editSpot.price = price;
-  editSpot.lat = lat;
-  editSpot.lng = lng;
+  await editSpot.update({
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  });
+
   res.json(editSpot)
 })
 
@@ -404,7 +408,7 @@ router.post('/', requireAuth, async (req, res, next) => {
   }
   if (!lat) errors.latReq = 'Latitude is required'
   if (lng) {
-    if (lng < -180 || lng > 180) errors.lat = 'Longitude is not valid.';
+    if (lng < -180 || lng > 180) errors.lng = 'Longitude is not valid.';
   }
   if (!lng) errors.lngReq = 'Longitude is required'
 

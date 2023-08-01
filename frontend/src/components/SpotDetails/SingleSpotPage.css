@@ -1,7 +1,38 @@
-.FirstSpotImage {
-    width: 300px;
+body {
+    max-width: 1200px; /* Replace 1200px with your desired maximum width */
+    margin: 0 auto; /* This centers the content horizontally within the page */
+  }
+
+.LargeSpotImage {
+    width: 600px;
+    height: 400px;
 }
 
-.otherSpotImage {
-    max-width: 100px;
+.LargeSpotImageDiv {
+    width: 600px;
+    height: 400px;
+    margin-left: 20px;
+}
+
+.SmallSpotImage {
+    width: 190px;
+    height: 200px;
+}
+
+.SmallSpotImageDiv {
+    width: 180px;
+    height: 200px;
+}
+
+.SpotDetailsImageDiv {
+    width: 1000px;
+    display: flex;
+}
+
+.AllSmallSpotImages {
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    height: 400px;
+    flex-wrap: wrap;
 }

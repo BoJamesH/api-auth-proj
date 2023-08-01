@@ -15,9 +15,14 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
+      <>
+        <span>
+          <NavLink className='createSpot' to='/spots/new'>List Your Property</NavLink>
+        </span>
+        <li>
+          <ProfileButton user={sessionUser} />
+        </li>
+      </>
     );
   } else {
     sessionLinks = (
@@ -44,7 +49,9 @@ function Navigation({ isLoaded }) {
       <li>
         <h1 className='homeLogo' onClick={handleLogoClick}>SOJOURN</h1>
       </li>
-      {isLoaded && sessionLinks}
+      <div className='createAndSession'>
+        {isLoaded && sessionLinks}
+      </div>
     </ul>
     </>
   );

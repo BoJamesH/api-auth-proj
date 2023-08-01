@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadSpots } from "../../../store/spots";
 import SpotCard from "../SpotCard";
 import { fetchSpots } from "../../../store/spots";
 import './AllSpotsPage.css'

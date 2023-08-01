@@ -20,7 +20,7 @@ const SpotCard = ({ spotId }) => {
   // Handle clicking on the SpotCard to navigate to the spot page
   const handleClick = () => {
     if (spot) {
-      history.push(`/spots/${spot.id}`);
+      history.push(`/spots/details/${spot.id}`);
     }
   };
 

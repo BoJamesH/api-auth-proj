@@ -4,12 +4,12 @@ body {
   }
 
 .LargeSpotImage {
-    width: 600px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
 }
 
 .LargeSpotImageDiv {
-    width: 600px;
+    width: 50%;
     height: 400px;
     margin-left: 20px;
 }
@@ -20,7 +20,7 @@ body {
 }
 
 .SmallSpotImageDiv {
-    width: 180px;
+    width: 50%;
     height: 200px;
 }
 

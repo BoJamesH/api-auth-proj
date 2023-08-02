@@ -9,6 +9,7 @@ import SpotDetails from "./components/SpotDetails";
 import { ModalProvider } from "./context/Modal";
 import SpotForm from "./components/CreateSpot";
 import { useLocation } from "react-router-dom";
+import CurrentSpots from "./components/CurrentSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function App() {
         </Route>
         <Route exact path='/spots/new'>
           <SpotForm />
+        </Route>
+        <Route path='/spots/current'>
+          <CurrentSpots />
         </Route>
         <Route path='/spots/details/:spotId'>
           <SpotDetails />

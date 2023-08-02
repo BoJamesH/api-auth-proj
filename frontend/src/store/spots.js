@@ -4,6 +4,8 @@ import { csrfFetch } from "./csrf";
 export const LOAD_SPOTS = 'spots/LOAD_SPOTS'
 export const LOAD_SINGLE_SPOT = 'spots/LOAD_SINGLE_SPOT';
 export const CREATE_SPOT = '/spots/CREATE_SPOT'
+export const LOAD_CURRENT_SPOTS = '/spots/LOAD_CURRENT_SPOTS'
+export const DESTROY_SPOT = '/spots/DESTROY_SPOT'
 
 
 // Action creators
@@ -23,6 +25,16 @@ export const createSpot = (spot) => ({
   spot
 })
 
+export const destroySpot = (spotId) => ({
+  type: DESTROY_SPOT,
+  spotId
+})
+
+// export const loadCurrentSpots = (spots) => ({
+//   type: LOAD_SPOTS,
+//   spots,
+// })
+
 
 // Thunk action creators
 export const postSpot = (spot) => async (dispatch) => {
@@ -33,21 +45,23 @@ export const postSpot = (spot) => async (dispatch) => {
       body: JSON.stringify(spot),
     });
 
-    if (!response.ok) {
-      // Handle the error
-      throw new Error('Failed to list new property');
+    if (response.ok) {
+      const newSpot = await response.json();
+      dispatch(createSpot(newSpot)); // Dispatch createSpot with the newly created spot
+      dispatch(fetchSpot(newSpot.id)); // Assuming your API returns the created spot's ID in the response
+      return newSpot
+    } else {
+      const errors = await response.json()
+      console.log(errors)
+      return errors;
     }
-
-    const newSpot = await response.json();
-    console.log(newSpot)
-    dispatch(createSpot(newSpot));
-    return newSpot;
   } catch (error) {
-    // Handle the error
-    console.error('Error creating new spot:', error.message);
-    // You can also show an error message to the user
+    const errors = await error.json()
+    console.log(errors)
+    return errors;
   }
 };
+
 
 export const fetchSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots');
@@ -65,6 +79,31 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     console.log(spot)
     dispatch(loadSingleSpot(spot));
 }
+
+export const fetchCurrentSpots = () => async (dispatch) => {
+  const response = await csrfFetch('/api/spots/current');
+  console.log(response)
+  if (!response.ok) throw new Error ('Failed to fetch your properties')
+  const data = await response.json();
+  const currentSpots = data.Spots
+  console.log(currentSpots)
+  dispatch(loadSpots(currentSpots))
+}
+
+export const deleteSpot = (spotId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete spot');
+    }
+    dispatch(destroySpot(spotId));
+  } catch (error) {
+    console.error('Error deleting spot:', error);
+  }
+};
+
 
 
 // Reducer
@@ -89,6 +128,12 @@ const initialState = {
           singleSpot: action.spot, // Store the single spot in the new slice of state
           isLoading: false,
         };
+      // case LOAD_CURRENT_SPOTS:
+      //   return {
+      //     ...state,
+      //     currentSpots: action.spots,
+      //     isLoading: false,
+      //   };
       case CREATE_SPOT:
         return {
           ...state,
@@ -96,6 +141,11 @@ const initialState = {
           singleSpot: action.spot, // Set the newly created spot as the singleSpot
           isLoading: false,
         };
+      case DESTROY_SPOT:
+          return {
+            ...state,
+            spots: state.spots.filter((spot) => spot.id !== action.spotId),
+          };
       default:
         return state;
     }

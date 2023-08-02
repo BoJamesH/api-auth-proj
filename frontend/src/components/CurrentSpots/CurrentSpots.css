@@ -1,0 +1,19 @@
+.customSpotCardDiv {
+    max-width: 220px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 15px;
+    padding-top: 20px;
+    cursor: pointer;
+}
+
+.customSpotImg {
+    width: 220px;
+    height: 200px;
+}
+
+.customStarImg {
+    width: 10px;
+    height: 10px;
+}

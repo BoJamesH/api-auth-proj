@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { postSpot } from '../../store/spots';
 import { useHistory } from 'react-router-dom';
 import './SpotForm.css';
+import { useEffect } from 'react';
 
 const SpotForm = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,6 @@ const SpotForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Create the spot object with form data
     const newSpot = {
       address,
       city,
@@ -46,20 +46,34 @@ const SpotForm = () => {
       SpotImages: imageUrls,
     };
     try {
-      // Dispatch the action to create the new spot
       const successSpot = await dispatch(postSpot(newSpot));
 
-      // Extract the ID of the newly created spot
       const newSpotId = successSpot.id;
-      console.log(newSpotId)
+      console.log(newSpotId);
 
-      // Redirect to the details page of the newly created spot
-      history.push(`/spots/details/${newSpotId}`);
+      if (newSpotId) {
+        setErrors({});
+        history.push(`/spots/details/${newSpotId}`);
+      } else {
+        setErrors(errors.errors);
+        console.log('ENTERED THE ELSE')
+      }
     } catch (error) {
-      // Handle any error here, if necessary
-      console.error('Error creating spot:', error);
+      if (errors.errors) {
+        console.log(error)
+        setErrors(error.errors);
+      } else {
+        console.error('Error creating spot:', error);
+      }
     }
   };
+
+  useEffect(() => {},[errors])
+  // useEffect(() => {
+  //   setErrors(null);
+  // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
+
+  console.log(errors)
 
   return (
     <>
@@ -69,7 +83,7 @@ const SpotForm = () => {
       <p>Guests will only get your exact address once they've booked a reservation.</p>
     </div>
     <div className='spot-form-div'>
-    <form className="spot-form" onSubmit={handleSubmit}>
+    <form noValidate={true} className="spot-form" onSubmit={handleSubmit}>
     <div className='form-group'>
       <label>
         Country: {errors.country && (<p>{errors.country}</p>)}

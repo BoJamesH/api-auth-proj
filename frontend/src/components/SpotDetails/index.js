@@ -48,7 +48,12 @@ const SpotDetails = () => {
               })}
             </span>
           </div>
-          <div className='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
+          {spot.Owner ? ( // Check if the spot has an Owner
+            <div className='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
+          ) : (
+            <div className='HostedBy'>Hosted by Unknown Owner</div>
+          )}
+
           <div className='SpotDescription'>{spot.description}</div>
         </>
       ) : (

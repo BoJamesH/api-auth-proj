@@ -454,7 +454,7 @@ router.get('/', async (req, res, next) => {
 
   if (isValidNumber(page) && page < 1) errors.page = 'Size must be greater than or equal to one';
   if (!isValidNumber(page)) page = 1;
-  pagination.limit = isValidNumber(size) && size >= 1 ? size : 20;
+  pagination.limit = isValidNumber(size) && size >= 1 ? size : 50;
   pagination.offset = (page - 1) * pagination.limit;
 
   if (isValidNumber(maxLat) && isValidNumber(minLat)) {

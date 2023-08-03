@@ -1,13 +1,41 @@
 .profile-dropdown {
-    background-color: lightgray;
     position: absolute;
     z-index: 99999;
     right: 0;
     margin-right: 20px;
     margin-top: 25px;
-    padding: 30px;
+    padding: 10px;
+    border: 3px solid rgb(28, 50, 146);
+    background-color: white;
+    border-radius: 10%;
 }
 
 ul {
     list-style: none;
+}
+
+.UserDropdownItem {
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#DropdownLink {
+    text-decoration: none;
+    color: black;
+}
+
+#DropdownLogoutLi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.DropdownLogoutButton {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    background-color: rgb(113, 69, 184);
+    border-radius: 10%;
+    width: 100px;
 }

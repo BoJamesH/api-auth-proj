@@ -46,27 +46,28 @@ const SpotForm = () => {
       SpotImages: imageUrls,
     };
     try {
-      const successSpot = await dispatch(postSpot(newSpot));
+      const response = await dispatch(postSpot(newSpot));
 
-      const newSpotId = successSpot.id;
+      const newSpotId = response.id;
       console.log(newSpotId);
+      console.log(response);
 
       if (newSpotId) {
         setErrors({});
         history.push(`/spots/details/${newSpotId}`);
       } else {
-        setErrors(errors.errors);
-        console.log('ENTERED THE ELSE')
+        setErrors(response.errors);
       }
     } catch (error) {
-      if (errors.errors) {
-        console.log(error)
-        setErrors(error.errors);
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrors(error.response.data.errors);
       } else {
-        console.error('Error creating spot:', error);
+        console.error("Error creating spot:", error);
       }
     }
   };
+
+
 
   useEffect(() => {},[errors])
   // useEffect(() => {
@@ -86,51 +87,78 @@ const SpotForm = () => {
     <form noValidate={true} className="spot-form" onSubmit={handleSubmit}>
     <div className='form-group'>
       <label>
-        Country: {errors.country && (<p>{errors.country}</p>)}
+        Country: 
       </label>
-        <input className='form-field' type="text" value={country} onChange={(e) => setCountry(e.target.value)} required />
+        <input className='form-field' type="text" value={country} onChange={(e) => setCountry(e.target.value)}  />
+        <div className='CreateFormErrors'>
+        {errors.country && (<p>{errors.country}</p>)}
+      </div>
       </div>
     <div className='form-group'>
       <label>
-        Address: {errors.address && (<p>{errors.address}</p>)}
+        Address:
       </label>
-        <input className='form-field' type="text" value={address} onChange={(e) => setAddress(e.target.value)} required />
+        <input className='form-field' type="text" value={address} onChange={(e) => setAddress(e.target.value)}  />
+        <div className='CreateFormErrors'>
+        {errors.address && (<p>{errors.address}</p>)}
+      </div>
       </div>
       <div className='form-group-block'>
       <label>
-        City: {errors.city && (<p>{errors.city}</p>)}
+        City:
       </label>
-        <input className='form-field' type="text" value={city} onChange={(e) => setCity(e.target.value)} required />
+        <input className='form-field' type="text" value={city} onChange={(e) => setCity(e.target.value)}  />
+        <div className='CreateFormErrors'>
+        {errors.city && (<p>{errors.city}</p>)}
+      </div>
       <label>
-        State: {errors.state && (<p>{errors.state}</p>)}
+        State:
       </label>
-        <input className='form-field' type="text" value={state} onChange={(e) => setState(e.target.value)} required />
+        <input className='form-field' type="text" value={state} onChange={(e) => setState(e.target.value)}  />
+        <div className='CreateFormErrors'>
+        {errors.state && (<p>{errors.state}</p>)}
+      </div>
       <label>
-        Latitude: {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
+        Latitude:
       </label>
-        <input className='form-field' type="text" value={lat} onChange={(e) => setLat(e.target.value)} required />
+        <input className='form-field' type="text" value={lat} onChange={(e) => setLat(e.target.value)}  />
+        <div className='CreateFormErrors'>
+        {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
+      </div>
       <label>
-        Longitude: {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
+        Longitude:
       </label>
-        <input className='form-field' type="text" value={lng} onChange={(e) => setLng(e.target.value)} required />
+        <input className='form-field' type="text" value={lng} onChange={(e) => setLng(e.target.value)}  />
+      </div>
+      <div className='CreateFormErrors'>
+      {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
       </div>
       <div className='form-group'>
       <label>
-        Name: {errors.name && (<p>{errors.name}</p>)}
-        <input className='form-field' type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+        Name:
+        <input className='form-field' type="text" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
+      <div className='CreateFormErrors'>
+      {errors.name && (<p>{errors.name}</p>)}
+      </div>
       </div>
       <div className='form-group'>
       <label>
-        Description: {errors.description && (<p>{errors.description}</p>)}
+        Description:
       </label>
-        <textarea className='form-field' value={description} onChange={(e) => setDescription(e.target.value)} required />
+        <textarea className='form-field' value={description} onChange={(e) => setDescription(e.target.value)} />
+      </div>
+      <div className='CreateFormErrors'>
+      {errors.description && (<p>{errors.description}</p>)}
       </div>
       <div className='form-group'>
       <label>
-        Price: {errors.price && (<p>{errors.price}</p>)}
+        Price:
       </label>
-        <input className='form-field' type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
+        <input className='form-field' type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+      </div>
+      <div className='CreateFormErrors'>
+      {errors.price && (<p>{errors.price}</p>)}
       </div>
       <label>Liven up your rental property with photos</label>
       <p>Submit a link to at least one photo to publish your spot</p>

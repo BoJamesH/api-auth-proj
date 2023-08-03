@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './ProfileButton.css'
+import { NavLink } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -42,11 +43,12 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={logout}>Log Out</button>
+        <li className="UserDropdownItem">{user.username}</li>
+        <li className="UserDropdownItem">{user.firstName} {user.lastName}</li>
+        <li className="UserDropdownItem">{user.email}</li>
+        <li className="UserDropdownItem"><NavLink id="DropdownLink" to='/spots/current'>Manage Properties</NavLink></li>
+        <li className="UserDropdownItem" id="DropdownLogoutLi">
+          <button className="DropdownLogoutButton" onClick={logout}>Log Out</button>
         </li>
       </ul>
     </>

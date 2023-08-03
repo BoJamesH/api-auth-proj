@@ -17,3 +17,12 @@
     width: 10px;
     height: 10px;
 }
+
+.CurrentCreateSpotButton {
+    color: white;
+    background-color: rgb(113, 69, 184);
+}
+
+.CurrentTitleCreateButtonDiv {
+    margin-left: 20px;
+}

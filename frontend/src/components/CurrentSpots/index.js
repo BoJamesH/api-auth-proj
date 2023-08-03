@@ -4,6 +4,7 @@ import { fetchCurrentSpots } from "../../store/spots";
 import { deleteSpot } from "../../store/spots";
 import ConfirmationModal from "./DeleteModal/index.js";
 import "./CurrentSpots.css";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const CurrentSpots = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,12 @@ const CurrentSpots = () => {
 
   return (
     <div className="currentSpots">
-      <h2>Your Properties</h2>
+      <div className="CurrentTitleCreateButtonDiv">
+      <h2>Manage Your Properties</h2>
+      <Link to='/spots/new'>
+      <button className="CurrentCreateSpotButton">List a New Property</button>
+      </Link>
+      </div>
       {isLoading ? (
         <p>Loading properties...</p>
       ) : spots.length > 0 ? (

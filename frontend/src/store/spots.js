@@ -128,12 +128,6 @@ const initialState = {
           singleSpot: action.spot, // Store the single spot in the new slice of state
           isLoading: false,
         };
-      // case LOAD_CURRENT_SPOTS:
-      //   return {
-      //     ...state,
-      //     currentSpots: action.spots,
-      //     isLoading: false,
-      //   };
       case CREATE_SPOT:
         return {
           ...state,

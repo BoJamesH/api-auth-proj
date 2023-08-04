@@ -36,6 +36,7 @@ button {
     font-size: 18px;
     background: linear-gradient(to right, rgb(110, 20, 133), rgb(0, 0, 255));
     -webkit-background-clip: text;
+    background-clip: text;
 }
 
 /* .createSpot {

@@ -6,6 +6,8 @@ export const LOAD_SINGLE_SPOT = 'spots/LOAD_SINGLE_SPOT';
 export const CREATE_SPOT = '/spots/CREATE_SPOT'
 export const LOAD_CURRENT_SPOTS = '/spots/LOAD_CURRENT_SPOTS'
 export const DESTROY_SPOT = '/spots/DESTROY_SPOT'
+export const UPDATE_SPOT = '/spots/UPDATE_SPOT'
+export const ADD_SPOT_IMAGES = '/spots/ADD_SPOT_IMAGES'
 
 
 // Action creators
@@ -22,18 +24,28 @@ export const loadSingleSpot = (spot) => ({
 
 export const createSpot = (spot) => ({
   type: CREATE_SPOT,
-  spot
+  spot,
 })
 
 export const destroySpot = (spotId) => ({
   type: DESTROY_SPOT,
-  spotId
+  spotId,
 })
 
-// export const loadCurrentSpots = (spots) => ({
-//   type: LOAD_SPOTS,
-//   spots,
-// })
+export const loadCurrentSpots = (spots) => ({
+  type: LOAD_CURRENT_SPOTS,
+  spots,
+})
+
+export const editSpot = (spot) => ({
+  type: UPDATE_SPOT,
+  spot,
+})
+
+export const addSpotImages = (spotId, images) => ({
+  type: ADD_SPOT_IMAGES,
+  images
+})
 
 
 // Thunk action creators
@@ -48,12 +60,9 @@ export const postSpot = (spot) => async (dispatch) => {
     if (response.ok) {
       const newSpot = await response.json();
       dispatch(createSpot(newSpot)); // Dispatch createSpot with the newly created spot
+      // dispatch(addSpotImages(newSpot.id, response.SpotI))
       dispatch(fetchSpot(newSpot.id)); // Assuming your API returns the created spot's ID in the response
       return newSpot
-    } else {
-      const errors = await response.json()
-      console.log(errors)
-      return errors;
     }
   } catch (error) {
     const errors = await error.json()
@@ -87,7 +96,7 @@ export const fetchCurrentSpots = () => async (dispatch) => {
   const data = await response.json();
   const currentSpots = data.Spots
   console.log(currentSpots)
-  dispatch(loadSpots(currentSpots))
+  dispatch(loadCurrentSpots(currentSpots))
 }
 
 export const deleteSpot = (spotId) => async (dispatch) => {
@@ -104,12 +113,31 @@ export const deleteSpot = (spotId) => async (dispatch) => {
   }
 };
 
+export const updateSpot = (spotId, spot) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(spot),
+    });
+    if (response.ok) {
+      const newSpot = await response.json();
+      return newSpot
+    }
+    } catch (error) {
+    const errors = await error.json()
+    console.log(errors)
+    return errors;
+  }
+}
+
 
 
 // Reducer
 
 const initialState = {
     spots: [],
+    currentSpots: [],
     singleSpot: null, // New slice of state to hold the single spot information
     isLoading: true,
   };
@@ -135,11 +163,21 @@ const initialState = {
           singleSpot: action.spot, // Set the newly created spot as the singleSpot
           isLoading: false,
         };
+      case LOAD_CURRENT_SPOTS:
+        return {
+          ...state,
+          currentSpots: action.spots,
+          isLoading: false,
+        };
       case DESTROY_SPOT:
           return {
             ...state,
             spots: state.spots.filter((spot) => spot.id !== action.spotId),
           };
+      case UPDATE_SPOT:
+        return {
+          ...state,
+        }
       default:
         return state;
     }

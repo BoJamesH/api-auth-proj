@@ -1,0 +1,60 @@
+.LoginFormDiv {
+    position: fixed;
+    z-index: 99999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid rgb(28, 50, 146);
+    background-color: white;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 340px;
+    margin: 0;
+}
+
+.LoginTitle {
+    color: rgb(28, 50, 146);
+    margin: 10px 0;
+}
+
+.LoginButtonDiv {
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 20px;
+}
+
+.LoginButton {
+    width: 100%;
+    align-self: center;
+    justify-self: center;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.PasswordInputDiv {
+    margin-top: 10px;
+}
+
+.CredentialInputDiv {
+    margin-right: 0;
+    margin-top: 10px;
+}
+
+.LoginInputField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    transition: border-color 0.2s ease-out;
+}
+
+form {
+    width: 260px;
+    margin-right: 20px;
+}
+
+.LoginInputField:focus {
+    border-color: rgb(28, 50, 146);
+}

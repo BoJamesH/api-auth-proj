@@ -389,34 +389,44 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
 router.post('/', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
-  // console.log(req.user.id)
-  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price, SpotImages } = req.body;
   const errors = {};
-  // console.log(name)
+
   if (!address) errors.address = 'Street address is required.';
   if (!city) errors.city = 'City is required.';
   if (!state) errors.state = 'State is required.';
   if (!country) errors.country = 'Country is required.';
   if (!name) errors.name = 'Name is required.';
-  if (name) {
-    if (name.length > 49) errors.name = 'Name must be less than 50 characters.';
-  }
+  if (name && name.length > 49) errors.name = 'Name must be less than 50 characters.';
   if (!description) errors.description = 'Description is required.';
   if (!price) errors.price = 'Price per day is required.';
-  if (lat) {
-    if (lat < -90 || lat > 90) errors.lat = 'Latitude is not valid.';
+  if (lat && (lat < -90 || lat > 90)) errors.lat = 'Latitude is not valid.';
+  if (!lat) errors.latReq = 'Latitude is required';
+  if (lng && (lng < -180 || lng > 180)) errors.lng = 'Longitude is not valid.';
+  if (!lng) errors.lngReq = 'Longitude is required';
+
+  // Ensure SpotImages is initialized as an empty array if not provided
+  const spotImagesArray = SpotImages || [];
+
+  // Validate SpotImages if provided
+  if (spotImagesArray.length > 0) {
+    if (!Array.isArray(spotImagesArray)) {
+      errors.SpotImages = 'SpotImages must be an array.';
+    } else {
+      for (const image of spotImagesArray) {
+        if (typeof image !== 'object' || !image.url || typeof image.url !== 'string' || image.url.trim() === '') {
+          errors.SpotImages = 'SpotImages must be an array of image objects with a valid "url" property.';
+          break;
+        }
+      }
+    }
   }
-  if (!lat) errors.latReq = 'Latitude is required'
-  if (lng) {
-    if (lng < -180 || lng > 180) errors.lng = 'Longitude is not valid.';
-  }
-  if (!lng) errors.lngReq = 'Longitude is required'
 
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({
       message: 'Bad Request',
       errors: errors,
-  });
+    });
   }
 
   const newSpot = await Spot.create({
@@ -430,9 +440,13 @@ router.post('/', requireAuth, async (req, res, next) => {
     name,
     description,
     price,
-  })
-  res.status(201).json(newSpot)
-})
+    SpotImages: spotImagesArray, // Use the validated SpotImages array
+  });
+  console.log(spotImagesArray)
+
+  res.status(201).json(newSpot);
+});
+
 
 function isValidNumber(value) {
   return typeof value === 'number' && !isNaN(value);

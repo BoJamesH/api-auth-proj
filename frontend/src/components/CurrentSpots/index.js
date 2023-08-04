@@ -4,11 +4,13 @@ import { fetchCurrentSpots } from "../../store/spots";
 import { deleteSpot } from "../../store/spots";
 import ConfirmationModal from "./DeleteModal/index.js";
 import "./CurrentSpots.css";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const CurrentSpots = () => {
+  const history = useHistory()
   const dispatch = useDispatch();
-  const spots = useSelector((state) => state.spotsState.spots);
+  const spots = useSelector((state) => state.spotsState.currentSpots);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [spotToDelete, setSpotToDelete] = useState(null);
@@ -43,6 +45,10 @@ const CurrentSpots = () => {
     openDeleteModal();
   };
 
+  // const handleClick = () => {
+  //     history.push(`/spots/details/${spot.id}`);
+  // };
+
   return (
     <div className="currentSpots">
       <div className="CurrentTitleCreateButtonDiv">
@@ -58,21 +64,32 @@ const CurrentSpots = () => {
           {spots.map((spot) => (
             <div key={spot.id} className="customSpotCardDiv">
               <img
+                onClick={() => {
+                  history.push(`/spots/details/${spot.id}`);
+                }}
                 className="customSpotImg"
                 src={spot.previewImage || "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"}
                 alt={`Property with id of ${spot.id}`}
               />
-              <div className="customSpotLocationRatingDiv">
+              <div onClick={() => {
+                  history.push(`/spots/details/${spot.id}`);
+                }} className="customSpotLocationRatingDiv">
                 {spot.city}, {spot.state}
-                <div className="customStarsAndAvg">
+                <div onClick={() => {
+                  history.push(`/spots/details/${spot.id}`);
+                }} className="customStarsAndAvg">
                   <img className="customStarImg" src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" /> {spot.avgRating}
                 </div>
               </div>
-              <span className="customPriceLine">
+              <span onClick={() => {
+                  history.push(`/spots/details/${spot.id}`);
+                }} className="customPriceLine">
                 <span className="customPrice">${spot.price}</span> night
               </span>
               <div className="UpdateDeleteButtonsDiv">
-                <button className="UpdateButton" onClick={handleUpdate}>
+                <button className="UpdateButton" onClick={() => {
+                  history.push(`/spots/${spot.id}/edit`)
+                }}>
                   Update
                 </button>
                 <button className="DeleteButton" onClick={() => handleDeleteSpotModal(spot.id)}>

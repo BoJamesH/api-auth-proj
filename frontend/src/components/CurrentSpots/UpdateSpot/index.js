@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { postSpot } from '../../store/spots';
-import { useHistory } from 'react-router-dom';
-import './SpotForm.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSpot } from '../../../store/spots';
+import { postSpot } from '../../../store/spots';
+import { useHistory, useParams } from 'react-router-dom';
+import './UpdateSpot.css';
 import { useEffect } from 'react';
+import { fetchSpot } from '../../../store/spots';
+import { fetchCurrentSpots } from '../../../store/spots';
 
-const SpotForm = () => {
+const UpdateSpot = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { spotId } = useParams();
+  const spotToUpdate = useSelector((state) => state.spotsState.singleSpot);
+  const isLoading = useSelector((state) => state.spotsState.isLoading);
+
+  useEffect(() => {
+    dispatch(fetchSpot(parseInt(spotId)));
+  }, [dispatch, spotId]);
 
   // Form state
   const [address, setAddress] = useState('');
@@ -19,32 +29,35 @@ const SpotForm = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [errors, setErrors] = useState({})
-  const [imageUrls, setImageUrls] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [imageUrls, setImageUrls] = useState(['', '', '', '', '']);
+
+  useEffect(() => {
+    if (spotToUpdate) {
+      setAddress(spotToUpdate.address || '');
+      setCity(spotToUpdate.city || '');
+      setState(spotToUpdate.state || '');
+      setCountry(spotToUpdate.country || '');
+      setLat(spotToUpdate.lat || '');
+      setLng(spotToUpdate.lng || '');
+      setName(spotToUpdate.name || '');
+      setDescription(spotToUpdate.description || '');
+      setPrice(spotToUpdate.price || '');
+      setImageUrls(spotToUpdate.SpotImages.map((image) => image.url) || ['', '', '', '', '']);
+    }
+  }, [spotToUpdate]);
 
   const handleAddImageUrl = (e, index) => {
     const newImageUrl = e.target.value;
     setImageUrls((prevImageUrls) => {
       const updatedImageUrls = [...prevImageUrls];
-      if (index >= updatedImageUrls.length) {
-        updatedImageUrls.push({ url: newImageUrl, preview: true });
-      } else {
-        updatedImageUrls[index].url = newImageUrl;
-      }
+      updatedImageUrls[index] = newImageUrl;
       return updatedImageUrls;
     });
   };
 
-  console.log(imageUrls)
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const spotImages = imageUrls.map((imageUrl) => ({ url: imageUrl.url, preview: true }));
-    console.log(spotImages)
-    console.log(imageUrls)
-
     const newSpot = {
       address,
       city,
@@ -55,17 +68,19 @@ const SpotForm = () => {
       name,
       description,
       price,
-      SpotImages: spotImages,
+      SpotImages: imageUrls,
     };
     try {
-      const response = await dispatch(postSpot(newSpot));
+      const response = await dispatch(updateSpot(spotId, newSpot));
+      await dispatch(fetchCurrentSpots());
+
       const newSpotId = response.id;
       console.log(newSpotId);
       console.log(response);
 
       if (newSpotId) {
         setErrors({});
-        history.push(`/spots/details/${newSpotId}`);
+        history.push(`/spots/details/${spotId}`);
       } else {
         setErrors(response.errors);
       }
@@ -80,15 +95,23 @@ const SpotForm = () => {
 
 
 
-  useEffect(() => {},[errors])
+  useEffect(() => {},[errors, useState])
   // useEffect(() => {
   //   setErrors(null);
   // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
 
+  console.log(errors)
+
+  if (isLoading) {
+    return <p>Loading your property...</p>;
+  } else if (!spotToUpdate) {
+    return <p>Spot data not found.</p>;
+  }
+
   return (
     <>
     <div className='form-intro'>
-      <h2>List Your Property</h2>
+      <h2>Update Your Property</h2>
       <h4>Where's your place located?</h4>
       <p>Guests will only get your exact address once they've booked a reservation.</p>
     </div>
@@ -175,32 +198,32 @@ const SpotForm = () => {
       <input
         type='url'
         className='image-url-field'
-        value={imageUrls[0]?.url || ''}
-        onChange={(e) => handleAddImageUrl(e, 0)}
+        value={imageUrls[0] || ''}
+        onChange={handleAddImageUrl}
       />
       <input
         type='url'
         className='image-url-field'
-        value={imageUrls[1]?.url || ''}
-        onChange={(e) => handleAddImageUrl(e, 1)}
+        value={imageUrls[1] || ''}
+        onChange={handleAddImageUrl}
       />
       <input
         type='url'
         className='image-url-field'
-        value={imageUrls[2]?.url || ''}
-        onChange={(e) => handleAddImageUrl(e, 2)}
+        value={imageUrls[2] || ''}
+        onChange={handleAddImageUrl}
       />
       <input
         type='url'
         className='image-url-field'
-        value={imageUrls[3]?.url || ''}
-        onChange={(e) => handleAddImageUrl(e, 3)}
+        value={imageUrls[3] || ''}
+        onChange={handleAddImageUrl}
       />
       <input
         type='url'
         className='image-url-field'
-        value={imageUrls[4]?.url || ''}
-        onChange={(e) => handleAddImageUrl(e, 4)}
+        value={imageUrls[4] || ''}
+        onChange={handleAddImageUrl}
       />
       {/* Add more input fields for other image URLs */}
     </div>
@@ -211,4 +234,4 @@ const SpotForm = () => {
   );
 };
 
-export default SpotForm;
+export default UpdateSpot;

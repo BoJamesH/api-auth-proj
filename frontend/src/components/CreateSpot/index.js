@@ -27,7 +27,7 @@ const SpotForm = () => {
     setImageUrls((prevImageUrls) => {
       const updatedImageUrls = [...prevImageUrls];
       if (index >= updatedImageUrls.length) {
-        updatedImageUrls.push({ url: newImageUrl, preview: true });
+        updatedImageUrls.push({ url: newImageUrl, preview: false });
       } else {
         updatedImageUrls[index].url = newImageUrl;
       }
@@ -41,9 +41,9 @@ const SpotForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const spotImages = imageUrls.map((imageUrl) => ({ url: imageUrl.url, preview: true }));
-    console.log(spotImages)
-    console.log(imageUrls)
+    // const spotImages = imageUrls.map((imageUrl) => ({ url: imageUrl.url, preview: true }));
+    // console.log(spotImages)
+    // console.log(imageUrls)
 
     const newSpot = {
       address,
@@ -55,10 +55,10 @@ const SpotForm = () => {
       name,
       description,
       price,
-      SpotImages: spotImages,
     };
     try {
-      const response = await dispatch(postSpot(newSpot));
+      imageUrls[0].preview = true;
+      const response = await dispatch(postSpot(imageUrls, newSpot));
       const newSpotId = response.id;
       console.log(newSpotId);
       console.log(response);
@@ -144,7 +144,7 @@ const SpotForm = () => {
       </div>
       <div className='form-group'>
       <label>
-        Name:
+        Property Title:
         <input className='form-field' type="text" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
       <div className='CreateFormErrors'>
@@ -202,7 +202,7 @@ const SpotForm = () => {
         value={imageUrls[4]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 4)}
       />
-      {/* Add more input fields for other image URLs */}
+
     </div>
       <button className='form-field' type="submit">Submit</button>
     </form>

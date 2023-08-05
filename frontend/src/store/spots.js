@@ -49,7 +49,7 @@ export const addSpotImages = (spotId, images) => ({
 
 
 // Thunk action creators
-export const postSpot = (spot) => async (dispatch) => {
+export const postSpot = (spotImages, spot) => async (dispatch) => {
   try {
     const response = await csrfFetch('/api/spots', {
       method: 'POST',
@@ -60,7 +60,7 @@ export const postSpot = (spot) => async (dispatch) => {
     if (response.ok) {
       const newSpot = await response.json();
       dispatch(createSpot(newSpot)); // Dispatch createSpot with the newly created spot
-      // dispatch(addSpotImages(newSpot.id, response.SpotI))
+      dispatch(postSpotImages(spotImages, newSpot.id))
       dispatch(fetchSpot(newSpot.id)); // Assuming your API returns the created spot's ID in the response
       return newSpot
     }
@@ -68,6 +68,16 @@ export const postSpot = (spot) => async (dispatch) => {
     const errors = await error.json()
     console.log(errors)
     return errors;
+  }
+};
+
+export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
+  for (let spotImage of spotImages) {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(spotImage)
+    })
   }
 };
 
@@ -136,52 +146,53 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
 // Reducer
 
 const initialState = {
-    spots: [],
-    currentSpots: [],
-    singleSpot: null, // New slice of state to hold the single spot information
-    isLoading: true,
-  };
+  spots: [],
+  currentSpots: [],
+  singleSpot: null, // New slice of state to hold the single spot information
+  isLoading: true,
+};
 
-  const spotsReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case LOAD_SPOTS:
+const spotsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOAD_SPOTS:
+      return {
+        ...state,
+        spots: action.spots,
+        isLoading: false,
+      };
+    case LOAD_SINGLE_SPOT:
+      return {
+        ...state,
+        singleSpot: action.spot, // Store the single spot in the new slice of state
+        isLoading: false,
+      };
+    case CREATE_SPOT:
+      return {
+        ...state,
+        spots: [...state.spots, action.spot], // Add the new spot to the list of spots
+        singleSpot: action.spot, // Set the newly created spot as the singleSpot
+        isLoading: false,
+      };
+    case LOAD_CURRENT_SPOTS:
+      return {
+        ...state,
+        currentSpots: action.spots,
+        isLoading: false,
+      };
+    case DESTROY_SPOT:
         return {
           ...state,
-          spots: action.spots,
-          isLoading: false,
+          spots: state.spots.filter((spot) => spot.id !== action.spotId),
+          currentSpots: state.currentSpots.filter((spot) => spot.id !== action.spotId)
         };
-      case LOAD_SINGLE_SPOT:
-        return {
-          ...state,
-          singleSpot: action.spot, // Store the single spot in the new slice of state
-          isLoading: false,
-        };
-      case CREATE_SPOT:
-        return {
-          ...state,
-          spots: [...state.spots, action.spot], // Add the new spot to the list of spots
-          singleSpot: action.spot, // Set the newly created spot as the singleSpot
-          isLoading: false,
-        };
-      case LOAD_CURRENT_SPOTS:
-        return {
-          ...state,
-          currentSpots: action.spots,
-          isLoading: false,
-        };
-      case DESTROY_SPOT:
-          return {
-            ...state,
-            spots: state.spots.filter((spot) => spot.id !== action.spotId),
-          };
-      case UPDATE_SPOT:
-        return {
-          ...state,
-        }
-      default:
-        return state;
-    }
-  };
+    case UPDATE_SPOT:
+      return {
+        ...state,
+      }
+    default:
+      return state;
+  }
+};
 
 
 export default spotsReducer;

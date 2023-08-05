@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpot } from '../../store/spots';
+import ReviewsList from '../Reviews';
 
 const SpotDetails = () => {
   const { spotId } = useParams();
@@ -12,7 +13,7 @@ const SpotDetails = () => {
 
   useEffect(() => {
     dispatch(fetchSpot(parseInt(spotId)));
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, isLoading]);
 
   return (
     <div className='AllSpotDetails'>
@@ -49,12 +50,24 @@ const SpotDetails = () => {
             </span>
           </div>
           {spot.Owner ? ( // Check if the spot has an Owner
-            <div className='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
+            <span className='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</span>
           ) : (
-            <div className='HostedBy'>Hosted by Unknown Owner</div>
+            <span className='HostedBy'>Hosted by Unknown Owner</span>
           )}
-
+          <span className='ReserveInfoBox'>
+            <div className="contentAboveButton">
+              <p className="price">${spot.price} </p><p> night</p>
+              <img className='starImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
+              {spot.avgRating} · {spot.numReviews} reviews
+            </div>
+            <div className='ReserveButton'>
+              <button>Reserve</button>
+            </div>
+          </span>
           <div className='SpotDescription'>{spot.description}</div>
+          <div className='ReviewInfoDiv'><img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
+            {spot.avgRating} · <span className='ReviewNum'>{spot.numReviews} reviews </span></div>
+            <ReviewsList spotId={spotId} spotOwnerId={spot.Owner.id} />
         </>
       ) : (
         <p>Spot data not found.</p>

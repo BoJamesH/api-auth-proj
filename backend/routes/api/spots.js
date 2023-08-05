@@ -108,7 +108,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
       },
     ],
   });
-  if (reviewsBySpotId.length < 1) return res.status(404).json({ message: 'No reviews for that property could be found' })
+  // if (reviewsBySpotId.length < 1) return res.status(404).json({ message: 'No reviews for that property could be found' })
   // console.log(reviewsBySpotId)
   res.status(200).json({ 'Reviews': reviewsBySpotId })
 });
@@ -299,7 +299,7 @@ router.get('/:spotId', async (req, res, next) => {
 }
 } else {
   avgRating = {
-    avgRating: 'No reviews yet for this property',
+    avgRating: 0,
   }
 }
   // console.log(avgRating)
@@ -389,7 +389,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
 router.post('/', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
-  const { address, city, state, country, lat, lng, name, description, price, SpotImages } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const errors = {};
 
   if (!address) errors.address = 'Street address is required.';
@@ -405,22 +405,6 @@ router.post('/', requireAuth, async (req, res, next) => {
   if (lng && (lng < -180 || lng > 180)) errors.lng = 'Longitude is not valid.';
   if (!lng) errors.lngReq = 'Longitude is required';
 
-  // Ensure SpotImages is initialized as an empty array if not provided
-  const spotImagesArray = SpotImages || [];
-
-  // Validate SpotImages if provided
-  if (spotImagesArray.length > 0) {
-    if (!Array.isArray(spotImagesArray)) {
-      errors.SpotImages = 'SpotImages must be an array.';
-    } else {
-      for (const image of spotImagesArray) {
-        if (typeof image !== 'object' || !image.url || typeof image.url !== 'string' || image.url.trim() === '') {
-          errors.SpotImages = 'SpotImages must be an array of image objects with a valid "url" property.';
-          break;
-        }
-      }
-    }
-  }
 
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({
@@ -440,9 +424,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     name,
     description,
     price,
-    SpotImages: spotImagesArray, // Use the validated SpotImages array
   });
-  console.log(spotImagesArray)
 
   res.status(201).json(newSpot);
 });

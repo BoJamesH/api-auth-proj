@@ -27,6 +27,7 @@ body {
 .SpotDetailsImageDiv {
     width: 1000px;
     display: flex;
+    justify-content: center;
 }
 
 .AllSmallSpotImages {
@@ -35,4 +36,73 @@ body {
     width: 400px;
     height: 400px;
     flex-wrap: wrap;
+}
+
+.SpotName {
+    margin-left: 60px;
+}
+
+.CityStateCountry {
+    margin-left: 60px;
+    margin-bottom: 20px;
+}
+
+.HostedBy {
+    margin-left: 60px;
+    margin-top: 10px;
+}
+
+.SpotDescription {
+    margin-left: 60px;
+    margin-top: 20px;
+    width: 90%;
+    height: 160px;
+    border-bottom: 1px solid #615d5d;
+}
+
+.ReserveInfoBox {
+    position: absolute;
+    right: 0;
+    margin-right: 100px;
+    margin-top: 20px;
+    border: 3px solid rgb(28, 50, 146);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.contentAboveButton {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+}
+
+.ReserveButton {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px; /* Adjust this margin as needed */
+    align-self: center;
+}
+
+.price {
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.ReviewInfoDiv {
+    font-size: 20px;
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+.StarImgReviews {
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+}
+
+.ReviewNum {
+    margin-left: 10px;
 }

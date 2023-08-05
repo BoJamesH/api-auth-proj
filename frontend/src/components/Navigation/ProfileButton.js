@@ -40,7 +40,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button className='ProfileButton' onClick={() => setShowMenu(!showMenu)}>
-        <i className="fas fa-user-circle" />
+        <i className="fas fa-user-circle" /><i id='HamburgerIcon' className="fas fa-bars"/>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li className="UserDropdownItem">{user.username}</li>

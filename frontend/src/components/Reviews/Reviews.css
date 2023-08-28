@@ -1,0 +1,54 @@
+.PostReviewButtonDiv {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+.PostReviewButton {
+    width: 200px;
+    height: 30px;
+}
+
+.ReviewsList {
+    margin-left: 60px;
+    margin-right: 60px;
+    width: 85%;
+}
+
+.NoReviews {
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.ReviewItem {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.ReviewUsername {
+    margin-top: 10px;
+}
+
+.ReviewDate {
+    margin-top: 10px;
+}
+
+.ReviewStarRating {
+    margin-top: 10px;
+}
+
+.ReviewText {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+.OddReview {
+    background-color: rgb(187, 205, 243);
+    border-radius: 5px;
+}
+
+.EvenReview {
+    background-color: rgb(224, 221, 224);
+    border-radius: 5px;
+}

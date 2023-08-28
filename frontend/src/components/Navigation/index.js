@@ -40,7 +40,7 @@ function Navigation({ isLoaded }) {
   }
 
   const handleLogoClick = () => {
-    history.push('/'); // Navigate to '/'
+    history.push('/'); 
   };
 
   return (

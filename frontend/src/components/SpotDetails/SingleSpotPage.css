@@ -6,22 +6,28 @@ body {
 .LargeSpotImage {
     width: 100%;
     height: 100%;
+    border-radius: 5px;
 }
 
 .LargeSpotImageDiv {
     width: 50%;
-    height: 400px;
+    height: 398px;
     margin-left: 20px;
 }
 
 .SmallSpotImage {
-    width: 190px;
-    height: 200px;
+    width: 198px;
+    height: 198px;
+    margin: 2px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-radius: 5px;
 }
 
 .SmallSpotImageDiv {
     width: 50%;
     height: 200px;
+    margin-bottom: 0px;
 }
 
 .SpotDetailsImageDiv {
@@ -55,35 +61,42 @@ body {
 .SpotDescription {
     margin-left: 60px;
     margin-top: 20px;
-    width: 90%;
+    width: 50%;
     height: 160px;
-    border-bottom: 1px solid #615d5d;
 }
 
 .ReserveInfoBox {
     position: absolute;
     right: 0;
     margin-right: 100px;
-    margin-top: 20px;
     border: 3px solid rgb(28, 50, 146);
-    padding: 20px;
+    border-radius: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 300px;
+    height: 100px;
 }
 
 .contentAboveButton {
     display: flex;
     flex-direction: row;
     align-self: center;
-    justify-content: center;
+    justify-content: space-between;
+    width: 250px;
+    margin-top: 20px;
+}
+
+.ReserveButtonDiv {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px; /* Adjust this margin as needed */
+    align-self: center;
 }
 
 .ReserveButton {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px; /* Adjust this margin as needed */
-    align-self: center;
+    width: 240px;
+    height: 40px;
 }
 
 .price {
@@ -92,9 +105,13 @@ body {
 }
 
 .ReviewInfoDiv {
-    font-size: 20px;
+    font-size: 24px;
     margin-left: 60px;
+    padding-top: 20px;
     margin-top: 20px;
+    margin-right: 60px;
+    border-top: 1px solid #615d5d;
+    margin-bottom: 20px;
 }
 
 .StarImgReviews {
@@ -105,4 +122,8 @@ body {
 
 .ReviewNum {
     margin-left: 10px;
+}
+
+.HostedBy {
+    margin-top: 10px;
 }

@@ -43,7 +43,7 @@
 }
 
 .LoginInputField {
-    width: 100%;
+    width: 236px;
     padding: 10px;
     border: 1px solid gray;
     border-radius: 5px;
@@ -57,4 +57,12 @@ form {
 
 .LoginInputField:focus {
     border-color: rgb(28, 50, 146);
+}
+
+.DemoUserButton {
+    width: 100%;
+    align-self: center;
+    justify-self: center;
+    height: 30px;
+    margin-bottom: 20px;
 }

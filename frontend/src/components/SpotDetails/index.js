@@ -10,6 +10,7 @@ const SpotDetails = () => {
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spotsState.singleSpot);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
+  console.log(spot)
 
   useEffect(() => {
     dispatch(fetchSpot(parseInt(spotId)));
@@ -50,24 +51,24 @@ const SpotDetails = () => {
             </span>
           </div>
           {spot.Owner ? ( // Check if the spot has an Owner
-            <span className='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</span>
+            <div className='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
           ) : (
             <span className='HostedBy'>Hosted by Unknown Owner</span>
           )}
           <span className='ReserveInfoBox'>
             <div className="contentAboveButton">
-              <p className="price">${spot.price} </p><p> night</p>
+              <span className='ReservePricePerNight'>${spot.price} per night</span>
               <img className='starImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-              {spot.avgRating} · {spot.numReviews} reviews
-            </div>
-            <div className='ReserveButton'>
-              <button>Reserve</button>
+              {spot.avgRating} · {spot.numReviews} reviews</div>
+            <div className='ReserveButtonDiv'>
+              <button className='ReserveButton'>Reserve</button>
             </div>
           </span>
           <div className='SpotDescription'>{spot.description}</div>
           <div className='ReviewInfoDiv'><img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
             {spot.avgRating} · <span className='ReviewNum'>{spot.numReviews} reviews </span></div>
             <ReviewsList spotId={spotId} spotOwnerId={spot.Owner.id} />
+            {/* {console.log('ownerId and spotId: ' + spotOwnerId + spotId)} */}
         </>
       ) : (
         <p>Spot data not found.</p>

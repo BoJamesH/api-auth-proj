@@ -26,5 +26,39 @@
 }
 
 .CurrentTitleCreateButtonDiv {
-    margin-left: 20px;
+    margin-left: 32px;
+}
+
+.spotCardGrid {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.customSpotLocationRatingDiv {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.customPrice {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.customPerNight {
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.updateDeleteButtonsDiv {
+    margin-top: 50px;
+}
+
+.DeleteButton {
+    margin-top: 10px;
 }

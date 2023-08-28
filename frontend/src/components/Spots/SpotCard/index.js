@@ -11,24 +11,21 @@ const SpotCard = ({ spotId }) => {
   const isLoading = useSelector((state) => state.spotsState.isLoading);
 
   useEffect(() => {
-    // Dispatch the fetchSpot action when the component mounts and 'spotId' is available
     if (!isLoading && spotId && !spot) {
       dispatch(fetchSpot(spotId));
     }
   }, [dispatch, isLoading, spotId, spot]);
 
-  // Handle clicking on the SpotCard to navigate to the spot page
   const handleClick = () => {
     if (spot) {
       history.push(`/spots/details/${spot.id}`);
     }
   };
 
-  // Render the single spot
   return (
     <>
       {!isLoading && spot ? (
-        <div className="spotCard" title={spot.name} onClick={handleClick}> {/* Add the onClick handler */}
+        <div className="spotCard" title={spot.name} onClick={handleClick}>
           <div className="spotImgCard">
             <img
               className="imgCard"
@@ -39,7 +36,9 @@ const SpotCard = ({ spotId }) => {
           <div className="locationRatingCard">
             {spot.city}, {spot.state} <div className="starsAndAvg"><img className='starImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" /> {spot.avgRating}</div>
           </div>
-          <span className="priceLine"><span className="price">${spot.price}</span>  night</span>
+          <span className="customPriceLine">
+                <span className="customPrice">${spot.price}</span><span className="customPerNight">per night</span>
+              </span>
         </div>
       ) : (
         <p>Loading spot...</p>

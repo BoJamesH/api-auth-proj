@@ -84,7 +84,7 @@ const CurrentSpots = () => {
               <span onClick={() => {
                   history.push(`/spots/details/${spot.id}`);
                 }} className="customPriceLine">
-                <span className="customPrice">${spot.price}</span> night
+                <span className="customPrice">${spot.price}</span><span className="customPerNight">per night</span>
               </span>
               <div className="UpdateDeleteButtonsDiv">
                 <button className="UpdateButton" onClick={() => {

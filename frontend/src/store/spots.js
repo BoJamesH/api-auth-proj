@@ -59,9 +59,9 @@ export const postSpot = (spotImages, spot) => async (dispatch) => {
 
     if (response.ok) {
       const newSpot = await response.json();
-      dispatch(createSpot(newSpot)); // Dispatch createSpot with the newly created spot
+      dispatch(createSpot(newSpot));
       dispatch(postSpotImages(spotImages, newSpot.id))
-      dispatch(fetchSpot(newSpot.id)); // Assuming your API returns the created spot's ID in the response
+      dispatch(fetchSpot(newSpot.id)); 
       return newSpot
     }
   } catch (error) {

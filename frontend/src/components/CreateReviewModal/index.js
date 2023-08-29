@@ -2,21 +2,79 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import ClickOutside from "./outsideClick";
+import { addReview } from "../../store/reviews";
 import "./CreateReviewModal.css"; // Update with your CSS file
 
-function CreateReviewModal({ showModal, setShowModal }) {
+function CreateReviewModal({ showModal, setShowModal, spotId }) {
   const dispatch = useDispatch();
   const [reviewText, setReviewText] = useState("");
-  const [reviewStars, setReviewStars] = useState(0); // You can initialize this to any default value
+  const [starsSelected, setStarsSelected] = useState(false);
+  const [selectedStars, setSelectedStars] = useState(0);
+  const [starsNotSelected, setStarsNotSelected] = useState(true)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Dispatch your review submission action here
-    setShowModal(false); // Close the modal after submitting
+    if (!starsSelected) {
+      setStarsNotSelected(true)
+      return;
+    }
+    const newReview = {
+      review: reviewText,
+      stars: selectedStars,
+    }
+    console.log(newReview)
+    try {
+      const response = await dispatch(addReview(newReview, spotId))
+    } catch (error) {
+      console.log(error)
+    }
+    setShowModal(false);
   };
 
   const closeOnOutsideClick = () => {
-    setShowModal(false); // Close the modal on outside click
+    setShowModal(false);
+  };
+
+
+  const handleMouseOver = (starId) => {
+    const stars = document.querySelectorAll(".ReviewFormStar");
+    stars.forEach((star, index) => {
+      if (index < selectedStars) {
+        star.innerHTML = "★";
+      } else if (index <= starId) {
+        star.innerHTML = "★";
+      } else {
+        star.innerHTML = "☆";
+      }
+    });
+  };
+
+  const handleMouseOut = () => {
+    // Reset the stars on mouseout
+    const stars = document.querySelectorAll(".ReviewFormStar");
+    stars.forEach((star, index) => {
+      if (index < selectedStars) {
+        star.innerHTML = "★";
+      } else {
+        star.innerHTML = "☆";
+      }
+    });
+  };
+
+  const handleClick = (starId) => {
+    setStarsSelected(true)
+    setStarsNotSelected(false)
+    setSelectedStars(starId + 1);
+    const stars = document.querySelectorAll(".ReviewFormStar");
+    stars.forEach((star, index) => {
+      if (index <= starId) {
+        star.innerHTML = "★";
+        star.classList.add("selected");
+      } else {
+        star.innerHTML = "☆";
+        star.classList.remove("selected");
+      }
+    });
   };
 
   return (
@@ -35,11 +93,62 @@ function CreateReviewModal({ showModal, setShowModal }) {
                 rows={6}
             />
             </div>
-            <div className="StarRatingDiv">
-            {/* Implement your star rating input component here */}
+            <div className="CreateReviewStarRatingDiv">
+                <p className="CreateReviewStarP">
+                <span
+                    className="ReviewFormStar"
+                    id="star1"
+                    onMouseOver={() => handleMouseOver(0)}
+                    onMouseOut={handleMouseOut}
+                    onClick={() => handleClick(0)}
+                >
+                    ☆
+                </span>
+                <span
+                    className="ReviewFormStar"
+                    id="star2"
+                    onMouseOver={() => handleMouseOver(1)}
+                    onMouseOut={handleMouseOut}
+                    onClick={() => handleClick(1)}
+                >
+                    ☆
+                </span>
+                <span
+                    className="ReviewFormStar"
+                    id="star3"
+                    onMouseOver={() => handleMouseOver(2)}
+                    onMouseOut={handleMouseOut}
+                    onClick={() => handleClick(2)}
+                >
+                    ☆
+                </span>
+                <span
+                    className="ReviewFormStar"
+                    id="star4"
+                    onMouseOver={() => handleMouseOver(3)}
+                    onMouseOut={handleMouseOut}
+                    onClick={() => handleClick(3)}
+                >
+                    ☆
+                </span>
+                <span
+                    className="ReviewFormStar"
+                    id="star5"
+                    onMouseOver={() => handleMouseOver(4)}
+                    onMouseOut={handleMouseOut}
+                    onClick={() => handleClick(4)}
+                >
+                    ☆
+                </span>
+                {" "}
+                Stars
+                </p>
             </div>
+            {starsNotSelected && (
+              <p className="starsError">Star rating is required.</p>
+            )}
             <div className="CreateReviewSubmitButtonDiv">
-            <button className="CreateReviewSubmitButton" type="submit">Submit Review</button>
+                <button className="CreateReviewSubmitButton" type="submit">Submit Review</button>
             </div>
         </form>
         </div>

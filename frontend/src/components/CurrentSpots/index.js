@@ -62,28 +62,25 @@ const CurrentSpots = () => {
       ) : spots.length > 0 ? (
         <div className="spotCardGrid">
           {spots.map((spot) => (
-            <div key={spot.id} className="customSpotCardDiv">
+            <div key={spot.id}
+              className="customSpotCardDiv"
+              onClick={() => {
+                history.push(`/spots/details/${spot.id}`);
+              }}>
               <img
-                onClick={() => {
-                  history.push(`/spots/details/${spot.id}`);
-                }}
                 className="customSpotImg"
                 src={spot.previewImage || "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"}
                 alt={`Property with id of ${spot.id}`}
               />
-              <div onClick={() => {
-                  history.push(`/spots/details/${spot.id}`);
-                }} className="customSpotLocationRatingDiv">
+              <div className="customSpotLocationRatingDiv">
                 {spot.city}, {spot.state}
-                <div onClick={() => {
-                  history.push(`/spots/details/${spot.id}`);
-                }} className="customStarsAndAvg">
-                  <img className="customStarImg" src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" /> {spot.avgRating}
+                <div className="customStarsAndAvg">
+                  <img className="customStarImg" src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
+                  {console.log(spot.avgRating)}
+                  {spot.avgRating || 'New'}
                 </div>
               </div>
-              <span onClick={() => {
-                  history.push(`/spots/details/${spot.id}`);
-                }} className="customPriceLine">
+              <span className="customPriceLine">
                 <span className="customPrice">${spot.price}</span><span className="customPerNight">per night</span>
               </span>
               <div className="UpdateDeleteButtonsDiv">

@@ -4,20 +4,21 @@ import { fetchReviews } from '../../store/reviews';
 import CreateReviewModal from '../CreateReviewModal';
 import { useState } from 'react';
 import './Reviews.css'
+import ConfirmationReviewDeleteModal from './ConfirmationReviewDelete';
 
 const ReviewsList = ({ spotId, spotOwnerId }) => {
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviewsState.reviews);
   const sessionUser = useSelector((state) => state.session.user);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState(null);
 
 
   useEffect(() => {
-
     dispatch(fetchReviews(spotId));
   }, [dispatch, spotId]);
 
-  // If reviews is empty or undefined, return null or any other fallback content
   if (!reviews || reviews.length === 0) {
     return <p className='NoReviews'>Be the first to post a review!</p>;
   }
@@ -26,13 +27,26 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
     setShowModal(true)
   }
 
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteReviewModal = (reviewId) => {
+    setReviewToDelete(reviewId);
+    openDeleteModal();
+  };
+
   const userAlreadyReviewed = reviews.filter((review) => review.userId === sessionUser?.id);
   const isOwner = sessionUser?.id === spotOwnerId;
 
   return (
     <>
       {showModal && (
-        <CreateReviewModal showModal={showModal} setShowModal={setShowModal} />
+        <CreateReviewModal showModal={showModal} setShowModal={setShowModal} spotId={spotId} />
       )}
       <div className='PostReviewButtonDiv'>
         {userAlreadyReviewed.length < 1 && !isOwner && sessionUser && (
@@ -49,12 +63,22 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
             {console.log(review.User)}
             {sessionUser.id === review.userId ? (
               <div className="ButtonContainer">
-                <button className="UpdateButton">Update</button>
-                <button className="DeleteButton">Delete</button>
+                <button className="UpdateReviewButton">Update</button>
+                <button className="DeleteReviewButton" onClick={() => handleDeleteReviewModal(review.id)}>Delete</button>
               </div>
             ) : null}
           </div>
         ))}
+        {isDeleteModalOpen && (
+        <ConfirmationReviewDeleteModal
+          onClose={closeDeleteModal}
+          onDelete={() => {
+            handleDeleteReviewModal(reviewToDelete);
+          }}
+          reviewToDelete={reviewToDelete}
+          spotId={spotId}
+        />
+      )}
       </div>
     </>
   );

@@ -61,7 +61,7 @@ body {
 .SpotDescription {
     margin-left: 60px;
     margin-top: 20px;
-    width: 50%;
+    width: 40%;
     height: 160px;
 }
 
@@ -92,6 +92,11 @@ body {
     margin-top: 0px;
 }
 
+.ReserveAvgRating {
+    margin-left: 10px;
+    text-align: right;
+}
+
 .ReservePricePerNight {
     margin-left: 15px;
 }
@@ -99,6 +104,7 @@ body {
 .PerNightReserveBox {
     margin-left: 5px;
     margin-top: 25px;
+
 }
 
 .RightSideReserveBox {

@@ -56,6 +56,7 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
 
   const userAlreadyReviewed = reviews.filter((review) => review.userId === sessionUser?.id);
   const isOwner = sessionUser?.id === spotOwnerId;
+  console.log(isOwner)
 
   return (
       <>
@@ -63,7 +64,7 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
         <CreateReviewModal showModal={showModal} setShowModal={setShowModal} spotId={spotId} />
       )}
           <div className='PostReviewButtonDiv'>
-      {((userAlreadyReviewed.length < 1 && !isOwner) || (sessionUser && reviews.length < 1)) && (
+      {((userAlreadyReviewed.length < 1 && !isOwner) || (sessionUser && reviews.length < 1 && !isOwner)) && (
         <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>
       )}
     </div>

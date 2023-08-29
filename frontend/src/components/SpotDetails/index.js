@@ -59,19 +59,19 @@ const SpotDetails = () => {
               <h2 className='ReservePricePerNight'>${spot.price.toFixed(2)}</h2><span className='PerNightReserveBox'> per night</span>
               <span className='RightSideReserveBox'>
               <img className='starImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-              {spot.avgRating.toFixed(1)} · {spot.numReviews} reviews</span></div>
+              <span className='ReserveAvgRating'></span>{spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span></div>
             <div className='ReserveButtonDiv'>
               <button className='ReserveButton'>Reserve</button>
             </div>
           </span>
           <div className='SpotDescription'>{spot.description}</div>
           <div className='ReviewInfoDiv'>
-              <span className='StarsReviewsAboveReviewList'>
-                  <img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-                  {parseFloat(spot.avgRating.toFixed(1))} · {spot.numReviews} reviews
-              </span>
+            <span className='StarsReviewsAboveReviewList'>
+              <img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
+              <span className='AvgRating'>{spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span>
+            </span>
           </div>
-            <ReviewsList spotId={spotId} spotOwnerId={spot.Owner.id} />
+            <ReviewsList spotId={spotId} spotOwnerId={spot.ownerId} />
         </>
       ) : (
         <p>Spot data not found.</p>

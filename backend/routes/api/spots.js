@@ -60,7 +60,7 @@ router.get('/current', requireAuth, async (req, res) => {
       });
 
       const reviewStars = reviews.map(review => review.stars);
-      const avgRating = reviewStars.length > 0 ? starAverage(reviewStars) : 'New';
+      const avgRating = reviewStars.length > 0 ? starAverage(reviewStars): null;
 
 
       return {

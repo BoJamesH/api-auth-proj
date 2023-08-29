@@ -40,9 +40,11 @@ const SpotCard = ({ spotId }) => {
               {spot.avgRating ? (spot.avgRating.toFixed(1)) : 'New'}
             </div>
           </div>
-          <span className="customPriceLine">
-                <span className="customPrice">${spot.price.toFixed(2)}</span><span className="customPerNight">per night</span>
-              </span>
+          <span className="customPrice">
+            {spot.price ? `$${spot.price.toFixed(2)}` : null}
+          </span>
+          <span className="customPerNight">per night</span>
+
         </div>
       ) : (
         <p>Loading spot...</p>

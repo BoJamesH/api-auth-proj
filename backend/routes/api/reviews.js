@@ -96,6 +96,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
     existingReview.review = review;
     existingReview.stars = stars;
+    await existingReview.save();
     res.status(200).json(existingReview)
 })
 

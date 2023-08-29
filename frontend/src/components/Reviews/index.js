@@ -5,6 +5,7 @@ import CreateReviewModal from '../CreateReviewModal';
 import { useState } from 'react';
 import './Reviews.css'
 import ConfirmationReviewDeleteModal from './ConfirmationReviewDelete';
+import UpdateReviewModal from '../CreateReviewModal/UpdateReviewModal.js'
 
 const ReviewsList = ({ spotId, spotOwnerId }) => {
   const dispatch = useDispatch();
@@ -13,24 +14,13 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
   const [showModal, setShowModal] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [reviewIdToUpdate, setReviewIdToUpdate] = useState(null)
 
 
   useEffect(() => {
     dispatch(fetchReviews(spotId));
   }, [dispatch, spotId]);
-
-  // if (!reviews || reviews.length === 0) {
-  //   return (
-  //     <>
-  //     <div className='PostReviewButtonDiv'>
-  //       {(userAlreadyReviewed.length < 1 && !isOwner && sessionUser &&
-  //       <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>
-  //     )}
-  //     </div>
-  //   <p className='NoReviews'>Be the first to post a review!</p>
-  //   </>
-  //   )
-  // }
 
   const postReviewClickHandler = async () => {
     setShowModal(true)
@@ -48,6 +38,21 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
     setReviewToDelete(reviewId);
     openDeleteModal();
   };
+
+  const openUpdateModal = () => {
+    setIsUpdateModalOpen(true);
+  }
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+  }
+
+  const handleUpdateReviewModal = (reviewId) => {
+    setReviewIdToUpdate(reviewId);
+    openUpdateModal();
+  }
+
+
 
   const userAlreadyReviewed = reviews.filter((review) => review.userId === sessionUser?.id);
   const isOwner = sessionUser?.id === spotOwnerId;
@@ -72,7 +77,7 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
             {console.log(review.User)}
             {sessionUser?.id === review.userId ? (
               <div className="ButtonContainer">
-                <button className="UpdateReviewButton">Update</button>
+                <button className="UpdateReviewButton" onClick={() => handleUpdateReviewModal(review.id)}>Update</button>
                 <button className="DeleteReviewButton" onClick={() => handleDeleteReviewModal(review.id)}>Delete</button>
               </div>
             ) : null}
@@ -87,6 +92,14 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
           reviewToDelete={reviewToDelete}
           spotId={spotId}
         />
+      )}
+              {isUpdateModalOpen && (
+        <UpdateReviewModal
+        showModal={isUpdateModalOpen}
+        setShowModal={setIsUpdateModalOpen}
+        reviewIdToUpdate={reviewIdToUpdate}
+        spotId={spotId}
+      />
       )}
       </div>
     </>

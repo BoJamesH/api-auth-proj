@@ -7,7 +7,6 @@ const ConfirmationReviewDeleteModal = ({ onClose, onDelete, reviewToDelete, spot
   const dispatch = useDispatch();
 
   const handleDeleteReview = () => {
-    // Call the deleteSpot thunk here with the spotToDelete ID
     dispatch(destroyReview(reviewToDelete, spotId));
   };
 

@@ -7,7 +7,7 @@
     padding: 10px;
     border: 3px solid rgb(28, 50, 146);
     background-color: white;
-    border-radius: 10%;
+    border-radius: 10px;
 }
 
 ul {
@@ -40,7 +40,7 @@ ul {
     text-transform: uppercase;
     color: white;
     background-color: rgb(113, 69, 184);
-    border-radius: 10%;
+    border-radius: 5px;
     width: 100px;
 }
 

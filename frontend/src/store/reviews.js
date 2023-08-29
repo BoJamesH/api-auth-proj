@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 export const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
+export const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 
 export const loadReviews = (reviews) => ({
     type: LOAD_REVIEWS,
@@ -16,6 +17,11 @@ export const createReview = (review) => ({
 
 export const deleteReview = (reviewId) => ({
   type: DELETE_REVIEW,
+  reviewId
+})
+
+export const updateReview = (reviewId) => ({
+  type: UPDATE_REVIEW,
   reviewId
 })
 
@@ -41,7 +47,7 @@ export const addReview = (review, spotId) => async (dispatch) => {
   try {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/JSON' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(review)
     })
 
@@ -66,6 +72,27 @@ export const destroyReview = (reviewId, spotId) => async (dispatch) => {
       const deletedReview = await response.json();
       dispatch(fetchReviews(spotId))
       return deletedReview;
+    }
+  } catch (error) {
+    const errors = await error.json();
+    console.log(errors);
+    return errors
+  }
+}
+
+export const editReview = (reviewId, spotId, review) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(review)
+    });
+
+    if (response.ok) {
+      const updatedReview = await response.json();
+      console.log(updatedReview)
+      dispatch(fetchReviews(spotId));
+      return updatedReview;
     }
   } catch (error) {
     const errors = await error.json();

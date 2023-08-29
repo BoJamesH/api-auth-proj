@@ -74,7 +74,7 @@ router.get('/current', requireAuth, async (req, res) => {
         lng: spot.lng,
         name: spot.name,
         description: spot.description,
-        price: spot.price,
+        price: parseFloat(spot.price),
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
         avgRating: avgRating,
@@ -365,7 +365,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     lng,
     name,
     description,
-    price,
+    price: parseFloat(price),
   });
 
   res.json(editSpot)
@@ -423,7 +423,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     lng,
     name,
     description,
-    price,
+    price: parseFloat(price),
   });
 
   res.status(201).json(newSpot);

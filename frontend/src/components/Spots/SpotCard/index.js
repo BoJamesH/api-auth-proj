@@ -41,7 +41,7 @@ const SpotCard = ({ spotId }) => {
             </div>
           </div>
           <span className="customPrice">
-            {spot.price ? `$${spot.price.toFixed(2)}` : null}
+            {spot && spot.price ? `$${spot.price.toFixed(2)}` : null}
           </span>
           <span className="customPerNight">per night</span>
 

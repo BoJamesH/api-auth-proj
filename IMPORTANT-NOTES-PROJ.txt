@@ -1,0 +1,17 @@
+☆★
+
+To Do CheckList: 
+
+
+- If there are no reviews, the button to submit a review doesn't appear, fix that.
+- Style reserve box in spot details, combine star image with number
+- Update review
+- Delete Review
+- Style and function for create review
+- Fix create and update spots forms (price and images, plus styling).
+- Fix toFixed on currentSpots (it works on allSpots, no clue why it wouldn't in currentSpots).
+rgb(113, 69, 184); PURPLE
+rgb(28, 50, 146); BLUE
+rgb(30, 178, 197); TEAL
+
+FINISHED CREATE REVIEW!!!

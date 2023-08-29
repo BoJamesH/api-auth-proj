@@ -63,21 +63,22 @@ const CurrentSpots = () => {
         <div className="spotCardGrid">
           {spots.map((spot) => (
             <div key={spot.id}
-              className="customSpotCardDiv"
-              onClick={() => {
-                history.push(`/spots/details/${spot.id}`);
-              }}>
+              className="customSpotCardDiv">
               <img
                 className="customSpotImg"
                 src={spot.previewImage || "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"}
                 alt={`Property with id of ${spot.id}`}
+                onClick={() => {
+                history.push(`/spots/details/${spot.id}`);
+              }}
               />
               <div className="customSpotLocationRatingDiv">
                 {spot.city}, {spot.state}
-                <div className="customStarsAndAvg">
+                <div className="customStarsAndAvg"
+                  onClick={() => {history.push(`/spots/details/${spot.id}`)}}>
                   <img className="customStarImg" src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
                   {console.log(spot.avgRating)}
-                  {spot.avgRating || 'New'}
+                  {spot.avgRating && spot.avgRating !== 'New' ? spot.avgRating.toFixed(1) : 'New'}
                 </div>
               </div>
               <span className="customPriceLine">

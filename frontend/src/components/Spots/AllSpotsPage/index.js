@@ -10,7 +10,6 @@ const AllSpots = () => {
   const isLoading = useSelector((state) => state.spotsState.isLoading);
 
   useEffect(() => {
-    // Always dispatch the fetchSpots action
     dispatch(fetchSpots());
   }, [dispatch]);
 
@@ -22,7 +21,7 @@ const AllSpots = () => {
     <>
       <div className='spotCardGrid'>
         {spots.map(({ id }) => (
-          <SpotCard key={id} spotId={id} /> // Pass the spot's id as a prop to the SpotCard component
+          <SpotCard key={id} spotId={id} />
         ))}
       </div>
     </>

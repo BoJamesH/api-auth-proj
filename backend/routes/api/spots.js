@@ -280,6 +280,12 @@ router.get('/:spotId', async (req, res, next) => {
   });
   if (!spotById) return res.status(404).json({ message: 'That property could not be found' })
 
+  if (spotById.price) {
+    const priceString = spotById.price;
+    const priceNumber = parseFloat(priceString);
+    spotById.price = priceNumber;
+  }
+
   const reviewStars = await Review.findAll({
     where: {
       spotId: thisSpot,
@@ -311,6 +317,8 @@ router.get('/:spotId', async (req, res, next) => {
       }
     }
   }
+
+
 
   const response = {
     ...spotById.toJSON(),

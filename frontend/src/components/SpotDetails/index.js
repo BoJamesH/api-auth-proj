@@ -56,17 +56,22 @@ const SpotDetails = () => {
             <span className='HostedBy'>Hosted by Unknown Owner</span>
           )}
           <span className='ReserveInfoBox'>
-            <div className="contentAboveButton">
-              <span className='ReservePricePerNight'>${spot.price} per night</span>
+            <div className="ContentAboveButton">
+              <h2 className='ReservePricePerNight'>${spot.price.toFixed(2)}</h2><span className='PerNightReserveBox'> per night</span>
+              <span className='RightSideReserveBox'>
               <img className='starImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-              {spot.avgRating.toFixed(1)} · {spot.numReviews} reviews</div>
+              {spot.avgRating.toFixed(1)} · {spot.numReviews} reviews</span></div>
             <div className='ReserveButtonDiv'>
               <button className='ReserveButton'>Reserve</button>
             </div>
           </span>
           <div className='SpotDescription'>{spot.description}</div>
-          <div className='ReviewInfoDiv'><img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-            {spot.avgRating.toFixed(1)} · <span className='ReviewNum'>{spot.numReviews} reviews </span></div>
+          <div className='ReviewInfoDiv'>
+              <span className='StarsReviewsAboveReviewList'>
+                  <img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
+                  {spot.avgRating.toFixed(1)} · {spot.numReviews} reviews
+              </span>
+          </div>
             <ReviewsList spotId={spotId} spotOwnerId={spot.Owner.id} />
             {/* {console.log('ownerId and spotId: ' + spotOwnerId + spotId)} */}
         </>

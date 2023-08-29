@@ -74,23 +74,44 @@ body {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    width: 300px;
-    height: 100px;
+    width: 350px;
+    height: 140px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
 }
 
-.contentAboveButton {
+.ContentAboveButton {
     display: flex;
     flex-direction: row;
     align-self: center;
-    justify-content: space-between;
-    width: 250px;
-    margin-top: 20px;
+    justify-self: center;
+    /* justify-content: space-between; */
+    width: 350px;
+    margin-top: 0px;
+}
+
+.ReservePricePerNight {
+    margin-left: 15px;
+}
+
+.PerNightReserveBox {
+    margin-left: 5px;
+    margin-top: 25px;
+}
+
+.RightSideReserveBox {
+    text-align: right;
+    margin-left: 30px;
+    margin-top: 25px;
+    font-size: 18px;
 }
 
 .ReserveButtonDiv {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px; /* Adjust this margin as needed */
+    margin-top: 10px;
     align-self: center;
 }
 

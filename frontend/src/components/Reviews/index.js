@@ -19,9 +19,18 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
     dispatch(fetchReviews(spotId));
   }, [dispatch, spotId]);
 
-  if (!reviews || reviews.length === 0) {
-    return <p className='NoReviews'>Be the first to post a review!</p>;
-  }
+  // if (!reviews || reviews.length === 0) {
+  //   return (
+  //     <>
+  //     <div className='PostReviewButtonDiv'>
+  //       {(userAlreadyReviewed.length < 1 && !isOwner && sessionUser &&
+  //       <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>
+  //     )}
+  //     </div>
+  //   <p className='NoReviews'>Be the first to post a review!</p>
+  //   </>
+  //   )
+  // }
 
   const postReviewClickHandler = async () => {
     setShowModal(true)
@@ -44,15 +53,15 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
   const isOwner = sessionUser?.id === spotOwnerId;
 
   return (
-    <>
+      <>
       {showModal && (
         <CreateReviewModal showModal={showModal} setShowModal={setShowModal} spotId={spotId} />
       )}
-      <div className='PostReviewButtonDiv'>
-        {(userAlreadyReviewed.length < 1 && !isOwner && sessionUser &&
+          <div className='PostReviewButtonDiv'>
+      {((userAlreadyReviewed.length < 1 && !isOwner) || (sessionUser && reviews.length < 1)) && (
         <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>
       )}
-      </div>
+    </div>
       <div className="ReviewsList">
         {reviews.map((review, index) => (
           <div key={review.id} className={`ReviewItem ${index % 2 === 0 ? 'EvenReview' : 'OddReview'}`}>
@@ -81,7 +90,7 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
       )}
       </div>
     </>
-  );
+    )
 };
 
 export default ReviewsList;

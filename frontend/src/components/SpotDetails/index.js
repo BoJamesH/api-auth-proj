@@ -10,7 +10,6 @@ const SpotDetails = () => {
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spotsState.singleSpot);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
-  console.log(spot)
 
   useEffect(() => {
     dispatch(fetchSpot(parseInt(spotId)));
@@ -69,11 +68,10 @@ const SpotDetails = () => {
           <div className='ReviewInfoDiv'>
               <span className='StarsReviewsAboveReviewList'>
                   <img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-                  {spot.avgRating.toFixed(1)} · {spot.numReviews} reviews
+                  {parseFloat(spot.avgRating.toFixed(1))} · {spot.numReviews} reviews
               </span>
           </div>
             <ReviewsList spotId={spotId} spotOwnerId={spot.Owner.id} />
-            {/* {console.log('ownerId and spotId: ' + spotOwnerId + spotId)} */}
         </>
       ) : (
         <p>Spot data not found.</p>

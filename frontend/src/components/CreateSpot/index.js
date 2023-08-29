@@ -35,15 +35,9 @@ const SpotForm = () => {
     });
   };
 
-  console.log(imageUrls)
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // const spotImages = imageUrls.map((imageUrl) => ({ url: imageUrl.url, preview: true }));
-    // console.log(spotImages)
-    // console.log(imageUrls)
 
     const newSpot = {
       address,
@@ -60,8 +54,6 @@ const SpotForm = () => {
       imageUrls[0].preview = true;
       const response = await dispatch(postSpot(imageUrls, newSpot));
       const newSpotId = response.id;
-      console.log(newSpotId);
-      console.log(response);
 
       if (newSpotId) {
         setErrors({});

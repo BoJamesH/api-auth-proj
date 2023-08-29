@@ -90,7 +90,6 @@ export const editReview = (reviewId, spotId, review) => async (dispatch) => {
 
     if (response.ok) {
       const updatedReview = await response.json();
-      console.log(updatedReview)
       dispatch(fetchReviews(spotId));
       return updatedReview;
     }

@@ -61,7 +61,7 @@ export const postSpot = (spotImages, spot) => async (dispatch) => {
       const newSpot = await response.json();
       dispatch(createSpot(newSpot));
       dispatch(postSpotImages(spotImages, newSpot.id))
-      dispatch(fetchSpot(newSpot.id)); 
+      dispatch(fetchSpot(newSpot.id));
       return newSpot
     }
   } catch (error) {
@@ -87,7 +87,6 @@ export const fetchSpots = () => async (dispatch) => {
     if (!response.ok) throw new Error('Failed to fetch all properties');
     const data = await response.json();
     const allSpots = data.Spots
-    console.log('Spots', allSpots)
     dispatch(loadSpots(allSpots));
 };
 
@@ -101,7 +100,6 @@ export const fetchSpot = (spotId) => async (dispatch) => {
 
 export const fetchCurrentSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots/current');
-  console.log(response)
   if (!response.ok) throw new Error ('Failed to fetch your properties')
   const data = await response.json();
   const currentSpots = data.Spots
@@ -136,7 +134,6 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
     }
     } catch (error) {
     const errors = await error.json()
-    console.log(errors)
     return errors;
   }
 }

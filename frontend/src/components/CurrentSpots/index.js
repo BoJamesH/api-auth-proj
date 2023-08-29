@@ -77,7 +77,6 @@ const CurrentSpots = () => {
                 <div className="customStarsAndAvg"
                   onClick={() => {history.push(`/spots/details/${spot.id}`)}}>
                   <img className="customStarImg" src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-                  {console.log(spot.avgRating)}
                   {spot.avgRating && spot.avgRating !== 'New' ? spot.avgRating.toFixed(1) : 'New'}
                 </div>
               </div>

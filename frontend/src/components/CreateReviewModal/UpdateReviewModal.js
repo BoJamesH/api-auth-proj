@@ -12,7 +12,6 @@ function UpdateReviewModal({ showModal, setShowModal, reviewIdToUpdate, spotId }
   const [reviewText, setReviewText] = useState(reviewToUpdate.review);
   const [starsSelected, setStarsSelected] = useState(true);
   const [selectedStars, setSelectedStars] = useState(reviewToUpdate.stars);
-  console.log(selectedStars)
   const [starsNotSelected, setStarsNotSelected] = useState(false)
 
   useEffect(() => {
@@ -31,7 +30,6 @@ function UpdateReviewModal({ showModal, setShowModal, reviewIdToUpdate, spotId }
       review: reviewText,
       stars: selectedStars,
     }
-    console.log(newReview)
     try {
       const response = await dispatch(editReview(reviewIdToUpdate, spotId, newReview))
     } catch (error) {

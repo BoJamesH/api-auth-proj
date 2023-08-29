@@ -74,7 +74,6 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
             <div className="ReviewDate">{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</div>
             <div className="ReviewStarRating">Star Rating: {review.stars}</div>
             <div className="ReviewText">{review.review}</div>
-            {console.log(review.User)}
             {sessionUser?.id === review.userId ? (
               <div className="ButtonContainer">
                 <button className="UpdateReviewButton" onClick={() => handleUpdateReviewModal(review.id)}>Update</button>

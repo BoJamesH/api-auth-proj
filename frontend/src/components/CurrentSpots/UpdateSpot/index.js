@@ -75,8 +75,6 @@ const UpdateSpot = () => {
       await dispatch(fetchCurrentSpots());
 
       const newSpotId = response.id;
-      console.log(newSpotId);
-      console.log(response);
 
       if (newSpotId) {
         setErrors({});

@@ -49,7 +49,7 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
         <CreateReviewModal showModal={showModal} setShowModal={setShowModal} spotId={spotId} />
       )}
       <div className='PostReviewButtonDiv'>
-        {userAlreadyReviewed.length < 1 && !isOwner && sessionUser && (
+        {(userAlreadyReviewed.length < 1 && !isOwner && sessionUser &&
         <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>
       )}
       </div>
@@ -61,7 +61,7 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
             <div className="ReviewStarRating">Star Rating: {review.stars}</div>
             <div className="ReviewText">{review.review}</div>
             {console.log(review.User)}
-            {sessionUser.id === review.userId ? (
+            {sessionUser?.id === review.userId ? (
               <div className="ButtonContainer">
                 <button className="UpdateReviewButton">Update</button>
                 <button className="DeleteReviewButton" onClick={() => handleDeleteReviewModal(review.id)}>Delete</button>

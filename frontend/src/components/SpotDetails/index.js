@@ -59,14 +59,14 @@ const SpotDetails = () => {
             <div className="contentAboveButton">
               <span className='ReservePricePerNight'>${spot.price} per night</span>
               <img className='starImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-              {spot.avgRating} · {spot.numReviews} reviews</div>
+              {spot.avgRating.toFixed(1)} · {spot.numReviews} reviews</div>
             <div className='ReserveButtonDiv'>
               <button className='ReserveButton'>Reserve</button>
             </div>
           </span>
           <div className='SpotDescription'>{spot.description}</div>
           <div className='ReviewInfoDiv'><img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-            {spot.avgRating} · <span className='ReviewNum'>{spot.numReviews} reviews </span></div>
+            {spot.avgRating.toFixed(1)} · <span className='ReviewNum'>{spot.numReviews} reviews </span></div>
             <ReviewsList spotId={spotId} spotOwnerId={spot.Owner.id} />
             {/* {console.log('ownerId and spotId: ' + spotOwnerId + spotId)} */}
         </>

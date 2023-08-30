@@ -27,9 +27,9 @@ const SpotForm = () => {
     setImageUrls((prevImageUrls) => {
       const updatedImageUrls = [...prevImageUrls];
       if (index >= updatedImageUrls.length) {
-        updatedImageUrls.push({ url: newImageUrl, preview: false });
+        updatedImageUrls.push(newImageUrl);
       } else {
-        updatedImageUrls[index].url = newImageUrl;
+        updatedImageUrls[index] = newImageUrl;
       }
       return updatedImageUrls;
     });
@@ -52,7 +52,7 @@ const SpotForm = () => {
     };
     console.log(newSpot)
     try {
-      imageUrls[0].preview = true;
+      // imageUrls[0].preview = true;
       const response = await dispatch(postSpot(imageUrls, newSpot));
       const newSpotId = response.id;
 
@@ -238,32 +238,32 @@ const SpotForm = () => {
       {!imageUrls[0] && <div style={{ color: 'red' }}>You must enter at least one image URL.</div>}
       <input
         type='url'
-        className='CreateImageUrlField'
-        value={imageUrls[0]?.url || ''}
-        onChange={(e) => handleAddImageUrl(e, 0)}
+        className='image-url-field'
+        value={imageUrls[0] || ''}
+        onChange={(e) => handleAddImageUrl(e, 0)} // Pass index 0 to update the first image URL
       />
       <input
         type='url'
-        className='CreateImageUrlField'
-        value={imageUrls[1]?.url || ''}
+        className='image-url-field'
+        value={imageUrls[1] || ''}
         onChange={(e) => handleAddImageUrl(e, 1)}
       />
       <input
         type='url'
-        className='CreateImageUrlField'
-        value={imageUrls[2]?.url || ''}
+        className='image-url-field'
+        value={imageUrls[2] || ''}
         onChange={(e) => handleAddImageUrl(e, 2)}
       />
       <input
         type='url'
-        className='CreateImageUrlField'
-        value={imageUrls[3]?.url || ''}
+        className='image-url-field'
+        value={imageUrls[3] || ''}
         onChange={(e) => handleAddImageUrl(e, 3)}
       />
       <input
         type='url'
-        className='CreateImageUrlField'
-        value={imageUrls[4]?.url || ''}
+        className='image-url-field'
+        value={imageUrls[4] || ''}
         onChange={(e) => handleAddImageUrl(e, 4)}
       />
 

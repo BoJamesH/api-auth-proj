@@ -65,8 +65,8 @@ export const postSpot = (spotImages, spot) => async (dispatch) => {
     if (response.ok) {
       const newSpot = await response.json();
       dispatch(postSpotImages(spotImages, newSpot.id))
-      dispatch(createSpot(newSpot));
-      dispatch(fetchSpot(newSpot.id));
+      await dispatch(createSpot(newSpot));
+      await dispatch(fetchSpot(newSpot.id));
       return newSpot
     }
   } catch (error) {
@@ -148,7 +148,7 @@ export const updateSpot = (spotId, spot, spotImages) => async (dispatch) => {
     if (response.ok) {
       const newSpot = await response.json();
       dispatch(postSpotImages(spotImages, spotId))
-      // await dispatch(fetchSpot(spotId)) // DO I NEED THIS?
+      await dispatch(fetchSpot(spotId)) // DO I NEED THIS?
       // await dispatch(postSpotImages(spotImages, spotId))
       return newSpot
     }

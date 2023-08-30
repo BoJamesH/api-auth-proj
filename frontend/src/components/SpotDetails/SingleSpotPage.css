@@ -92,6 +92,11 @@ body {
     margin-top: 0px;
 }
 
+.StarImg {
+    height: 15px;
+    width: 15px;
+}
+
 .ReserveAvgRating {
     margin-left: 10px;
     text-align: right;

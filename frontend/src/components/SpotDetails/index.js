@@ -33,10 +33,9 @@ const SpotDetails = () => {
                 alt="Large spot image"
               />
             </div>
-            {/* Map through the rest of the images (up to four times) */}
             <span className='AllSmallSpotImages'>
               {[...Array(4)].map((_, index) => {
-                const image = spot.SpotImages?.[index + 1]; // Get the corresponding image if available
+                const image = spot.SpotImages?.[index + 1];
                 return (
                   <span className="SmallSpotImageDiv" key={index}>
                     <img
@@ -58,7 +57,7 @@ const SpotDetails = () => {
             <div className="ContentAboveButton">
               <h2 className='ReservePricePerNight'>${spot.price.toFixed(2)}</h2><span className='PerNightReserveBox'> per night</span>
               <span className='RightSideReserveBox'>
-              <img className='starImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
+              <img className='StarImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
               <span className='ReserveAvgRating'></span>{spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span></div>
             <div className='ReserveButtonDiv'>
               <button className='ReserveButton'>Reserve</button>

@@ -41,11 +41,9 @@ const CurrentSpots = () => {
     openDeleteModal();
   };
 
-  if (spots.length < 1) {
-    return (
-      <p className="CurrentLoading">Loading properties...</p>
-    );
-  }
+  {spots && spots.length < 1 ? (
+    <p className="CurrentLoading">Loading properties...</p>
+  ) : null}
 
   return (
     <div className="currentSpots">

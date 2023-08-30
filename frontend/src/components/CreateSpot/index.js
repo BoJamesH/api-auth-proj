@@ -85,7 +85,7 @@ const SpotForm = () => {
 
   return (
     <>
-    <div className='form-intro'>
+    <div className='CreateFormIntro'>
       <h2>List Your Property</h2>
       <h4>Where's your place located?</h4>
       <p>Guests will only get your exact address once they've booked a reservation.</p>
@@ -96,7 +96,7 @@ const SpotForm = () => {
       <label>
         Country:
       </label>
-        <input className='form-field' type="text" value={country} onChange={(e) => setCountry(e.target.value)}  />
+        <input className='CreateFormField' type="text" value={country} onChange={(e) => setCountry(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.country && (<p>{errors.country}</p>)}
       </div>
@@ -105,7 +105,7 @@ const SpotForm = () => {
       <label>
         Address:
       </label>
-        <input className='form-field' type="text" value={address} onChange={(e) => setAddress(e.target.value)}  />
+        <input className='CreateFormField' type="text" value={address} onChange={(e) => setAddress(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.address && (<p>{errors.address}</p>)}
       </div>
@@ -114,7 +114,7 @@ const SpotForm = () => {
       <label>
         City:
       </label>
-        <input className='form-field' type="text" value={city} onChange={(e) => setCity(e.target.value)}  />
+        <input className='CreateFormField' type="text" value={city} onChange={(e) => setCity(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.city && (<p>{errors.city}</p>)}
       </div>
@@ -122,7 +122,7 @@ const SpotForm = () => {
         State:
       </label>
       <select
-          className='form-field CreateStateField'
+          className='CreateFormField CreateStateField'
           value={state}
           onChange={(e) => setState(e.target.value)}
         >
@@ -178,21 +178,21 @@ const SpotForm = () => {
         <option value='Wyoming'>Wyoming</option>
         <option value='District of Columbia'>District of Columbia</option>
       </select>
-        {/* <input className='form-field' type="text" value={state} onChange={(e) => setState(e.target.value)}  /> */}
+        {/* <input className='CreateFormField' type="text" value={state} onChange={(e) => setState(e.target.value)}  /> */}
         <div className='CreateFormErrors'>
         {errors.state && (<p>{errors.state}</p>)}
       </div>
       <label>
         Latitude:
       </label>
-        <input className='form-field' type="text" value={lat} onChange={(e) => setLat(e.target.value)}  />
+        <input className='CreateFormField' type="text" value={lat} onChange={(e) => setLat(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
       </div>
       <label>
         Longitude:
       </label>
-        <input className='form-field' type="text" value={lng} onChange={(e) => setLng(e.target.value)}  />
+        <input className='CreateFormField' type="text" value={lng} onChange={(e) => setLng(e.target.value)}  />
       </div>
       <div className='CreateFormErrors'>
       {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
@@ -200,7 +200,7 @@ const SpotForm = () => {
       <div className='form-group'>
       <label>
         Property Title:
-        <input className='form-field' type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <input className='CreateFormField' type="text" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
       <div className='CreateFormErrors'>
       {errors.name && (<p>{errors.name}</p>)}
@@ -210,7 +210,7 @@ const SpotForm = () => {
       <label>
         Description:
       </label>
-        <textarea className='form-field' value={description} onChange={(e) => setDescription(e.target.value)} />
+        <textarea className='CreateFormField' value={description} onChange={(e) => setDescription(e.target.value)} />
       </div>
       <div className='CreateFormErrors'>
       {errors.description && (<p>{errors.description}</p>)}
@@ -220,7 +220,7 @@ const SpotForm = () => {
         Price:
       </label>
       <input
-          className='form-field'
+          className='CreateFormField'
           type="number"
           value={price}
           onChange={handlePriceChange} // Use the new handler to handle price changes

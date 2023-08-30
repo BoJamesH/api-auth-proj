@@ -1,6 +1,7 @@
 // frontend/src/store/session.js
 import { csrfFetch } from "./csrf";
 import { clearSpotState, loadSpots } from "./spots";
+import { fetchCurrentSpots } from "./spots";
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -30,6 +31,7 @@ export const login = (user) => async (dispatch) => {
 
   const data = await response.json();
   dispatch(setUser(data.user));
+  dispatch(fetchCurrentSpots());
   return response;
 };
 

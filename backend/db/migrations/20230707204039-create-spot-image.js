@@ -21,7 +21,7 @@ module.exports = {
         references: { model: 'Spots' },
       },
       url: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       preview: {

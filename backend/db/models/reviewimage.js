@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    url: DataTypes.STRING
+    url: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'ReviewImage',

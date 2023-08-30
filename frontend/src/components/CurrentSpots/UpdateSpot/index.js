@@ -78,7 +78,7 @@ const UpdateSpot = () => {
     try {
       console.log('IMAGE URLS', imageUrls)
       const response = await dispatch(updateSpot(spotToUpdate.id, newSpot, imageUrls));
-      // await dispatch(fetchCurrentSpots());
+      await dispatch(fetchSpot(spotToUpdate.id));
         setErrors({});
         history.push(`/spots/details/${spotToUpdate.id}`);
     } catch (error) {

@@ -64,8 +64,8 @@ export const postSpot = (spotImages, spot) => async (dispatch) => {
 
     if (response.ok) {
       const newSpot = await response.json();
-      dispatch(createSpot(newSpot));
       dispatch(postSpotImages(spotImages, newSpot.id))
+      dispatch(createSpot(newSpot));
       dispatch(fetchSpot(newSpot.id));
       return newSpot
     }
@@ -77,12 +77,25 @@ export const postSpot = (spotImages, spot) => async (dispatch) => {
 };
 
 export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
-  for (let spotImage of spotImages) {
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(spotImage)
-    })
+  try {
+    const imageObjects = spotImages.map((imageUrl) => ({
+      url: imageUrl,
+      preview: true,
+    }));
+
+    for (let spotImage of imageObjects) {
+      const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spotImage),
+      });
+      // Handle response here if needed
+    }
+
+    // If you need to fetch the updated spot data after posting images, you can do it here.
+    // await dispatch(fetchSpot(spotId));
+  } catch (error) {
+    console.error('Error updating or creating spot images:', error);
   }
 };
 
@@ -92,7 +105,7 @@ export const fetchSpots = () => async (dispatch) => {
     if (!response.ok) throw new Error('Failed to fetch all properties');
     const data = await response.json();
     const allSpots = data.Spots
-    dispatch(loadSpots(allSpots));
+    await dispatch(loadSpots(allSpots));
 };
 
 export const fetchSpot = (spotId) => async (dispatch) => {
@@ -100,7 +113,7 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     if (!response.ok) throw new Error('Failed to fetch property')
     const spot = await response.json();
     console.log(spot)
-    dispatch(loadSingleSpot(spot));
+    await dispatch(loadSingleSpot(spot));
 }
 
 export const fetchCurrentSpots = () => async (dispatch) => {
@@ -108,7 +121,7 @@ export const fetchCurrentSpots = () => async (dispatch) => {
   if (!response.ok) throw new Error ('Failed to fetch your properties')
   const data = await response.json();
   const currentSpots = data.Spots
-  dispatch(loadCurrentSpots(currentSpots))
+  await dispatch(loadCurrentSpots(currentSpots))
 }
 
 export const deleteSpot = (spotId) => async (dispatch) => {
@@ -119,7 +132,7 @@ export const deleteSpot = (spotId) => async (dispatch) => {
     if (!response.ok) {
       throw new Error('Failed to delete spot');
     }
-    dispatch(destroySpot(spotId));
+    await dispatch(destroySpot(spotId));
   } catch (error) {
     console.error('Error deleting spot:', error);
   }
@@ -134,8 +147,9 @@ export const updateSpot = (spotId, spot, spotImages) => async (dispatch) => {
     });
     if (response.ok) {
       const newSpot = await response.json();
-      dispatch(fetchSpot(spot.id)) // DO I NEED THIS?
       dispatch(postSpotImages(spotImages, spotId))
+      // await dispatch(fetchSpot(spotId)) // DO I NEED THIS?
+      // await dispatch(postSpotImages(spotImages, spotId))
       return newSpot
     }
     } catch (error) {

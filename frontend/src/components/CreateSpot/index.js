@@ -111,6 +111,7 @@ const SpotForm = () => {
       </div>
       </div>
       <div className='CreateFormGroupBlock'>
+        <span className='CreateCityStateSpan'>
       <label>
         City:
       </label>
@@ -183,6 +184,7 @@ const SpotForm = () => {
         <div className='CreateFormErrors'>
         {errors.state && (<p>{errors.state}</p>)}
       </div>
+      </span>
       <label>
         Latitude:
       </label>

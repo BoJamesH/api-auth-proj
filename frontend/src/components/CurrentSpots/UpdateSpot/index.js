@@ -33,6 +33,7 @@ const UpdateSpot = () => {
   const [imageUrls, setImageUrls] = useState(['', '', '', '', '']);
 
   useEffect(() => {
+    console.log(spotToUpdate)
     if (spotToUpdate) {
       setAddress(spotToUpdate.address || '');
       setCity(spotToUpdate.city || '');
@@ -51,7 +52,11 @@ const UpdateSpot = () => {
     const newImageUrl = e.target.value;
     setImageUrls((prevImageUrls) => {
       const updatedImageUrls = [...prevImageUrls];
-      updatedImageUrls[index] = newImageUrl;
+      if (index >= updatedImageUrls.length) {
+        updatedImageUrls.push(newImageUrl);
+      } else {
+        updatedImageUrls[index] = newImageUrl;
+      }
       return updatedImageUrls;
     });
   };
@@ -71,17 +76,11 @@ const UpdateSpot = () => {
       SpotImages: imageUrls,
     };
     try {
-      const response = await dispatch(updateSpot(spotId, newSpot));
-      await dispatch(fetchCurrentSpots());
-
-      const newSpotId = response.id;
-
-      if (newSpotId) {
+      console.log('IMAGE URLS', imageUrls)
+      const response = await dispatch(updateSpot(spotToUpdate.id, newSpot, imageUrls));
+      // await dispatch(fetchCurrentSpots());
         setErrors({});
-        history.push(`/spots/details/${spotId}`);
-      } else {
-        setErrors(response.errors);
-      }
+        history.push(`/spots/details/${spotToUpdate.id}`);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
@@ -91,9 +90,12 @@ const UpdateSpot = () => {
     }
   };
 
+  const handlePriceChange = (e) => {
+    const newPrice = parseFloat(e.target.value);
+    setPrice(newPrice);
+  };
 
-
-  useEffect(() => {},[errors, useState])
+  useEffect(() => {}, [errors])
   // useEffect(() => {
   //   setErrors(null);
   // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
@@ -185,7 +187,11 @@ const UpdateSpot = () => {
       <label>
         Price:
       </label>
-        <input className='form-field' type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <input
+        className='form-field'
+        type="number"
+        value={price}
+        onChange={handlePriceChange} />
       </div>
       <div className='CreateFormErrors'>
       {errors.price && (<p>{errors.price}</p>)}
@@ -197,31 +203,31 @@ const UpdateSpot = () => {
         type='url'
         className='image-url-field'
         value={imageUrls[0] || ''}
-        onChange={handleAddImageUrl}
+        onChange={(e) => handleAddImageUrl(e, 0)} // Pass index 0 to update the first image URL
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[1] || ''}
-        onChange={handleAddImageUrl}
+        onChange={(e) => handleAddImageUrl(e, 1)}
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[2] || ''}
-        onChange={handleAddImageUrl}
+        onChange={(e) => handleAddImageUrl(e, 2)}
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[3] || ''}
-        onChange={handleAddImageUrl}
+        onChange={(e) => handleAddImageUrl(e, 3)}
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[4] || ''}
-        onChange={handleAddImageUrl}
+        onChange={(e) => handleAddImageUrl(e, 4)}
       />
       {/* Add more input fields for other image URLs */}
     </div>

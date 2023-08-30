@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { Link } from 'react-router-dom'
+import { login } from "../../store/session";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -27,8 +28,8 @@ function LoginFormModal() {
   };
 
   const handleDemoUserClick = (e) => {
-    // e.preventDefault();
-    return dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password'}))
+    e.preventDefault();
+    return dispatch(login({ credential: 'demo@user.io', password: 'password'}))
     .then(closeModal)
   };
 

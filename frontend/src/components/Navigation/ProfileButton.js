@@ -1,4 +1,3 @@
-// frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
@@ -12,20 +11,17 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
   }
 
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
+
   useEffect(() => {
     if (!showMenu) return;
-
-    const closeMenu = (e) => {
-        if (!ulRef.current.contains(e.target)) {
-          setShowMenu(false);
-        }
-      };
 
     document.addEventListener('click', closeMenu);
 
@@ -49,7 +45,11 @@ function ProfileButton({ user }) {
         <li className="UserDropdownItem">{user.username}</li>
         <li className="UserDropdownItem">{user.firstName} {user.lastName}</li>
         <li className="UserDropdownItem">{user.email}</li>
-        <li className="UserDropdownItem"><NavLink id="DropdownLink" to='/spots/current'>Manage Properties</NavLink></li>
+        <li className="UserDropdownItem">
+          <NavLink id="DropdownLink" to='/spots/current' onClick={closeMenu}>
+            Manage Properties
+          </NavLink>
+        </li>
         <li className="UserDropdownItem" id="DropdownLogoutLi">
           <button className="DropdownLogoutButton" onClick={logout}>Log Out</button>
         </li>
@@ -59,3 +59,4 @@ function ProfileButton({ user }) {
 }
 
 export default ProfileButton;
+

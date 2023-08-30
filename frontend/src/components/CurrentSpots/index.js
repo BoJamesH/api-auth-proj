@@ -23,8 +23,6 @@ const CurrentSpots = () => {
     setIsDeleteModalOpen(false);
   };
 
-  console.log(spots)
-
 
   useEffect(() => {
     if (spots.length === 0) {
@@ -43,9 +41,11 @@ const CurrentSpots = () => {
     openDeleteModal();
   };
 
-  // const handleClick = () => {
-  //     history.push(`/spots/details/${spot.id}`);
-  // };
+  if (spots.length < 1) {
+    return {
+      {<p className="CurrentLoading">Loading properties...</p>}
+    }
+  }
 
   return (
     <div className="currentSpots">

@@ -108,7 +108,6 @@ export const fetchCurrentSpots = () => async (dispatch) => {
   if (!response.ok) throw new Error ('Failed to fetch your properties')
   const data = await response.json();
   const currentSpots = data.Spots
-  console.log(currentSpots)
   dispatch(loadCurrentSpots(currentSpots))
 }
 

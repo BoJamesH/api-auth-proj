@@ -407,6 +407,7 @@ router.post('/', requireAuth, async (req, res, next) => {
   if (!name) errors.name = 'Name is required.';
   if (name && name.length > 49) errors.name = 'Name must be less than 50 characters.';
   if (!description) errors.description = 'Description is required.';
+  if (description.length < 30) errors.description = 'Description must be 30 characters or more.'
   if (!price) errors.price = 'Price per day is required.';
   if (lat && (lat < -90 || lat > 90)) errors.lat = 'Latitude is not valid.';
   if (!lat) errors.latReq = 'Latitude is required';
@@ -458,7 +459,7 @@ router.get('/', async (req, res, next) => {
 
   if (isValidNumber(page) && page < 1) errors.page = 'Size must be greater than or equal to one';
   if (!isValidNumber(page)) page = 1;
-  pagination.limit = isValidNumber(size) && size >= 1 ? size : 50;
+  pagination.limit = isValidNumber(size) && size >= 1 ? size : 100;
   pagination.offset = (page - 1) * pagination.limit;
 
   if (isValidNumber(maxLat) && isValidNumber(minLat)) {

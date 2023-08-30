@@ -93,7 +93,7 @@ export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
     }
 
     // If you need to fetch the updated spot data after posting images, you can do it here.
-    // await dispatch(fetchSpot(spotId));
+    await dispatch(fetchSpot(spotId));
   } catch (error) {
     console.error('Error updating or creating spot images:', error);
   }

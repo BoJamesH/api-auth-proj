@@ -110,7 +110,7 @@ const SpotForm = () => {
         {errors.address && (<p>{errors.address}</p>)}
       </div>
       </div>
-      <div className='CreateFormGroupBlock'>
+      <span className='CreateFormGroupBlock'>
         <span className='CreateCityStateSpan'>
       <label>
         City:
@@ -196,7 +196,7 @@ const SpotForm = () => {
         Longitude:
       </label>
         <input className='CreateFormField' type="text" value={lng} placeholder='Longitude' onChange={(e) => setLng(e.target.value)}  />
-      </div>
+      </span>
       <div className='CreateFormErrors'>
       {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
       </div>
@@ -268,7 +268,7 @@ const SpotForm = () => {
       />
 
     </div>
-      <button className='form-field' type="submit">Submit</button>
+      <button className='CreateFormField' type="submit">Submit</button>
     </form>
     </div>
     </>

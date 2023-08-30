@@ -73,7 +73,7 @@ const UpdateSpot = () => {
       name,
       description,
       price,
-      SpotImages: imageUrls,
+      // SpotImages: imageUrls,
     };
     try {
       console.log('IMAGE URLS', imageUrls)
@@ -99,8 +99,6 @@ const UpdateSpot = () => {
   // useEffect(() => {
   //   setErrors(null);
   // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
-
-  console.log(errors)
 
   if (isLoading) {
     return <p>Loading your property...</p>;
@@ -291,7 +289,7 @@ const UpdateSpot = () => {
       />
       {/* Add more input fields for other image URLs */}
     </div>
-      <button className='form-field' type="submit">Submit</button>
+      <button className='CreateFormField' type="submit">Submit</button>
     </form>
     </div>
     </>

@@ -27,9 +27,9 @@ const SpotForm = () => {
     setImageUrls((prevImageUrls) => {
       const updatedImageUrls = [...prevImageUrls];
       if (index >= updatedImageUrls.length) {
-        updatedImageUrls.push(newImageUrl);
+        updatedImageUrls.push({ url: newImageUrl, preview: false });
       } else {
-        updatedImageUrls[index] = newImageUrl;
+        updatedImageUrls[index].url = newImageUrl;
       }
       return updatedImageUrls;
     });
@@ -52,7 +52,7 @@ const SpotForm = () => {
     };
     console.log(newSpot)
     try {
-      // imageUrls[0].preview = true;
+      imageUrls[0].preview = true;
       const response = await dispatch(postSpot(imageUrls, newSpot));
       const newSpotId = response.id;
 
@@ -92,14 +92,12 @@ const SpotForm = () => {
     </div>
     <div className='CreateFormDiv'>
     <form noValidate={true} className="CreateForm" onSubmit={handleSubmit}>
-    <div className='CreateFormGroup'>
       <label>
         Country:
       </label>
         <input className='CreateFormField CreateCountry' type="text" value={country} placeholder='Country' onChange={(e) => setCountry(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.country && (<p>{errors.country}</p>)}
-      </div>
       </div>
     <div className='CreateFormGroup'>
       <label>
@@ -110,7 +108,6 @@ const SpotForm = () => {
         {errors.address && (<p>{errors.address}</p>)}
       </div>
       </div>
-      <span className='CreateFormGroupBlock'>
         <span className='CreateCityStateSpan'>
       <label>
         City:
@@ -180,45 +177,39 @@ const SpotForm = () => {
         <option value='Wyoming'>Wyoming</option>
         <option value='District of Columbia'>District of Columbia</option>
       </select>
+      </span>
         {/* <input className='CreateFormField' type="text" value={state} onChange={(e) => setState(e.target.value)}  /> */}
         <div className='CreateFormErrors'>
         {errors.state && (<p>{errors.state}</p>)}
       </div>
-      </span>
       <label>
         Latitude:
       </label>
-        <input className='CreateFormField' type="text" value={lat} placeholder='Latitude' onChange={(e) => setLat(e.target.value)}  />
+        <input className='CreateFormField CreateLat' type="text" value={lat} placeholder='Latitude' onChange={(e) => setLat(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
       </div>
       <label>
         Longitude:
       </label>
-        <input className='CreateFormField' type="text" value={lng} placeholder='Longitude' onChange={(e) => setLng(e.target.value)}  />
-      </span>
+        <input className='CreateFormField CreateLng' type="text" value={lng} placeholder='Longitude' onChange={(e) => setLng(e.target.value)}  />
       <div className='CreateFormErrors'>
       {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
       </div>
-      <div className='CreateFormGroup'>
       <label>
         Property Title:
-        <input className='CreateFormField' type="text" value={name} placeholder='Property title' onChange={(e) => setName(e.target.value)} />
       </label>
+        <input className='CreateFormField' type="text" value={name} placeholder='Property title' onChange={(e) => setName(e.target.value)} />
       <div className='CreateFormErrors'>
       {errors.name && (<p>{errors.name}</p>)}
       </div>
-      </div>
-      <div className='CreateFormGroup'>
       <label>
         Description:
       </label>
-        <textarea className='CreateFormField' value={description} placeholder='Property description' onChange={(e) => setDescription(e.target.value)} />
-      </div>
+        <textarea className='CreateFormField CreateDescription' value={description} placeholder='Property description' onChange={(e) => setDescription(e.target.value)} />
       <div className='CreateFormErrors'>
       {errors.description && (<p>{errors.description}</p>)}
       </div>
-      <div className='CreateFormGroup'>
       <label>
         Price:
       </label>
@@ -228,47 +219,45 @@ const SpotForm = () => {
           value={price}
           onChange={handlePriceChange} // Use the new handler to handle price changes
         />
-      </div>
       <div className='CreateFormErrors'>
       {errors.price && (<p>{errors.price}</p>)}
       </div>
       <label>Liven up your rental property with photos</label>
       <p>Submit a link to at least one photo to publish your spot</p>
-      <div className='CreateFormGroup'>
       {!imageUrls[0] && <div style={{ color: 'red' }}>You must enter at least one image URL.</div>}
       <input
         type='url'
-        className='image-url-field'
-        value={imageUrls[0] || ''}
-        onChange={(e) => handleAddImageUrl(e, 0)} // Pass index 0 to update the first image URL
+        className='CreateImageUrlField'
+        value={imageUrls[0]?.url || ''}
+        onChange={(e) => handleAddImageUrl(e, 0)}
       />
       <input
         type='url'
-        className='image-url-field'
-        value={imageUrls[1] || ''}
+        className='CreateImageUrlField'
+        value={imageUrls[1]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 1)}
       />
       <input
         type='url'
-        className='image-url-field'
-        value={imageUrls[2] || ''}
+        className='CreateImageUrlField'
+        value={imageUrls[2]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 2)}
       />
       <input
         type='url'
-        className='image-url-field'
-        value={imageUrls[3] || ''}
+        className='CreateImageUrlField'
+        value={imageUrls[3]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 3)}
       />
       <input
         type='url'
-        className='image-url-field'
-        value={imageUrls[4] || ''}
+        className='CreateImageUrlField'
+        value={imageUrls[4]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 4)}
       />
-
-    </div>
-      <button className='CreateFormField' type="submit">Submit</button>
+      <div className='CreateSubmitButtonDiv'>
+      <button className='CreateSubmitButton' type="submit">Submit</button>
+      </div>
     </form>
     </div>
     </>

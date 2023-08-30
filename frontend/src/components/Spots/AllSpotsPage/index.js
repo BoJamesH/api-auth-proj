@@ -20,7 +20,7 @@ const AllSpots = () => {
   return (
     <>
       <div className='spotCardGrid'>
-        {spots.map(({ id }) => (
+        {spots && spots.map(({ id }) => (
           <SpotCard key={id} spotId={id} />
         ))}
       </div>

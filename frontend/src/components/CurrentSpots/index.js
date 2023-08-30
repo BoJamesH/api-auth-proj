@@ -30,11 +30,9 @@ const CurrentSpots = () => {
     if (spots.length === 0) {
       dispatch(fetchCurrentSpots());
     }
-  }, [dispatch, isLoading, spots]);
-  console.log(spots.length)
+  }, [dispatch]);
 
   const handleUpdate = () => {
-
     console.log("Update button clicked");
   };
 
@@ -58,7 +56,7 @@ const CurrentSpots = () => {
       </Link>
       </div>
       {isLoading ? (
-        <p>Loading properties...</p>
+        <p className="CurrentLoading">Loading properties...</p>
       ) : spots.length > 0 ? (
         <div className="spotCardGrid">
           {spots.map((spot) => (
@@ -106,7 +104,7 @@ const CurrentSpots = () => {
       )}
         </div>
       ) : (
-        <p>You don't have any properties.</p>
+        <p className="CurrentNoProperties">You don't have any properties.</p>
       )}
     </div>
   );

@@ -8,6 +8,7 @@ export const LOAD_CURRENT_SPOTS = '/spots/LOAD_CURRENT_SPOTS'
 export const DESTROY_SPOT = '/spots/DESTROY_SPOT'
 export const UPDATE_SPOT = '/spots/UPDATE_SPOT'
 export const ADD_SPOT_IMAGES = '/spots/ADD_SPOT_IMAGES'
+export const CLEAR_SPOT_STATE = '/spot/CLEAR_SPOT_STATE'
 
 
 // Action creators
@@ -45,6 +46,10 @@ export const editSpot = (spot) => ({
 export const addSpotImages = (spotId, images) => ({
   type: ADD_SPOT_IMAGES,
   images
+})
+
+export const clearSpotState = () => ({
+  type: CLEAR_SPOT_STATE,
 })
 
 
@@ -121,7 +126,7 @@ export const deleteSpot = (spotId) => async (dispatch) => {
   }
 };
 
-export const updateSpot = (spotId, spot) => async (dispatch) => {
+export const updateSpot = (spotId, spot, spotImages) => async (dispatch) => {
   try {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: 'PUT',
@@ -130,6 +135,8 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
     });
     if (response.ok) {
       const newSpot = await response.json();
+      dispatch(fetchSpot(spot.id)) // DO I NEED THIS?
+      dispatch(postSpotImages(spotImages, spotId))
       return newSpot
     }
     } catch (error) {
@@ -137,8 +144,6 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
     return errors;
   }
 }
-
-
 
 // Reducer
 
@@ -185,6 +190,10 @@ const spotsReducer = (state = initialState, action) => {
     case UPDATE_SPOT:
       return {
         ...state,
+      }
+    case CLEAR_SPOT_STATE:
+      return {
+        initialState
       }
     default:
       return state;

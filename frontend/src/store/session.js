@@ -1,5 +1,6 @@
 // frontend/src/store/session.js
 import { csrfFetch } from "./csrf";
+import { clearSpotState, loadSpots } from "./spots";
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -57,6 +58,7 @@ export const logout = () => async (dispatch) => {
       method: 'DELETE',
     });
     dispatch(removeUser());
+    dispatch(clearSpotState())
     return response;
 };
 

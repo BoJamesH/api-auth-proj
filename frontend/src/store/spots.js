@@ -147,7 +147,7 @@ export const updateSpot = (spotId, spot, spotImages) => async (dispatch) => {
     });
     if (response.ok) {
       const newSpot = await response.json();
-      dispatch(postSpotImages(spotImages, spotId))
+      await dispatch(postSpotImages(spotImages, spotId))
       await dispatch(fetchSpot(spotId)) // DO I NEED THIS?
       // await dispatch(postSpotImages(spotImages, spotId))
       return newSpot

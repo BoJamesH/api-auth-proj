@@ -1,10 +1,10 @@
 
-.spot-form-div {
+.CreateFormDiv {
     width: 50%;
     margin: 0 auto;
 }
 
-  .spot-form {
+  .CreateForm {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -29,24 +29,24 @@ label {
     font-weight: bold;
 }
 
-.form-group {
+.CreateFormGroup {
     display: flex;
     flex-direction: column;
     /* margin-bottom: 20px;  */
 }
 
-.form-group label {
+.CreateFormGroup label {
     display: block;
 }
 
-.form-group-block {
+.CreateFormGroupBlock {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     margin-bottom: 20px;
 }
 
-.image-url-field {
+.CreateImageURLField {
     margin-bottom: 10px;
 }
 

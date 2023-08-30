@@ -28,7 +28,7 @@ const CurrentSpots = () => {
     if (spots.length === 0) {
       dispatch(fetchCurrentSpots());
     }
-  }, [dispatch]);
+  }, [dispatch, isLoading]);
 
   const handleUpdate = () => {
     console.log("Update button clicked");
@@ -41,10 +41,6 @@ const CurrentSpots = () => {
     openDeleteModal();
   };
 
-  {spots && spots.length < 1 ? (
-    <p className="CurrentLoading">Loading properties...</p>
-  ) : null}
-
   return (
     <div className="currentSpots">
       <div className="CurrentTitleCreateButtonDiv">
@@ -53,6 +49,9 @@ const CurrentSpots = () => {
       <button className="CurrentCreateSpotButton">List a New Property</button>
       </Link>
       </div>
+      {/* {spots && spots.length < 1 && (
+      <p className="CurrentLoading">Loading properties...</p>
+      )} */}
       {isLoading ? (
         <p className="CurrentLoading">Loading properties...</p>
       ) : spots.length > 0 ? (

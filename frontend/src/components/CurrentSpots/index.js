@@ -42,9 +42,9 @@ const CurrentSpots = () => {
   };
 
   if (spots.length < 1) {
-    return {
-      {<p className="CurrentLoading">Loading properties...</p>}
-    }
+    return (
+      <p className="CurrentLoading">Loading properties...</p>
+    );
   }
 
   return (

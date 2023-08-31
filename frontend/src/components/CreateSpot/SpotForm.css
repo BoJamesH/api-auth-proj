@@ -3,49 +3,63 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    align-content: center;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    margin: 0 auto; /* Optional: To center horizontally within the parent container */
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
-  .CreateForm {
+form {
+    width: 350px;
+}
+
+  /* .CreateForm {
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 10px;
     width: 480px;
+} */
+
+.CreateForm .CreateFormField {
+    /* margin-top: 10px; */
+    width: 300px;
+    text-align: left;
+    display: block;
 }
+
 
 
 .CreateFormIntro {
     text-align: left;
     margin-bottom: 20px;
-    width: 50%;
-    margin-left: 26%;
-    margin-right: 25%
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
 }
 
 .CreateFormField {
     /* padding: 10px; */
     margin-top: 10px;
-    width: 300px;
-    justify-content: center;
-    text-align: center;
+    width: 100%;
     height: 16px;
+    text-align: left;
 }
-
-.CreateLat {
-
-}
-
-
 
 .CreateCity {
-    width: 160px;
+
 }
 
 .CreateState {
-    width: 160px;
-    height: 40px;
+    width: 150px;
+    height: 22px;
     font-size: 16px;
+    margin-top: 10px;
+}
+
+.StateLabel {
+    margin-left: 140px;
 }
 
 .CreateCityStateSpan {
@@ -53,12 +67,40 @@
     flex-direction: row;
 }
 
+.CreateCity {
+    width: 140px;
+}
+
+.CreateLatLngSpan {
+    display: flex;
+    flex-direction: row;
+}
+
+.LngLabel {
+    margin-left: 120px;
+}
+
+.CreateLat {
+    width: 140px;
+}
+
+.CreateLng {
+    width: 140px;
+}
+
 .CreateDescription {
-    height: 50px
+    height: 100px;
+    width: 100
+}
+
+.CreateDescription {
+    height: 100px;
+    margin-left: 16px;
 }
 
 label {
     font-weight: bold;
+    margin-top: 10px;
 }
 
 .CreateFormGroup {
@@ -80,11 +122,22 @@ label {
 
 .CreateImageURLField {
     margin-bottom: 10px;
-    width: 100%;
+    width: 500px;
+    margin-left: 50px;
+}
+
+.CreateImageInputsDiv {
+
 }
 
 .CreateSubmitButtonDiv {
-    align-self: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.CreateSubmitButton {
+    width: 300px;
+    height: 40px;
 }
 
 .CreateFormErrors {

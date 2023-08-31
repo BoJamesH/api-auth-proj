@@ -108,19 +108,19 @@ const SpotForm = () => {
         {errors.address && (<p>{errors.address}</p>)}
       </div>
       </div>
-        <span className='CreateCityStateSpan'>
-      <label>
+      <label className='CityLabel'>
         City:
       </label>
-        <input className='CreateFormField CreateCity' type="text" value={city} placeholder='City' onChange={(e) => setCity(e.target.value)}  />
+      <label className='StateLabel'>
+        State:
+      </label>
+        <span className='CreateCityStateSpan'>
+        <input className='CreateCity' type="text" value={city} placeholder='City' onChange={(e) => setCity(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.city && (<p>{errors.city}</p>)}
       </div>
-      <label>
-        State:
-      </label>
       <select
-          className='CreateFormField CreateState'
+          className='CreateState'
           value={state}
           onChange={(e) => setState(e.target.value)}
         >
@@ -182,17 +182,19 @@ const SpotForm = () => {
         <div className='CreateFormErrors'>
         {errors.state && (<p>{errors.state}</p>)}
       </div>
-      <label>
+      <label className='LatLabel'>
         Latitude:
       </label>
-        <input className='CreateFormField CreateLat' type="text" value={lat} placeholder='Latitude' onChange={(e) => setLat(e.target.value)}  />
-        <div className='CreateFormErrors'>
-        {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
-      </div>
-      <label>
+      <label className='LngLabel'>
         Longitude:
       </label>
-        <input className='CreateFormField CreateLng' type="text" value={lng} placeholder='Longitude' onChange={(e) => setLng(e.target.value)}  />
+      <span className='CreateLatLngSpan'>
+        <input className='CreateLat' type="text" value={lat} placeholder='Latitude' onChange={(e) => setLat(e.target.value)}  />
+        <input className='CreateLng' type="text" value={lng} placeholder='Longitude' onChange={(e) => setLng(e.target.value)}  />
+      </span>
+      <div className='CreateFormErrors'>
+        {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
+      </div>
       <div className='CreateFormErrors'>
       {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
       </div>
@@ -206,7 +208,7 @@ const SpotForm = () => {
       <label>
         Description:
       </label>
-        <textarea className='CreateFormField CreateDescription' value={description} placeholder='Property description' onChange={(e) => setDescription(e.target.value)} />
+        <textarea className='CreateFormField CreateDescription' rows={20} value={description} placeholder='Property description' onChange={(e) => setDescription(e.target.value)} />
       <div className='CreateFormErrors'>
       {errors.description && (<p>{errors.description}</p>)}
       </div>
@@ -225,6 +227,7 @@ const SpotForm = () => {
       <label>Liven up your rental property with photos</label>
       <p>Submit a link to at least one photo to publish your spot</p>
       {!imageUrls[0] && <div style={{ color: 'red' }}>You must enter at least one image URL.</div>}
+      <div className='CreateImgInputsDiv'>
       <input
         type='url'
         className='CreateImageUrlField'
@@ -255,6 +258,7 @@ const SpotForm = () => {
         value={imageUrls[4]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 4)}
       />
+      </div>
       <div className='CreateSubmitButtonDiv'>
       <button className='CreateSubmitButton' type="submit">Submit</button>
       </div>

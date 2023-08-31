@@ -1,11 +1,28 @@
 ☆★
 
+- Rebuild and redeploy
+
+- Ask question about bookings
+- Postbird
+
 To Do CheckList: 
 
 - Fix create and update spots forms (mainly styling but check functionality).
-- Huge render problems
-- Fix spotImages upload issues on local and render (i THINK this is fixed)
-- Render: logout broken, won't log out.  All spots are hosted by me which is strange
+- Fix error handling for update spot form!!
+- STILL issues with SpotImages.  Need to create a PUT route for spotImages.
+- Yeah, updating spotImages just doesn't work.  God dammit.  It duplicates the photo AND won't be taken off.
+- Actually, it might be okay the database is just messed up.  I should probably reset it.
+
+- Huge render problems (Fixed)
+- Fix profile button modal so it looks decent on all screens (fixed, mostly
+- Fix spotImages upload issues on local and render (i THINK this is fixed) (seems fixed but update spot for images is an issue) FIXED
+- Render: logout broken, won't log out.  All spots are hosted by me which is strange - FIXED
+- Multiple pictures aren't immediately loaded after creating a spot - FIXED
+- Fix login issue, demo user isn't consistent FIXED
+- Set user issue, CLEAR STATE! - FIXED
+- Description must be 30 characters minimum in create and update spot - FIXED
+- Issue with log in/sign up on render: current spots is only for demo-lition 
+(Sam Boyle) account for some unaccountable (lol) reason. - FIXED
 
 rgb(113, 69, 184); PURPLE
 rgb(28, 50, 146); BLUE
@@ -14,7 +31,7 @@ rgb(30, 178, 197); TEAL
 FINISHED CREATE REVIEW!!!
 FINISHED DELETE REVIEW!!!
 FINISHED UPDATE REVIEW!!!
-FINISHED RESERVE BOX STYLING!!!
+FINISHED RESERVE BOX STYLING!!! (maybe do a bit more)
 FIXED POST REVIEW BUTTON ON SPOTS WITH NO REVIEWS!!!
 
         <input className='form-field' type="text" value={state} onChange={(e) => setState(e.target.value)}  />
@@ -72,8 +89,121 @@ FIXED POST REVIEW BUTTON ON SPOTS WITH NO REVIEWS!!!
         <option value='District of Columbia'>District of Columbia</option>
       </select>
 
+onClick={setShowMenu(false)
 
 {avgRating !== null ? `${parseFloat(avgRating.toFixed(1))} · ${numReviews} reviews` : 'New'}
 {avgRating !== null && typeof avgRating !== 'undefined' ? `${parseFloat(avgRating.toFixed(1))} · ${numReviews} reviews` : 'New'}
 
 {avgRating !== null && typeof avgRating !== 'undefined' ? `${parseFloat(avgRating.toFixed(1))} · ${numReviews} reviews` : 'New'}
+
+export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
+  try {
+    for (let spotImage of spotImages) {
+      if (spotImage.id) {
+        // Update existing image
+        const response = await csrfFetch(`/api/spots/${spotId}/images/${spotImage.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: spotImage.url, preview: spotImage.preview })
+        });
+      } else {
+        // Create new image
+        const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(spotImage)
+        });
+      }
+    }
+  } catch (error) {
+    console.error('Error updating or creating spot images:', error);
+  }
+};
+
+ console.log('IMAGE URLS', imageUrls)
+
+
+
+.CreateFormDiv {
+    width: 50%;
+    margin: 0 auto;
+}
+
+  .CreateForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+
+.CreateFormIntro {
+    text-align: left;
+    margin-bottom: 20px;
+    width: 50%;
+    margin-left: 26%;
+    margin-right: 25%
+}
+
+.CreateFormField {
+    padding: 10px;
+    margin-top: 10px;
+    width: 400px;
+    justify-content: left;
+}
+
+.CreateCity {
+    width: 160px;
+}
+
+.CreateState {
+    width: 160px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.CreateCityStateSpan {
+    display: flex;
+    flex-direction: row;
+}
+
+.CreateDescription {
+    
+}
+
+label {
+    font-weight: bold;
+}
+
+.CreateFormGroup {
+    display: flex;
+    flex-direction: column;
+    /* margin-bottom: 20px;  */
+}
+
+.CreateFormGroup label {
+    display: block;
+}
+
+.CreateFormGroupBlock {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.CreateImageURLField {
+    margin-bottom: 10px;
+}
+
+.CreateFormErrors {
+  color: red;
+}
+
+@media (max-width: 768px) {
+    .spot-form-div {
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}

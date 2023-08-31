@@ -115,38 +115,35 @@ const UpdateSpot = () => {
     </div>
     <div className='CreateFormDiv'>
     <form noValidate={true} className="CreateForm" onSubmit={handleSubmit}>
-    <div className='CreateFormGroup'>
       <label>
         Country:
       </label>
-        <input className='CreateFormField CreateCountry' type="text" value={country} onChange={(e) => setCountry(e.target.value)}  />
+        <input className='CreateFormField CreateCountry' type="text" value={country} placeholder='Country' onChange={(e) => setCountry(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.country && (<p>{errors.country}</p>)}
-      </div>
       </div>
     <div className='CreateFormGroup'>
       <label>
         Address:
       </label>
-        <input className='CreateFormField CreateAddress' type="text" value={address} onChange={(e) => setAddress(e.target.value)}  />
+        <input className='CreateFormField CreateAddress' type="text" value={address} placeholder='Address' onChange={(e) => setAddress(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.address && (<p>{errors.address}</p>)}
       </div>
       </div>
-      <div className='CreateFormGroupBlock'>
-      <span className='CreateCityStateSpan'>
-      <label>
+      <label className='CityLabel'>
         City:
       </label>
-        <input className='form-field' type="text" value={city} onChange={(e) => setCity(e.target.value)}  />
+      <label className='StateLabel'>
+        State:
+      </label>
+        <span className='CreateCityStateSpan'>
+        <input className='CreateCity' type="text" value={city} placeholder='City' onChange={(e) => setCity(e.target.value)}  />
         <div className='CreateFormErrors'>
         {errors.city && (<p>{errors.city}</p>)}
       </div>
-      <label>
-        State:
-      </label>
       <select
-          className='CreateFormField CreateState'
+          className='CreateState'
           value={state}
           onChange={(e) => setState(e.target.value)}
         >
@@ -203,59 +200,55 @@ const UpdateSpot = () => {
         <option value='Wyoming'>Wyoming</option>
         <option value='District of Columbia'>District of Columbia</option>
       </select>
+      </span>
+        {/* <input className='CreateFormField' type="text" value={state} onChange={(e) => setState(e.target.value)}  /> */}
         <div className='CreateFormErrors'>
         {errors.state && (<p>{errors.state}</p>)}
       </div>
-      </span>
-      <label>
+      <label className='LatLabel'>
         Latitude:
       </label>
-        <input className='CreateFormField' type="text" value={lat} onChange={(e) => setLat(e.target.value)}  />
-        <div className='CreateFormErrors'>
-        {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
-      </div>
-      <label>
+      <label className='LngLabel'>
         Longitude:
       </label>
-        <input className='CreateFormField' type="text" value={lng} onChange={(e) => setLng(e.target.value)}  />
+      <span className='CreateLatLngSpan'>
+        <input className='CreateLat' type="text" value={lat} placeholder='Latitude' onChange={(e) => setLat(e.target.value)}  />
+        <input className='CreateLng' type="text" value={lng} placeholder='Longitude' onChange={(e) => setLng(e.target.value)}  />
+      </span>
+      <div className='CreateFormErrors'>
+        {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
       </div>
       <div className='CreateFormErrors'>
       {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
       </div>
-      <div className='CreateFormGroup'>
       <label>
-        Name:
-        <input className='form-field' type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        Property Title:
       </label>
+        <input className='CreateFormField' type="text" value={name} placeholder='Property title' onChange={(e) => setName(e.target.value)} />
       <div className='CreateFormErrors'>
       {errors.name && (<p>{errors.name}</p>)}
       </div>
-      </div>
-      <div className='CreateFormGroup'>
       <label>
         Description:
       </label>
-        <textarea className='CreateFormField' value={description} onChange={(e) => setDescription(e.target.value)} />
-      </div>
+        <textarea className='CreateFormField CreateDescription' rows={20} value={description} placeholder='Property description' onChange={(e) => setDescription(e.target.value)} />
       <div className='CreateFormErrors'>
       {errors.description && (<p>{errors.description}</p>)}
       </div>
-      <div className='CreateFormGroup'>
       <label>
         Price:
       </label>
-        <input
-        className='CreateFormField'
-        type="number"
-        value={price}
-        onChange={handlePriceChange} />
-      </div>
+      <input
+          className='CreateFormField'
+          type="number"
+          value={price}
+          onChange={handlePriceChange} // Use the new handler to handle price changes
+        />
       <div className='CreateFormErrors'>
       {errors.price && (<p>{errors.price}</p>)}
       </div>
       <label>Liven up your rental property with photos</label>
       <p>Submit a link to at least one photo to publish your spot</p>
-      <div className='form-group'>
       {!imageUrls[0] && <div style={{ color: 'red' }}>You must enter at least one image URL.</div>}
       <input
         type='url'
@@ -287,9 +280,9 @@ const UpdateSpot = () => {
         value={imageUrls[4] || ''}
         onChange={(e) => handleAddImageUrl(e, 4)}
       />
-      {/* Add more input fields for other image URLs */}
-    </div>
-      <button className='CreateFormField' type="submit">Submit</button>
+      <div className='CreateSubmitButtonDiv'>
+      <button className='CreateSubmitButton' type="submit">Update</button>
+      </div>
     </form>
     </div>
     </>

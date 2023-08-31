@@ -79,12 +79,17 @@ const CurrentSpots = () => {
                 <span className="customPrice">${spot.price.toFixed(2)}</span><span className="customPerNight">per night</span>
               </span>
               <div className="UpdateDeleteButtonsDiv">
-                <button className="UpdateButton" onClick={() => {
+              <button className="CurrentBookingsButton CurrentButtons" onClick={() => {
+                  history.push(`/spots/${spot.id}/bookings`)
+                }}>
+                  Bookings
+                </button>
+                <button className="UpdateButton CurrentButtons" onClick={() => {
                   history.push(`/spots/${spot.id}/edit`)
                 }}>
                   Update
                 </button>
-                <button className="DeleteButton" onClick={() => handleDeleteSpotModal(spot.id)}>
+                <button className="DeleteButton CurrentButtons" onClick={() => handleDeleteSpotModal(spot.id)}>
                   Delete
                 </button>
               </div>

@@ -50,6 +50,11 @@ function ProfileButton({ user }) {
             Manage Properties
           </NavLink>
         </li>
+        <li className="UserDropdownItem">
+          <NavLink id="DropdownLink" to='/bookings/current' onClick={closeMenu}>
+            Manage Bookings
+          </NavLink>
+        </li>
         <li className="UserDropdownItem" id="DropdownLogoutLi">
           <button className="DropdownLogoutButton" onClick={logout}>Log Out</button>
         </li>
@@ -59,4 +64,3 @@ function ProfileButton({ user }) {
 }
 
 export default ProfileButton;
-

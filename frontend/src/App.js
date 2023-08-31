@@ -11,6 +11,7 @@ import SpotForm from "./components/CreateSpot";
 import { useLocation } from "react-router-dom";
 import CurrentSpots from "./components/CurrentSpots";
 import UpdateSpot from "./components/CurrentSpots/UpdateSpot";
+import CurrentBookings from "./components/CurrentBookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,9 @@ function App() {
         </Route>
         <Route path='/spots/:spotId/edit'>
           <UpdateSpot />
+        </Route>
+        <Route exact path='/bookings/current'>
+          <CurrentBookings />
         </Route>
       </ModalProvider>
       </Switch>}

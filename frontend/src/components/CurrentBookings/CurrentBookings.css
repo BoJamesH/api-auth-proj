@@ -1,0 +1,69 @@
+.UserBookingsTitle {
+    margin-left: 32px;
+}
+
+.CreateUserBookingButton {
+    margin-left: 32px;
+    margin-bottom: 10px;
+}
+
+.UserBookingCardDiv {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    margin: 10px;
+    width: 680px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 10px;
+}
+
+h3 {
+    margin-left: 20px;
+}
+
+.UserBookingPreviewImg {
+    object-fit: cover;
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-right: 20px; /* Add margin to create space between image and details */
+    margin-left: 20px;
+}
+
+.AllUserBookingsDiv {
+    display: flex;
+    flex-direction: column;
+    margin-left: 22px;
+}
+
+.UserBookingContent {
+    display: flex;
+    align-items: center;
+}
+
+.UserBookingUl {
+    list-style: none;
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.UserBookingLi {
+    margin: 10px;
+}
+
+.UserBookingLiPopulated {
+    color: rgb(28, 50, 146);
+    font-weight: 600;
+}
+
+.UserBookingUpdateButton {
+    margin-top: 4px;
+    height: 30px;
+}
+
+.UserBookingDeleteButton {
+    margin-top: 4px;
+    height: 30px;
+}

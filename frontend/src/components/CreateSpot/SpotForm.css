@@ -127,7 +127,8 @@ label {
 }
 
 .CreateImageInputsDiv {
-
+    display: flex;
+    align-self: center;
 }
 
 .CreateSubmitButtonDiv {
@@ -138,6 +139,7 @@ label {
 .CreateSubmitButton {
     width: 300px;
     height: 40px;
+    margin-top: 20px;
 }
 
 .CreateFormErrors {

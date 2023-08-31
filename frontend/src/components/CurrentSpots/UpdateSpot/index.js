@@ -247,38 +247,43 @@ const UpdateSpot = () => {
       <div className='CreateFormErrors'>
       {errors.price && (<p>{errors.price}</p>)}
       </div>
-      <label>Liven up your rental property with photos</label>
-      <p>Submit a link to at least one photo to publish your spot</p>
+      <label hidden={true}>Liven up your rental property with photos</label>
+      <p hidden={true}>Submit a link to at least one photo to publish your spot</p>
       {!imageUrls[0] && <div style={{ color: 'red' }}>You must enter at least one image URL.</div>}
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[0] || ''}
         onChange={(e) => handleAddImageUrl(e, 0)} // Pass index 0 to update the first image URL
+        hidden={true}
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[1] || ''}
         onChange={(e) => handleAddImageUrl(e, 1)}
+        hidden={true}
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[2] || ''}
         onChange={(e) => handleAddImageUrl(e, 2)}
+        hidden={true}
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[3] || ''}
         onChange={(e) => handleAddImageUrl(e, 3)}
+        hidden={true}
       />
       <input
         type='url'
         className='image-url-field'
         value={imageUrls[4] || ''}
         onChange={(e) => handleAddImageUrl(e, 4)}
+        hidden={true}
       />
       <div className='CreateSubmitButtonDiv'>
       <button className='CreateSubmitButton' type="submit">Update</button>

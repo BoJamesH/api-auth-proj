@@ -78,12 +78,15 @@ export const postSpot = (spotImages, spot) => async (dispatch) => {
 
 export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
   try {
-    const imageObjects = spotImages.map((imageUrl) => ({
-      url: imageUrl,
-      preview: true,
-    }));
+    // console.log('spotImages', spotImages)
+    // const imageObjects = spotImages.map((imageUrl) => ({
+    //   url: imageUrl,
+    //   preview: true,
+    // }));
+    // console.log('imageObjects', imageObjects)
 
-    for (let spotImage of imageObjects) {
+    for (let spotImage of spotImages) {
+      console.log('spotImage in array', spotImage)
       const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -91,8 +94,6 @@ export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
       });
       // Handle response here if needed
     }
-
-    // If you need to fetch the updated spot data after posting images, you can do it here.
     await dispatch(fetchSpot(spotId));
   } catch (error) {
     console.error('Error updating or creating spot images:', error);

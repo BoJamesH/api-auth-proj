@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { fetchSpot } from "./spots";
 
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
@@ -54,6 +55,7 @@ export const addReview = (review, spotId) => async (dispatch) => {
     if (response.ok) {
       const newReview = await response.json();
       dispatch(fetchReviews(spotId));
+      await dispatch(fetchSpot(spotId))
       return newReview;
     }
   } catch (error) {
@@ -71,6 +73,7 @@ export const destroyReview = (reviewId, spotId) => async (dispatch) => {
     if (response.ok) {
       const deletedReview = await response.json();
       dispatch(fetchReviews(spotId))
+      await dispatch(fetchSpot(spotId))
       return deletedReview;
     }
   } catch (error) {
@@ -91,6 +94,7 @@ export const editReview = (reviewId, spotId, review) => async (dispatch) => {
     if (response.ok) {
       const updatedReview = await response.json();
       dispatch(fetchReviews(spotId));
+      await dispatch(fetchSpot(spotId))
       return updatedReview;
     }
   } catch (error) {

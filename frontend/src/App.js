@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import CurrentSpots from "./components/CurrentSpots";
 import UpdateSpot from "./components/CurrentSpots/UpdateSpot";
 import CurrentBookings from "./components/CurrentBookings";
+import './index.css'
 
 function App() {
   const dispatch = useDispatch();

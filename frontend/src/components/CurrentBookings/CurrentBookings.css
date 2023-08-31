@@ -5,6 +5,7 @@
 .CreateUserBookingButton {
     margin-left: 32px;
     margin-bottom: 10px;
+    height: 30px;
 }
 
 .UserBookingCardDiv {

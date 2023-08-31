@@ -42,6 +42,7 @@ ul {
     background-color: rgb(113, 69, 184);
     border-radius: 5px;
     width: 100px;
+    margin-top: 5px;
 }
 
 #HamburgerIcon {

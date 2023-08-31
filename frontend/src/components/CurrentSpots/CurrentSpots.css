@@ -29,6 +29,7 @@
     color: white;
     background-color: rgb(113, 69, 184);
     margin-left: -2px;
+    height: 30px;
 }
 
 .CurrentTitleCreateButtonDiv {
@@ -42,7 +43,7 @@
 }
 
 .customSpotLocationRatingDiv {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     display: flex;
     flex-direction: row;

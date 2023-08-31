@@ -96,14 +96,14 @@ body {
     margin-top: 0px;
 }
 
-.StarImg {
-    height: 15px;
-    width: 15px;
+.ReserveBoxStar {
+    font-size: 25px;
 }
 
 .ReserveAvgRating {
     margin-left: 10px;
     text-align: right;
+    margin-bottom: 20px;
 }
 
 .ReservePricePerNight {
@@ -119,7 +119,7 @@ body {
 .RightSideReserveBox {
     text-align: right;
     margin-left: 30px;
-    margin-top: 25px;
+    margin-top: 14px;
     font-size: 18px;
 }
 

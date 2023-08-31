@@ -13,6 +13,7 @@ import CurrentSpots from "./components/CurrentSpots";
 import UpdateSpot from "./components/CurrentSpots/UpdateSpot";
 import CurrentBookings from "./components/CurrentBookings";
 import './index.css'
+import SpotBookings from "./components/SpotBookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,9 @@ function App() {
         </Route>
         <Route exact path='/bookings/current'>
           <CurrentBookings />
+        </Route>
+        <Route exact path='/spots/:spotId/bookings'>
+          <SpotBookings />
         </Route>
       </ModalProvider>
       </Switch>}

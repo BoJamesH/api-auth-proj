@@ -6,6 +6,7 @@
 .PostReviewButton {
     width: 200px;
     height: 30px;
+    font-weight: bold;
 }
 
 .ReviewsList {
@@ -23,6 +24,11 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.ReviewListStarImg {
+    height: 15px;
+    width: 15px;
 }
 
 .ReviewUsername {

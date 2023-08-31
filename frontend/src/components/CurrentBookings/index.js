@@ -39,8 +39,8 @@ const CurrentBookings = () => {
 
   return (
     <div>
-      <h2 className="UserBookingsTitle">User Bookings</h2>
-      <button className="CreateUserBookingButton">Create New Booking</button>
+      <h2 className="UserBookingsTitle">Manage Your Bookings</h2>
+      {/* <button className="CreateUserBookingButton">Create New Booking</button> */}
       <div className="AllUserBookingsDiv">
         {userBookings && userBookings.map(booking => (
           <div key={booking.id} className="UserBookingCardDiv">

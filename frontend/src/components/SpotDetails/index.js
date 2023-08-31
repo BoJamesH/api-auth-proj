@@ -1,6 +1,6 @@
 import './SingleSpotPage.css';
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpot } from '../../store/spots';
 import ReviewsList from '../Reviews';
@@ -8,6 +8,7 @@ import ReviewsList from '../Reviews';
 const SpotDetails = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const spot = useSelector((state) => state.spotsState.singleSpot);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
 
@@ -57,17 +58,16 @@ const SpotDetails = () => {
             <div className="ContentAboveButton">
               <h2 className='ReservePricePerNight'>${spot.price.toFixed(2)}</h2><span className='PerNightReserveBox'> per night</span>
               <span className='RightSideReserveBox'>
-              <img className='StarImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
+              <span className='ReserveBoxStar'>★</span>
               <span className='ReserveAvgRating'></span>{spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span></div>
             <div className='ReserveButtonDiv'>
-              <button className='ReserveButton'>Reserve</button>
+            <button className='ReserveButton' onClick={() => history.push(`/spots/${spotId}/bookings`)}>Bookings</button>
             </div>
           </span>
           <div className='SpotDescription'>{spot.description}</div>
           <div className='ReviewInfoDiv'>
             <span className='StarsReviewsAboveReviewList'>
-              <img className='StarImgReviews' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-              <span className='AvgRating'>{spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span>
+              <span className='AvgRating'>★ {spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span>
             </span>
           </div>
             <ReviewsList spotId={spotId} spotOwnerId={spot.ownerId} />

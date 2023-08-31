@@ -22,7 +22,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
                   required: false,
                 },
             },
-        ],
+          ],
+          order: [['startDate', 'ASC']],
     });
 
     if (!userBookings) return res.status(404).json({ message: "No bookings by the current user could be found" })

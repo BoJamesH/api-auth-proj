@@ -28,11 +28,11 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <li>
         <OpenModalButton
-          buttonText="Log In"
+          buttonText="LOG IN"
           modalComponent={<LoginFormModal />}
         />
         <OpenModalButton
-          buttonText="Sign Up"
+          buttonText="SIGN UP"
           modalComponent={<SignupFormModal />}
         />
       </li>
@@ -40,7 +40,7 @@ function Navigation({ isLoaded }) {
   }
 
   const handleLogoClick = () => {
-    history.push('/'); 
+    history.push('/');
   };
 
   return (

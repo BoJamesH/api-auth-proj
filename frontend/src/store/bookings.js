@@ -4,6 +4,7 @@ import { loadReviews } from "./reviews"; // Make sure to import necessary action
 // Action types
 export const LOAD_USER_BOOKINGS = 'bookings/LOAD_USER_BOOKINGS';
 export const LOAD_SPOT_BOOKINGS = 'bookings/LOAD_SPOT_BOOKINGS';
+export const CLEAR_BOOKINGS_STATE = '/spot/CLEAR_BOOKINGS_STATE'
 
 // Action creators
 export const loadUserBookings = (userBookings) => ({
@@ -16,6 +17,10 @@ export const loadSpotBookings = (spotBookings) => ({
     spotBookings,
 });
 
+export const clearBookingsState = () => ({
+    type: CLEAR_BOOKINGS_STATE,
+  })
+
 export const fetchUserBookings = (userId) => async (dispatch) => {
     try {
       const response = await csrfFetch(`/api/bookings/current`);
@@ -24,6 +29,7 @@ export const fetchUserBookings = (userId) => async (dispatch) => {
 
       if (response.status === 404) {
         dispatch(loadUserBookings([]));
+        return;
       } else if (!response.ok) {
         throw new Error('Failed to fetch user bookings');
       } else {
@@ -35,11 +41,29 @@ export const fetchUserBookings = (userId) => async (dispatch) => {
     }
 };
 
-// Similar action creator for fetching spot bookings
+export const fetchSpotBookings = (spotId) => async (dispatch) => {
+    try {
+      const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
+      const data = await response.json();
+      console.log(data)
+
+      if (response.status === 404) {
+        dispatch(clearBookingsState());
+      } else if (!response.ok) {
+        throw new Error('Failed to fetch user bookings');
+      } else {
+        const spotBookings = data; // Make sure the data structure matches
+        dispatch(loadSpotBookings(spotBookings));
+      }
+    } catch (error) {
+      console.error('Error fetching spot bookings:', error);
+    }
+};
+
 
 const initialState = {
     userBookings: [],
-    spotBookings: [], // Initialize with an empty array
+    spotBookings: [],
     isLoading: true,
 };
 
@@ -57,6 +81,10 @@ const bookingsReducer = (state = initialState, action) => {
           spotBookings: action.spotBookings,
           isLoading: false,
         };
+    case CLEAR_BOOKINGS_STATE:
+        return {
+            initialState
+        }
       default:
         return state;
     }

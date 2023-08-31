@@ -36,8 +36,7 @@ const SpotCard = ({ spotId }) => {
           <div className="customSpotLocationRatingDiv">
             {spot.city}, {spot.state}
             <div className="customStarsAndAvg">
-              <img className='customStarImg' src="https://png.pngtree.com/png-clipart/20201106/ourmid/pngtree-classic-black-stars-clipart-png-image_2395202.jpg" alt="Star icon" />
-              {spot.avgRating ? (spot.avgRating.toFixed(1)) : 'New'}
+              ★ {spot.avgRating ? (spot.avgRating.toFixed(1)) : 'New'}
             </div>
           </div>
           <span className="customPriceLine">

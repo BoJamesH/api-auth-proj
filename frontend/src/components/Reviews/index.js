@@ -73,7 +73,13 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
           <div key={review.id} className={`ReviewItem ${index % 2 === 0 ? 'EvenReview' : 'OddReview'}`}>
             <div className="ReviewUsername">{review.User.firstName}</div>
             <div className="ReviewDate">{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</div>
-            <div className="ReviewStarRating">Star Rating: {review.stars}</div>
+            <div className="ReviewStarRating">
+              Star Rating:
+              {' '}
+              {Array.from({ length: review.stars }).map((_, i) => (
+                <span key={i} className="StarIcon">★</span>
+              ))}
+            </div>
             <div className="ReviewText">{review.review}</div>
             {sessionUser?.id === review.userId ? (
               <div className="ButtonContainer">

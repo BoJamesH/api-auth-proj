@@ -1,13 +1,18 @@
 .profile-dropdown {
     position: absolute;
     z-index: 99999;
-    right: 0;
+    right: 0%;
+    left: 74%;
     margin-right: 20px;
     margin-top: 25px;
     padding: 10px;
     border: 3px solid rgb(28, 50, 146);
     background-color: white;
     border-radius: 10px;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+
 }
 
 ul {

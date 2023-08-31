@@ -82,10 +82,13 @@
     align-items: center; /* Center items vertically */
   }
 
+  .customSpotLocationRatingDiv {
+    font-size: 16px;
+  }
 
 
 .locationRatingCard {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     display: flex;
     flex-direction: row;

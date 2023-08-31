@@ -189,8 +189,9 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
   }
   const bookingsBySpotId = await Booking.findAll({
     where: { spotId },
-    attributes: ['spotId', 'startDate', 'endDate']
-  })
+    attributes: ['spotId', 'startDate', 'endDate'],
+    order: [['startDate', 'ASC']]
+  });
   if (bookingsBySpotId.length < 1) return res.status(404).json({ message: 'No bookings found for that spot' })
   res.status(200).json({ 'Bookings': bookingsBySpotId})
 });

@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 import { clearSpotState, loadSpots } from "./spots";
 import { fetchCurrentSpots } from "./spots";
 import { fetchSpots } from "./spots";
+import { clearBookingsState } from "./bookings";
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -63,6 +64,7 @@ export const logout = () => async (dispatch) => {
     });
     dispatch(removeUser());
     dispatch(clearSpotState())
+    dispatch(clearBookingsState())
     dispatch(fetchSpots())
     return response;
 };

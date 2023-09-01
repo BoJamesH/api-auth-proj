@@ -1,8 +1,8 @@
 .profile-dropdown {
     position: absolute;
     z-index: 99999;
-    right: 0%;
-    left: 74%;
+    right: 2%;
+    left: 70%;
     margin-right: 20px;
     margin-top: 25px;
     padding: 10px;
@@ -12,7 +12,8 @@
     overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
-
+    max-width: 280px;
+    min-width: 240px;
 }
 
 ul {

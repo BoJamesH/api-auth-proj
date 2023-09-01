@@ -55,6 +55,7 @@ export const clearSpotState = () => ({
 
 // Thunk action creators
 export const postSpot = (spotImages, spot) => async (dispatch) => {
+  if (spotImages.length < 1) return 'You must submit at least one image.'
   try {
     const response = await csrfFetch('/api/spots', {
       method: 'POST',

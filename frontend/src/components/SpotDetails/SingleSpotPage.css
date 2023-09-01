@@ -71,19 +71,15 @@ body {
 
 .ReserveInfoBox {
     position: absolute;
-    right: -40px;
+    left: 57%;
     margin-right: 100px;
     border: 3px solid rgb(28, 50, 146);
     border-radius: 20px;
     padding: 10px;
     display: flex;
     flex-direction: column;
-    width: 350px;
     height: 140px;
     justify-content: center;
-    align-content: center;
-    align-items: center;
-    justify-items: center;
 }
 
 .ContentAboveButton {
@@ -91,7 +87,6 @@ body {
     flex-direction: row;
     align-self: center;
     justify-self: center;
-    /* justify-content: space-between; */
     width: 350px;
     margin-top: 0px;
 }

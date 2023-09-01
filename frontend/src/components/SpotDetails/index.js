@@ -11,6 +11,7 @@ const SpotDetails = () => {
   const history = useHistory();
   const spot = useSelector((state) => state.spotsState.singleSpot);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
+  const sessionUser = useSelector((state) => state.session.user)
 
   useEffect(() => {
     dispatch(fetchSpot(parseInt(spotId)));
@@ -61,7 +62,10 @@ const SpotDetails = () => {
               <span className='ReserveBoxStar'>★</span>
               <span className='ReserveAvgRating'></span>{spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span></div>
             <div className='ReserveButtonDiv'>
-            <button className='ReserveButton' onClick={() => history.push(`/spots/${spotId}/bookings`)}>Bookings</button>
+              {sessionUser === null && (
+                <div className='ReserveNotLoggedIn'>You must be logged in to create a booking.</div>
+              )}
+            <button className='ReserveButton' hidden={sessionUser === null} onClick={() => history.push(`/spots/${spotId}/bookings`)}>Bookings</button>
             </div>
           </span>
           <div className='SpotDescription'>{spot.description}</div>

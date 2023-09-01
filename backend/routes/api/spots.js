@@ -402,9 +402,12 @@ router.post('/', requireAuth, async (req, res, next) => {
   const errors = {};
 
   if (!address) errors.address = 'Street address is required.';
+  if (address && address.length > 50) errors.address = 'Street address must be less than 50 characters.';
   if (!city) errors.city = 'City is required.';
+  if (city && city.length > 20) errors.city = 'City name must be less than 20 characters.';
   if (!state) errors.state = 'State is required.';
   if (!country) errors.country = 'Country is required.';
+  if (country && country.length > 56) errors.country = 'Country name must be less than 56 characters.';
   if (!name) errors.name = 'Name is required.';
   if (name && name.length > 49) errors.name = 'Name must be less than 50 characters.';
   if (!description) errors.description = 'Description is required.';

@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     justify-items: center;
-    width: 400px;
+    width: 448px;
     margin: 0;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .SignupButton {
-    width: 100%;
+    width: 260px;
     align-self: center;
     justify-self: center;
     height: 30px;
@@ -34,7 +34,7 @@
     align-items: center;
 }
 
-input {
+.SignupInputField {
     margin: 10px;
     width: 250px;
 }

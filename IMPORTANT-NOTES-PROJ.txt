@@ -7,11 +7,11 @@
 
 To Do CheckList: 
 
+- REMEMBER TO EDIT STORE SHAPE
+- Fix create spot URL fields not being centered.
 - Fix create and update spots forms (mainly styling but check functionality).
-- Fix error handling for update spot form!!
-- STILL issues with SpotImages.  Need to create a PUT route for spotImages.
-- Yeah, updating spotImages just doesn't work.  God dammit.  It duplicates the photo AND won't be taken off.
-- Actually, it might be okay the database is just messed up.  I should probably reset it.
+- Fix profile dropdown for wider screens.
+- Fix review modals after I stupidly broke them
 
 - Huge render problems (Fixed)
 - Fix profile button modal so it looks decent on all screens (fixed, mostly
@@ -27,6 +27,25 @@ To Do CheckList:
 rgb(113, 69, 184); PURPLE
 rgb(28, 50, 146); BLUE
 rgb(30, 178, 197); TEAL
+
+.profile-dropdown {
+    position: absolute;
+    z-index: 99999;
+    right: 0%;
+    left: 74%;
+    margin-right: 20px;
+    margin-top: 25px;
+    padding: 10px;
+    border: 3px solid rgb(28, 50, 146);
+    background-color: white;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+
+}
+
+onClick={history.push(`/spots/${spotId}/bookings`)}
 
 FINISHED CREATE REVIEW!!!
 FINISHED DELETE REVIEW!!!

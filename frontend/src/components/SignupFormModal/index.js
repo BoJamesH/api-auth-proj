@@ -47,7 +47,10 @@ function SignupFormModal() {
       <h1>Sign Up</h1>
       <form className="SignupForm" onSubmit={handleSubmit}>
           <input
+            autocomplete="off"
+            className="SignupInputField"
             type="text"
+            name="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -56,6 +59,9 @@ function SignupFormModal() {
         {errors.email && <p className="SignupErrors">{errors.email}</p>}
           <input
             type="text"
+            autocomplete="off"
+            className="SignupInputField"
+            name="username"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -64,6 +70,9 @@ function SignupFormModal() {
         {errors.username && <p className="SignupErrors">{errors.username}</p>}
           <input
             type="text"
+            autocomplete="off"
+            className="SignupInputField"
+            name="firstName"
             placeholder="First Name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -72,6 +81,9 @@ function SignupFormModal() {
         {errors.firstName && <p className="SignupErrors">{errors.firstName}</p>}
           <input
             type="text"
+            autocomplete="off"
+            className="SignupInputField"
+            name="lastName"
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -80,7 +92,10 @@ function SignupFormModal() {
         {errors.lastName && <p className="SignupErrors">{errors.lastName}</p>}
           <input
             type="password"
+            name="password1"
+            autocomplete="off"
             placeholder="Password"
+            className="SignupInputField"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -88,7 +103,10 @@ function SignupFormModal() {
         {errors.password && <p className="SignupErrors">{errors.password}</p>}
           <input
             type="password"
+            autocomplete="off"
+            name="password2"
             placeholder="Confirm Password"
+            className="SignupInputField"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required

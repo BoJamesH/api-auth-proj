@@ -21,6 +21,7 @@ const SpotForm = () => {
   const [price, setPrice] = useState(null);
   const [errors, setErrors] = useState({})
   const [imageUrls, setImageUrls] = useState([]);
+  const [oneImage, setOneImage] = useState(true)
 
   const handleAddImageUrl = (e, index) => {
     const newImageUrl = e.target.value;
@@ -34,7 +35,6 @@ const SpotForm = () => {
       return updatedImageUrls;
     });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,6 +52,11 @@ const SpotForm = () => {
     };
     console.log(newSpot)
     try {
+      console.log(imageUrls)
+      if (!imageUrls[0].url) {
+        setOneImage(false)
+        return
+      }
       imageUrls[0].preview = true;
       const response = await dispatch(postSpot(imageUrls, newSpot));
       const newSpotId = response.id;
@@ -228,9 +233,14 @@ const SpotForm = () => {
       <label>Liven up your rental property with photos</label>
       <p>Submit a link to at least one photo to publish your spot</p>
       {!imageUrls[0] && <div style={{ color: 'red' }}>You must enter at least one image URL.</div>}
+      {!oneImage && <div style={{ color: 'red' }}>You must enter at least one image URL.</div>}
+      <div className='CreateFormErrors'>
+      {errors.description && (<p>{errors.description}</p>)}
+      </div>
       <div className='CreateImgInputsDiv'>
       <input
         type='url'
+        required={true}
         className='CreateImageUrlField'
         value={imageUrls[0]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 0)}

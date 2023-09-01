@@ -64,49 +64,53 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
         <CreateReviewModal showModal={showModal} setShowModal={setShowModal} spotId={spotId} />
       )}
           <div className='PostReviewButtonDiv'>
-      {((userAlreadyReviewed.length < 1 && !isOwner) || (sessionUser && reviews.length < 1 && !isOwner)) && (
-        <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>
-      )}
-    </div>
-      <div className="ReviewsList">
-        {reviews.map((review, index) => (
-          <div key={review.id} className={`ReviewItem ${index % 2 === 0 ? 'EvenReview' : 'OddReview'}`}>
-            <div className="ReviewUsername">{review.User.firstName}</div>
-            <div className="ReviewDate">{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</div>
-            <div className="ReviewStarRating">
-              Star Rating:
-              {' '}
-              {Array.from({ length: review.stars }).map((_, i) => (
-                <span key={i} className="StarIcon">★</span>
-              ))}
-            </div>
-            <div className="ReviewText">{review.review}</div>
-            {sessionUser?.id === review.userId ? (
-              <div className="ButtonContainer">
-                <button className="UpdateReviewButton" onClick={() => handleUpdateReviewModal(review.id)}>Update</button>
-                <button className="DeleteReviewButton" onClick={() => handleDeleteReviewModal(review.id)}>Delete</button>
+          {(sessionUser === null) ? (
+              <p>You must be logged in to create a review.</p>
+            ) : (
+              ((userAlreadyReviewed.length < 1 && !isOwner) || (reviews.length < 1 && !isOwner)) && (
+                <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>
+              )
+            )}
+      </div>
+        <div className="ReviewsList">
+          {reviews.map((review, index) => (
+            <div key={review.id} className={`ReviewItem ${index % 2 === 0 ? 'EvenReview' : 'OddReview'}`}>
+              <div className="ReviewUsername">{review.User.firstName}</div>
+              <div className="ReviewDate">{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</div>
+              <div className="ReviewStarRating">
+                Star Rating:
+                {' '}
+                {Array.from({ length: review.stars }).map((_, i) => (
+                  <span key={i} className="StarIcon">★</span>
+                ))}
               </div>
-            ) : null}
-          </div>
-        ))}
-        {isDeleteModalOpen && (
-        <ConfirmationReviewDeleteModal
-          onClose={closeDeleteModal}
-          onDelete={() => {
-            handleDeleteReviewModal(reviewToDelete);
-          }}
-          reviewToDelete={reviewToDelete}
+              <div className="ReviewText">{review.review}</div>
+              {sessionUser?.id === review.userId ? (
+                <div className="ButtonContainer">
+                  <button className="UpdateReviewButton" onClick={() => handleUpdateReviewModal(review.id)}>Update</button>
+                  <button className="DeleteReviewButton" onClick={() => handleDeleteReviewModal(review.id)}>Delete</button>
+                </div>
+              ) : null}
+            </div>
+          ))}
+          {isDeleteModalOpen && (
+          <ConfirmationReviewDeleteModal
+            onClose={closeDeleteModal}
+            onDelete={() => {
+              handleDeleteReviewModal(reviewToDelete);
+            }}
+            reviewToDelete={reviewToDelete}
+            spotId={spotId}
+          />
+        )}
+                {isUpdateModalOpen && (
+          <UpdateReviewModal
+          showModal={isUpdateModalOpen}
+          setShowModal={setIsUpdateModalOpen}
+          reviewIdToUpdate={reviewIdToUpdate}
           spotId={spotId}
         />
-      )}
-              {isUpdateModalOpen && (
-        <UpdateReviewModal
-        showModal={isUpdateModalOpen}
-        setShowModal={setIsUpdateModalOpen}
-        reviewIdToUpdate={reviewIdToUpdate}
-        spotId={spotId}
-      />
-      )}
+        )}
       </div>
     </>
     )

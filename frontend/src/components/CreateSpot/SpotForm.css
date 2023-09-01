@@ -14,7 +14,6 @@ form {
     width: 80%;
     margin-left: 100px;
 }
-
   /* .CreateForm {
     width: 100%;
     display: flex;
@@ -46,26 +45,33 @@ form {
     width: 100%;
     height: 16px;
     text-align: left;
+    margin-bottom: 20px;
 }
 
 .CreateCity {
-
+    height: 15px;
 }
 
 .CreateState {
     width: 150px;
-    height: 22px;
+    height: 20px;
     font-size: 16px;
     margin-top: 10px;
+    margin-left: 10px;
 }
 
 .StateLabel {
-    margin-left: 140px;
+    margin-left: 120px;
 }
 
 .CreateCityStateSpan {
     display: flex;
     flex-direction: row;
+    width: 400px;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 20px;
+
 }
 
 .CreateCity {
@@ -75,10 +81,11 @@ form {
 .CreateLatLngSpan {
     display: flex;
     flex-direction: row;
+    margin-bottom: 20px;
 }
 
 .LngLabel {
-    margin-left: 120px;
+    margin-left: 100px;
 }
 
 .CreateLat {
@@ -87,6 +94,7 @@ form {
 
 .CreateLng {
     width: 140px;
+    margin-left: 20px;
 }
 
 .CreateDescription {
@@ -121,15 +129,22 @@ label {
     margin-bottom: 20px;
 }
 
-.CreateImageURLField {
-    margin-bottom: 10px;
+.CreateImageUrlField {
+    /* margin-bottom: 10px;
     width: 500px;
     margin-left: 50px;
+    padding: 5px;
+    margin: 10px; */
+    width: 300px;
+    justify-content: center;
+    margin: 10px;
 }
 
 .CreateImageInputsDiv {
     display: flex;
     align-self: center;
+    margin-left: 100px;
+    flex-direction: column;
 }
 
 .CreateSubmitButtonDiv {

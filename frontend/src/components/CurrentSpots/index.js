@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 const CurrentSpots = () => {
   const history = useHistory()
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user)
   const spots = useSelector((state) => state.spotsState.currentSpots);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -40,6 +41,12 @@ const CurrentSpots = () => {
     // Open the modal
     openDeleteModal();
   };
+
+  if (!sessionUser) {
+    return (
+      <p className='NoUser'>You must be logged in to view your properties.</p>
+    )
+  }
 
   return (
     <div className="currentSpots">

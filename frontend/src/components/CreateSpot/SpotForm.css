@@ -129,6 +129,19 @@ label {
     margin-bottom: 20px;
 }
 
+.CreateFormErrorsCityState {
+    display: flex;
+    flex-direction: row;
+}
+
+.NoUser {
+    margin-left: 20px;
+}
+
+.CityErrors {
+    margin-right: 50px;
+}
+
 .CreateImageUrlField {
     /* margin-bottom: 10px;
     width: 500px;

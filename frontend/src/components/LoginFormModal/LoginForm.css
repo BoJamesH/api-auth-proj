@@ -10,7 +10,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 435px;
+    justify-content: center;
+    width: 450px;
     margin: 0;
 }
 
@@ -20,17 +21,19 @@
 }
 
 .LoginButtonDiv {
-    justify-content: center;
-    align-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
+    margin-right: 95px;
 }
 
 .LoginButton {
-    width: 100%;
+    width: 400px;
     align-self: center;
     justify-self: center;
     height: 30px;
-    margin-top: 10px;
+    margin-top: 20px;
     width: 260px;
 }
 
@@ -44,16 +47,16 @@
 }
 
 .LoginInputField {
-    width: 236px;
+    width: 244px;
     padding: 10px;
     border: 1px solid gray;
     border-radius: 5px;
-    transition: border-color 0.2s ease-out;
+    /* transition: border-color 0.2s ease-out; */
 }
 
 form {
-    width: 260px;
-    margin-right: 20px;
+    /* width: 260px;
+    margin-right: 20px; */
 }
 
 .LoginInputField:focus {
@@ -65,6 +68,7 @@ form {
     align-self: center;
     justify-self: center;
     height: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     width: 260px;
 }

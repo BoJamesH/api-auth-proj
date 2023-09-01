@@ -65,7 +65,7 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
       )}
           <div className='PostReviewButtonDiv'>
           {(sessionUser === null) ? (
-              <p>You must be logged in to create a review.</p>
+              <p className='NoLogin'>You must be logged in to create a review.</p>
             ) : (
               ((userAlreadyReviewed.length < 1 && !isOwner) || (reviews.length < 1 && !isOwner)) && (
                 <button onClick={postReviewClickHandler} className='PostReviewButton'>Post Your Review</button>

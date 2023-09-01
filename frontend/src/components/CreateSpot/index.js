@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postSpot } from '../../store/spots';
 import { useHistory } from 'react-router-dom';
 import './SpotForm.css';
@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 const SpotForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const sessionUser = useSelector((state) => state.session.use)
   // Form state
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -88,6 +88,12 @@ const SpotForm = () => {
   //   setErrors(null);
   // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
 
+  if (!sessionUser) {
+    return (
+      <p className='NoUser'>You must be logged in to list a new property.</p>
+    )
+  }
+
   return (
     <>
     <div className='CreateFormIntro'>
@@ -121,9 +127,6 @@ const SpotForm = () => {
       </label>
         <span className='CreateCityStateSpan'>
         <input className='CreateCity' type="text" value={city} placeholder='City' onChange={(e) => setCity(e.target.value)}  />
-        <div className='CreateFormErrors'>
-        {errors.city && (<p>{errors.city}</p>)}
-      </div>
       <select
           className='CreateState'
           value={state}
@@ -184,9 +187,9 @@ const SpotForm = () => {
       </select>
       </span>
         {/* <input className='CreateFormField' type="text" value={state} onChange={(e) => setState(e.target.value)}  /> */}
-        <div className='CreateFormErrors'>
-        {errors.state && (<p>{errors.state}</p>)}
-      </div>
+        <span style={{ color: 'red' }} className='CreateFormErrorsCityState'>
+        {errors.city && (<p className='CityErrors'>{errors.city}</p>)} {errors.state && (<p>{errors.state}</p>)}
+      </span>
       <label className='LatLabel'>
         Latitude:
       </label>
@@ -197,12 +200,12 @@ const SpotForm = () => {
         <input className='CreateLat' type="text" value={lat} placeholder='Latitude' onChange={(e) => setLat(e.target.value)}  />
         <input className='CreateLng' type="text" value={lng} placeholder='Longitude' onChange={(e) => setLng(e.target.value)}  />
       </span>
-      <div className='CreateFormErrors'>
-        {errors.lat && (<p>{errors.lat}</p>)} {errors.latReq && (<p>{errors.latReq}</p>)}
-      </div>
-      <div className='CreateFormErrors'>
-      {errors.lng && (<p>{errors.lng}</p>)} {errors.lngReq && (<p>{errors.lngReq}</p>)}
-      </div>
+      <span style={{ color: 'red' }} className='CreateFormErrorsCityState'>
+        {errors.lat && (<p className='CityErrors'>{errors.lat}.</p>)} {errors.latReq && (<p className='CityErrors'>{errors.latReq}.</p>)}
+        {errors.lng && (<p>{errors.lng}.</p>)} {errors.lngReq && (<p>{errors.lngReq}.</p>)}
+      </span>
+
+
       <label>
         Property Title:
       </label>

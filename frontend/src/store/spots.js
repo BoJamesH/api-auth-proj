@@ -119,11 +119,15 @@ export const fetchSpot = (spotId) => async (dispatch) => {
 }
 
 export const fetchCurrentSpots = () => async (dispatch) => {
-  const response = await csrfFetch('/api/spots/current');
-  if (!response.ok) throw new Error ('Failed to fetch your properties')
-  const data = await response.json();
-  const currentSpots = data.Spots
-  await dispatch(loadCurrentSpots(currentSpots))
+  try {
+    const response = await csrfFetch('/api/spots/current');
+    if (response.ok) await dispatch(loadCurrentSpots(currentSpots))
+    const data = await response.json();
+    const currentSpots = data.Spots
+    return currentSpots;
+  } catch (error) {
+    console.error('Error fetching current spots:', error);
+  }
 }
 
 export const deleteSpot = (spotId) => async (dispatch) => {

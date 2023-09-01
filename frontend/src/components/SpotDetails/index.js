@@ -60,7 +60,11 @@ const SpotDetails = () => {
               <h2 className='ReservePricePerNight'>${spot.price.toFixed(2)}</h2><span className='PerNightReserveBox'> per night</span>
               <span className='RightSideReserveBox'>
               <span className='ReserveBoxStar'>★</span>
-              <span className='ReserveAvgRating'></span>{spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span></div>
+              {spot.avgRating !== null && spot.avgRating
+                ? `${parseFloat(spot.avgRating.toFixed(1))} · ${
+                    spot.numReviews === 1 ? "1 review" : `${spot.numReviews} reviews`
+                  }`
+                : 'New'}</span></div>
             <div className='ReserveButtonDiv'>
               {sessionUser === null && (
                 <div className='ReserveNotLoggedIn'>You must be logged in to create a booking.</div>
@@ -71,7 +75,13 @@ const SpotDetails = () => {
           <div className='SpotDescription'>{spot.description}</div>
           <div className='ReviewInfoDiv'>
             <span className='StarsReviewsAboveReviewList'>
-              <span className='AvgRating'>★ {spot.avgRating !== null && spot.avgRating ? `${parseFloat(spot.avgRating.toFixed(1))} · ${spot.numReviews} reviews` : 'New'}</span>
+            <span className='AvgRating'>
+              ★ {spot.avgRating !== null && spot.avgRating
+                ? `${parseFloat(spot.avgRating.toFixed(1))} · ${
+                    spot.numReviews === 1 ? "1 review" : `${spot.numReviews} reviews`
+                  }`
+                : 'New'}
+            </span>
             </span>
           </div>
             <ReviewsList spotId={spotId} spotOwnerId={spot.ownerId} />

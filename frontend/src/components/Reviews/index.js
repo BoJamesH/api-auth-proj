@@ -9,14 +9,14 @@ import UpdateReviewModal from '../CreateReviewModal/UpdateReviewModal.js'
 
 const ReviewsList = ({ spotId, spotOwnerId }) => {
   const dispatch = useDispatch();
-  const reviews = useSelector((state) => state.reviewsState.reviews);
+  const reviews = useSelector((state) => state.reviewsState.reviews.reverse());
   const sessionUser = useSelector((state) => state.session.user);
   const [showModal, setShowModal] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [reviewIdToUpdate, setReviewIdToUpdate] = useState(null)
-
+  console.log('REVIEWS', reviews)
 
   useEffect(() => {
     dispatch(fetchReviews(spotId));
@@ -73,8 +73,9 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
             )}
       </div>
         <div className="ReviewsList">
-          {reviews.map((review, index) => (
+          {reviews.reverse().map((review, index) => (
             <div key={review.id} className={`ReviewItem ${index % 2 === 0 ? 'EvenReview' : 'OddReview'}`}>
+              {console.log(review)}
               <div className="ReviewUsername">{review.User.firstName}</div>
               <div className="ReviewDate">{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</div>
               <div className="ReviewStarRating">

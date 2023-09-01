@@ -26,10 +26,15 @@ const CurrentSpots = () => {
 
 
   useEffect(() => {
+    // Check if the user is logged in
+    if (!sessionUser) {
+      return; // Don't make the request if the user is not logged in
+    }
+
     if (spots.length === 0) {
       dispatch(fetchCurrentSpots());
     }
-  }, [dispatch, isLoading]);
+  }, [dispatch, isLoading, sessionUser]);
 
   const handleUpdate = () => {
     console.log("Update button clicked");

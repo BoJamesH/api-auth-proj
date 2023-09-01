@@ -30,30 +30,31 @@
     width: 280px;
     height: 120px;
     box-sizing: border-box;
-    margin-right: 20px;
+    margin-right: 80px;
 }
 
 .CreateReviewSubmitButtonDiv {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-bottom: 20px;
+    margin-left: 30px;
 }
 
 .CreateReviewSubmitButton {
     width: 200px;
     height: 30px;
+    text-align: center;
+    align-self: center;
 }
 
 .CreateReviewStarRatingDiv {
     justify-content: center;
-    font-size: 16px;
     text-align: center;
+    font-size: 16px;
 }
 
 .CreateReviewStarP {
     font-size: 20px;
+    text-align: center;
+    margin-right: 60px
 }
 
 .ReviewFormStar {
@@ -68,4 +69,5 @@
 
 .starsError {
     text-align: center;
+    margin-right: 80px;
 }

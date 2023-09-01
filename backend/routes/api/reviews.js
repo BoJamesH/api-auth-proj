@@ -9,27 +9,28 @@ const router = express.Router()
 router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id;
     const userReviews = await Review.findAll({
-        where: { userId },
-        include: [
-            {
-                model: User,
-                attributes: ['id', 'firstName', 'lastName']
-            },
-            {
-                model: Spot,
-                attributes: { exclude: ['createdAt', 'updatedAt', 'description'] },
-                include: {
-                    model: SpotImage,
-                    attributes: ['url'],
-                    limit: 1,
-                    required: false,
-                }
-            },
-            {
-              model: ReviewImage,
-              attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] },
-            },
-        ],
+      where: { userId },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+          model: Spot,
+          attributes: { exclude: ['createdAt', 'updatedAt', 'description'] },
+          include: {
+            model: SpotImage,
+            attributes: ['url'],
+            limit: 1,
+            required: false,
+          }
+        },
+        {
+          model: ReviewImage,
+          attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] },
+        },
+      ],
+      order: [['createdAt', 'ASC']]
     });
     if (!userReviews) return res.status(404).json({ message: "No reviews by the current user could be found" })
     // Map the userReviews and modify the Spot object

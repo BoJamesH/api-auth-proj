@@ -36,7 +36,7 @@ export const fetchReviews = (spotId) => async (dispatch) => {
       } else if (!response.ok) {
         throw new Error('Failed to fetch the reviews for this property');
       } else {
-        const spotReviews = data.Reviews;
+        const spotReviews = data.Reviews.reverse();
         dispatch(loadReviews(spotReviews));
       }
     } catch (error) {

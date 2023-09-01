@@ -147,8 +147,13 @@ function CreateReviewModal({ showModal, setShowModal, spotId }) {
             {starsNotSelected && (
               <p className="starsError">Star rating is required.</p>
             )}
+            {reviewText.length < 10 && (
+              <p className="starsError">Review must contain at least ten characters.</p>
+            )}
             <div className="CreateReviewSubmitButtonDiv">
-                <button className="CreateReviewSubmitButton" type="submit">Submit Review</button>
+              <button className="CreateReviewSubmitButton" type="submit" disabled={reviewText.length < 10}>
+                Submit Review
+              </button>
             </div>
         </form>
         </div>

@@ -7,9 +7,11 @@ import './CurrentBookings.css'
 const CurrentBookings = () => {
   const history = useHistory()
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user)
   const userBookings = useSelector((state) => state.bookingsState.userBookings.Bookings);
+  // const userId = useSelector((state) => state.session.user.id);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
-  const userId = useSelector((state) => state.session.user.id);
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [spotToDelete, setSpotToDelete] = useState(null);
   console.log(userBookings)
@@ -24,6 +26,12 @@ const CurrentBookings = () => {
 
 
   useEffect(() => {
+
+    if (!sessionUser) {
+      return; // Don't make the request if the user is not logged in
+    }
+    const userId = sessionUser.id;
+
     dispatch(fetchUserBookings(parseInt(userId)));
   }, [dispatch, isLoading]);
 
@@ -34,6 +42,12 @@ const CurrentBookings = () => {
   if (userBookings && (userBookings.length < 1)) {
     return (
       <p>You have no bookings at this time.</p>
+    )
+  }
+
+  if (!sessionUser) {
+    return (
+      <p className='NoUser'>You must be logged in to view your bookings.</p>
     )
   }
 

@@ -16,7 +16,16 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   }
 
-  const closeMenu = () => {
+  const closeMenu = (e) => {
+    if (ulRef.current && ulRef.current.contains(e.target)) {
+      if (e.target.getAttribute("id") === "DropdownLink") {
+        const linkText = e.target.textContent.trim();
+        if (linkText === "Manage Properties" || linkText === "Manage Bookings") {
+          setShowMenu(false);
+        }
+      }
+      return;
+    }
     setShowMenu(false);
   };
 
@@ -42,8 +51,8 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" /><i id='HamburgerIcon' className="fas fa-bars"/>
       </button>
       <ul className={ulClassName} ref={ulRef}>
+        <li className="UserDropdownItem">Hello, {user.firstName}</li>
         <li className="UserDropdownItem">{user.username}</li>
-        <li className="UserDropdownItem">{user.firstName} {user.lastName}</li>
         <li className="UserDropdownItem">{user.email}</li>
         <li className="UserDropdownItem">
           <NavLink id="DropdownLink" to='/spots/current' onClick={closeMenu}>

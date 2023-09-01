@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserReviews } from "../../store/reviews";
 import { useHistory } from "react-router-dom";
+import ConfirmationReviewDeleteModal from "../Reviews/ConfirmationReviewDelete";
+import UpdateReviewModal from "../CreateReviewModal/UpdateReviewModal";
 import '../CurrentBookings/CurrentBookings.css'
 
 const CurrentReviews = () => {
@@ -12,15 +14,18 @@ const CurrentReviews = () => {
   // const userId = useSelector((state) => state.session.user.id);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   console.log(userReviews)
-
+  const [showModal, setShowModal] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [spotToDelete, setSpotToDelete] = useState(null);
+  const [reviewToDelete, setReviewToDelete] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [reviewIdToUpdate, setReviewIdToUpdate] = useState(null)
+  const [spotId, setSpotId] = useState(null)
 
 
   useEffect(() => {
 
     if (!sessionUser) {
-      return; // Don't make the request if the user is not logged in
+      return; 
     }
     const userId = sessionUser.id;
 
@@ -33,15 +38,43 @@ const CurrentReviews = () => {
 
   if (userReviews && (userReviews.length < 1)) {
     return (
-      <p>You have no bookings at this time.</p>
+      <p>You have no reviews at this time.</p>
     )
   }
 
   if (!sessionUser) {
     return (
-      <p className='NoUser'>You must be logged in to view your bookings.</p>
+      <p className='NoUser'>You must be logged in to view your reviews.</p>
     )
   }
+
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteReviewModal = (reviewId, spotId) => {
+    setReviewToDelete(reviewId);
+    openDeleteModal();
+    setSpotId(spotId);
+  };
+
+  const openUpdateModal = () => {
+    setIsUpdateModalOpen(true);
+  }
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+  }
+
+  const handleUpdateReviewModal = (reviewId, spotId) => {
+    setReviewIdToUpdate(reviewId);
+    openUpdateModal();
+    setSpotId(spotId);
+  };
 
   return (
     <div>
@@ -57,17 +90,43 @@ const CurrentReviews = () => {
                 <li className="UserBookingLi">Created: <span className="UserBookingLiPopulated">{new Date(review.createdAt).toLocaleDateString()}</span></li>
                 <li className="UserBookingLi">Stars: <span className="UserBookingLiPopulated">{review.stars}</span></li>
                 <li className="UserBookingLi">Review: <span className="UserBookingLiPopulated">{review.review}</span></li>
-                <li className="UserBookingLi">Address: <span className="UserBookingLiPopulated">{review.Spot.address}</span></li>
-                <li className="UserBookingLi">Location: <span className="UserBookingLiPopulated">{review.Spot.city}, {review.Spot.state}</span></li>
                 <span className="UserBookingButtonsSpan">
-                  <button className="UserBookingUpdateButton">Update Review</button>
-                  <button className="UserBookingDeleteButton">Delete Review</button>
-
+                    <button
+                    className="UpdateReviewButton"
+                    disabled={true}
+                    onClick={() => handleUpdateReviewModal(review.id, review.Spot.id)}
+                    >
+                    Update
+                    </button>
+                    <button
+                    className="DeleteReviewButton"
+                    onClick={() => handleDeleteReviewModal(review.id, review.Spot.id)}
+                    >
+                    Delete
+                    </button>
                 </span>
               </ul>
             </div>
           </div>
         ))}
+        {isDeleteModalOpen && (
+          <ConfirmationReviewDeleteModal
+            onClose={closeDeleteModal}
+            onDelete={() => {
+              handleDeleteReviewModal(reviewToDelete);
+            }}
+            reviewToDelete={reviewToDelete}
+            spotId={spotId}
+          />
+        )}
+                {isUpdateModalOpen && (
+          <UpdateReviewModal
+          showModal={isUpdateModalOpen}
+          setShowModal={setIsUpdateModalOpen}
+          reviewIdToUpdate={reviewIdToUpdate}
+          spotId={spotId}
+        />
+        )}
       </div>
     </div>
   );

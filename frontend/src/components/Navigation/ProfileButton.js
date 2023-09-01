@@ -64,6 +64,11 @@ function ProfileButton({ user }) {
             Manage Bookings
           </NavLink>
         </li>
+        <li className="UserDropdownItem">
+          <NavLink id="DropdownLink" to='/reviews/current' onClick={closeMenu}>
+            Manage Reviews
+          </NavLink>
+        </li>
         <li className="UserDropdownItem" id="DropdownLogoutLi">
           <button className="DropdownLogoutButton" onClick={logout}>Log Out</button>
         </li>

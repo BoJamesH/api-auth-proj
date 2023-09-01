@@ -9,10 +9,23 @@ To Do CheckList:
 
 - REMEMBER TO EDIT STORE SHAPE
 - Fix create spot URL fields not being centered.
-- Fix create and update spots forms (mainly styling but check functionality).
 - Fix profile dropdown for wider screens.
 - Fix review modals after I stupidly broke them
 
+Punished One and Deogracias give Rosary of Torment which causes Reaper Rosary to launch a wave attack while giving a 15% increase to Ruego and Mystic damage respectively.
+
+The Demented One and The Partisan give Endless Wrath which restores Blood Pact upon enemy hits(pretty much near infinite Berserker Mode) and increase duration of Blood Pact and increase parry window respectively.
+
+Viridiana and Nacimiento are just one of several combos that give Jaloque's Favour which increases Ruego Al Alba's damage while giving health regen on fatalities and improved flask use respectively.
+
+Combine with some of the perks from Ruego Al Alba like Blood Pact(Berserker Mode), Covenant of Atonement(health regen on hits while in Blood Pact), Cold Blood(increased duration of Blood Pact), Reaper Rosary(Blood Wave Slash/Corpse Piler), and Blessed Steel(damage increase) as well as the combo increasing buffs and you can pretty much just mow down enemies and bosses via brute force.
+
+For the Veredicto, Gregals Favor(damage increase for hammer) from The Ecstatic Novice(stun increase) and Cobijada Mayor(hp regen) pretty much nullify any problem the game tosses at you.
+
+Also, whoever said the game doesn't have disturbing fucked up shit obviously has not met Cesareo(first appearance was the Artbook from Blasphemous 1 same for a lot of bosses and enemies actually).
+
+
+- Fix create and update spots forms (mainly styling but check functionality). - FIXED
 - Huge render problems (Fixed)
 - Fix profile button modal so it looks decent on all screens (fixed, mostly
 - Fix spotImages upload issues on local and render (i THINK this is fixed) (seems fixed but update spot for images is an issue) FIXED

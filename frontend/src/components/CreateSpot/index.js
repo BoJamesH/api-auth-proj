@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 const SpotForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionUser = useSelector((state) => state.session.use)
+  const sessionUser = useSelector((state) => state.session.user)
   // Form state
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -88,7 +88,7 @@ const SpotForm = () => {
   //   setErrors(null);
   // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
 
-  if (!sessionUser) {
+  if (!sessionUser.id) {
     return (
       <p className='NoUser'>You must be logged in to list a new property.</p>
     )

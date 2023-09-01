@@ -18,7 +18,7 @@ const SpotForm = () => {
   const [lng, setLng] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(null);
   const [errors, setErrors] = useState({})
   const [imageUrls, setImageUrls] = useState([]);
 
@@ -220,6 +220,7 @@ const SpotForm = () => {
           type="number"
           value={price}
           onChange={handlePriceChange} // Use the new handler to handle price changes
+          placeholder='$ Price'
         />
       <div className='CreateFormErrors'>
       {errors.price && (<p>{errors.price}</p>)}
@@ -233,30 +234,35 @@ const SpotForm = () => {
         className='CreateImageUrlField'
         value={imageUrls[0]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 0)}
+        placeholder='Image 1'
       />
       <input
         type='url'
         className='CreateImageUrlField'
         value={imageUrls[1]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 1)}
+        placeholder='Image 2'
       />
       <input
         type='url'
         className='CreateImageUrlField'
         value={imageUrls[2]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 2)}
+        placeholder='Image 3'
       />
       <input
         type='url'
         className='CreateImageUrlField'
         value={imageUrls[3]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 3)}
+        placeholder='Image 4'
       />
       <input
         type='url'
         className='CreateImageUrlField'
         value={imageUrls[4]?.url || ''}
         onChange={(e) => handleAddImageUrl(e, 4)}
+        placeholder='Image 5'
       />
       </div>
       <div className='CreateSubmitButtonDiv'>

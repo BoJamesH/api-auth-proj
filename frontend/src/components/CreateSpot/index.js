@@ -78,6 +78,7 @@ const SpotForm = () => {
 
   const handlePriceChange = (e) => {
     const newPrice = parseFloat(e.target.value);
+    newPrice = newPrice.toFixed(2)
     setPrice(newPrice);
   };
 

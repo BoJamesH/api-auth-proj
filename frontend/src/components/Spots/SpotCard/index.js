@@ -43,7 +43,7 @@ const SpotCard = ({ spotId }) => {
           <span className="customPrice">
             {console.log('SPOT', spot)}
             {console.log('spot.price', spot.price)}
-            {spot && spot.price ? `$${spot.price.toFixed(2)}` : null}
+            {spot && spot.price ? `$${parseFloat(spot.price.toFixed(2))}` : null}
           </span>
           <span className="customPerNight">per night</span>
           </span>

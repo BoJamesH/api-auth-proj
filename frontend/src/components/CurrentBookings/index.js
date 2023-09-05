@@ -31,9 +31,8 @@ const CurrentBookings = () => {
       return; // Don't make the request if the user is not logged in
     }
     const userId = sessionUser.id;
-
     dispatch(fetchUserBookings(parseInt(userId)));
-  }, [dispatch, isLoading]);
+  }, [dispatch, isLoading, sessionUser.id]);
 
   const handleUpdate = () => {
     console.log("Update button clicked");

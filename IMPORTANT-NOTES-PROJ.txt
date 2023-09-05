@@ -11,6 +11,7 @@ To Do CheckList:
 - Fix create spot URL fields not being centered.
 - Fix profile dropdown for wider screens.
 - Fix review modals after I stupidly broke them
+- Issue where after logout current Bookings doesn't want to work, fix this
 
 Punished One and Deogracias give Rosary of Torment which causes Reaper Rosary to launch a wave attack while giving a 15% increase to Ruego and Mystic damage respectively.
 

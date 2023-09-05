@@ -16,7 +16,6 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
   const [reviewToDelete, setReviewToDelete] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [reviewIdToUpdate, setReviewIdToUpdate] = useState(null)
-  console.log('REVIEWS', reviews)
 
   useEffect(() => {
     dispatch(fetchReviews(spotId));
@@ -56,7 +55,6 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
 
   const userAlreadyReviewed = reviews.filter((review) => review.userId === sessionUser?.id);
   const isOwner = sessionUser?.id === spotOwnerId;
-  console.log(isOwner)
 
   return (
       <>
@@ -75,7 +73,6 @@ const ReviewsList = ({ spotId, spotOwnerId }) => {
         <div className="ReviewsList">
           {reviews.reverse().map((review, index) => (
             <div key={review.id} className={`ReviewItem ${index % 2 === 0 ? 'EvenReview' : 'OddReview'}`}>
-              {console.log(review)}
               <div className="ReviewUsername">{review.User.firstName}</div>
               <div className="ReviewDate">{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</div>
               <div className="ReviewStarRating">

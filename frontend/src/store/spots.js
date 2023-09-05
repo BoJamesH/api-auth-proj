@@ -87,7 +87,6 @@ export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
     // console.log('imageObjects', imageObjects)
 
     for (let spotImage of spotImages) {
-      console.log('spotImage in array', spotImage)
       const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -114,7 +113,6 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`);
     if (!response.ok) throw new Error('Failed to fetch property')
     const spot = await response.json();
-    console.log(spot)
     await dispatch(loadSingleSpot(spot));
 }
 

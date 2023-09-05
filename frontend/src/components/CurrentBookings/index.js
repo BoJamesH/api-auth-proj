@@ -14,7 +14,6 @@ const CurrentBookings = () => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [spotToDelete, setSpotToDelete] = useState(null);
-  console.log(userBookings)
 
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true);

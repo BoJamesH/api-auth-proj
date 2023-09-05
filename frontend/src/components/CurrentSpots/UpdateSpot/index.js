@@ -33,7 +33,6 @@ const UpdateSpot = () => {
   const [imageUrls, setImageUrls] = useState(['', '', '', '', '']);
 
   useEffect(() => {
-    console.log(spotToUpdate)
     if (spotToUpdate) {
       setAddress(spotToUpdate.address || '');
       setCity(spotToUpdate.city || '');
@@ -76,7 +75,6 @@ const UpdateSpot = () => {
       // SpotImages: imageUrls,
     };
     try {
-      console.log('IMAGE URLS', imageUrls)
       const response = await dispatch(updateSpot(spotToUpdate.id, newSpot, imageUrls));
       await dispatch(fetchSpot(spotToUpdate.id));
         setErrors({});

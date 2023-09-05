@@ -45,7 +45,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         }
         return formattedReview;
       });
-    // console.log(formattedReviews)
     res.json( {"Reviews": formattedReviews} )
 })
 

@@ -50,9 +50,7 @@ const SpotForm = () => {
       description,
       price,
     };
-    console.log(newSpot)
     try {
-      console.log(imageUrls)
       if (!imageUrls[0].url) {
         setOneImage(false)
         return
@@ -78,7 +76,6 @@ const SpotForm = () => {
 
   const handlePriceChange = (e) => {
     const newPrice = parseFloat(e.target.value);
-    newPrice = newPrice.toFixed(2)
     setPrice(newPrice);
   };
 

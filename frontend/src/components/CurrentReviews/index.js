@@ -13,7 +13,6 @@ const CurrentReviews = () => {
   const userReviews = useSelector((state) => state.reviewsState.userReviews);
   // const userId = useSelector((state) => state.session.user.id);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
-  console.log(userReviews)
   const [showModal, setShowModal] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
@@ -25,7 +24,7 @@ const CurrentReviews = () => {
   useEffect(() => {
 
     if (!sessionUser) {
-      return; 
+      return;
     }
     const userId = sessionUser.id;
 

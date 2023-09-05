@@ -108,8 +108,6 @@ router.get('/:spotId/reviews', async (req, res, next) => {
       },
     ],
   });
-  // if (reviewsBySpotId.length < 1) return res.status(404).json({ message: 'No reviews for that property could be found' })
-  // console.log(reviewsBySpotId)
   res.status(200).json({ 'Reviews': reviewsBySpotId })
 });
 
@@ -199,7 +197,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;
-  // console.log(spotId)
   const userId = req.user.id;
   const { startDate, endDate } = req.body;
   const errors = {};
@@ -224,7 +221,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
   }
 
   const spotToBook = await Spot.findByPk(spotId);
-  // console.log(spotToBook)
   if (!spotToBook) return res.status(404).json({ message: "The property you are trying to book could not be found" })
   if (spotToBook.ownerId === userId) return res.status(403).json({ message: 'The owner of a property is not allowed to book that property'})
   // TAKE CARE OF BOOKING CONFLICT ERRORS HERE
@@ -309,7 +305,6 @@ router.get('/:spotId', async (req, res, next) => {
     avgRating: 0,
   }
 }
-  // console.log(avgRating)
   let numReviews = {numReviews: 0};
   if (starArray) {
     if (starArray.length > 0) {

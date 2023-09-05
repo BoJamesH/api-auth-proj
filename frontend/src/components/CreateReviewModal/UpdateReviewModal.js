@@ -8,9 +8,7 @@ import "./CreateReviewModal.css"; // Update with your CSS file
 function UpdateReviewModal({ showModal, setShowModal, reviewIdToUpdate, spotId }) {
   const dispatch = useDispatch();
   const reviews = useSelector(state => state.reviewsState.reviews);
-  console.log('REVIEWIDTOUPDATE', reviewIdToUpdate)
   const reviewToUpdate = reviews.find(review => review.id === reviewIdToUpdate);
-  console.log('reviewToUpdate', reviewToUpdate)
   const [reviewText, setReviewText] = useState(reviewToUpdate.review);
   const [starsSelected, setStarsSelected] = useState(true);
   const [selectedStars, setSelectedStars] = useState(reviewToUpdate.stars);

@@ -25,7 +25,6 @@ export const fetchUserBookings = (userId) => async (dispatch) => {
     try {
       const response = await csrfFetch(`/api/bookings/current`);
       const data = await response.json();
-      console.log(data)
 
       if (response.status === 404) {
         dispatch(loadUserBookings([]));
@@ -45,7 +44,6 @@ export const fetchSpotBookings = (spotId) => async (dispatch) => {
     try {
       const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
       const data = await response.json();
-      console.log(data)
 
       if (response.status === 404) {
         dispatch(clearBookingsState());

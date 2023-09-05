@@ -22,7 +22,6 @@ function CreateReviewModal({ showModal, setShowModal, spotId }) {
       review: reviewText,
       stars: selectedStars,
     }
-    console.log(newReview)
     try {
       const response = await dispatch(addReview(newReview, spotId))
     } catch (error) {

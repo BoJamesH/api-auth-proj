@@ -9,7 +9,6 @@ const SpotBookings = () => {
   const history = useHistory()
   const dispatch = useDispatch();
   const spotBookings = useSelector((state) => state.bookingsState.spotBookings.Bookings);
-  console.log(spotBookings)
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   const spotInQuestion = useSelector((state) => state.spotsState.singleSpot)
   const sessionUser = useSelector((state) => state.session.user);
@@ -17,7 +16,6 @@ const SpotBookings = () => {
   const [ownerCatch, setOwnerCatch] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [spotToDelete, setSpotToDelete] = useState(null);
-  console.log(spotBookings)
 
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true);

@@ -50,14 +50,14 @@
 }
 
 .OddReview {
-    background-color: rgb(187, 205, 243);
+    background: linear-gradient(to right, rgb(187, 205, 243) 0%, white 100%);
     border-radius: 5px;
-}
+  }
 
-.EvenReview {
-    background-color: rgb(224, 221, 224);
+  .EvenReview {
+    background: linear-gradient(to right, rgb(224, 221, 224) 0%, white 100%);
     border-radius: 5px;
-}
+  }
 
 .NoLogin {
     margin-left: 10px;

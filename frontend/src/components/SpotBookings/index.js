@@ -12,7 +12,7 @@ const SpotBookings = () => {
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   const spotInQuestion = useSelector((state) => state.spotsState.singleSpot);
   const spotBookings = useSelector((state) => state.bookingsState.spotBookings.Bookings);
-  const spotPricePerDay = spotInQuestion.price
+  const spotPricePerDay = useSelector(state => state?.spotsState?.singleSpot?.price)
 
   console.log(spotPricePerDay, 'SPOT PRICE PER DAY <<<<<')
   const sessionUser = useSelector((state) => state.session.user);
@@ -58,7 +58,7 @@ const SpotBookings = () => {
 
   return (
     <>
-    {spotInQuestion && spotPricePerDay ? (
+    {!isLoading && spotInQuestion && spotPricePerDay ? (
     <div>
       <h2 className="SpotBookingsTitle">Bookings for {spotInQuestion ? spotInQuestion.name : null}</h2>
       {ownerCatch && <p className="OwnerP">You Own This Property</p>}

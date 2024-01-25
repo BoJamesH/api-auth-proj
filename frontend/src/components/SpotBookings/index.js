@@ -44,7 +44,6 @@ const SpotBookings = () => {
   };
 
   if (spotInQuestion === null) {
-    // Render loading or a placeholder while spotInQuestion is being fetched
     return <p>Loading...</p>;
   }
 
@@ -64,7 +63,7 @@ const SpotBookings = () => {
           <div key={index} className="SpotBookingCardDiv">
             <h3>Booking {index + 1}</h3>
             <div className="SpotBookingContent">
-              {/* <img className="SpotBookingPreviewImg" src={spotInQuestion?.SpotImages[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'} alt="Spot Preview" /> */}
+              
 
                 <div className="SpotBookingLi">Start Date: <span className="SpotBookingLiPopulated">{new Date(booking.startDate).toLocaleDateString()}</span></div>
                 <div className="SpotBookingLi">End Date: <span className="SpotBookingLiPopulated">{new Date(booking.endDate).toLocaleDateString()}</span></div>

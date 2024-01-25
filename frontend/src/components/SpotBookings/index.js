@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpotBookings } from "../../store/bookings";
 import { fetchSpot } from "../../store/spots";
@@ -16,6 +16,8 @@ const SpotBookings = () => {
   const [ownerCatch, setOwnerCatch] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [spotToDelete, setSpotToDelete] = useState(null);
+  const spotInQuestionMemoized = useMemo(() => spotInQuestion, [spotInQuestion]);
+
 
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true);
@@ -27,15 +29,22 @@ const SpotBookings = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchSpot(spotId));
-      dispatch(fetchSpotBookings(parseInt(spotId)));
+      if (spotId && sessionUser.id && !spotInQuestion) {
+        await dispatch(fetchSpot(spotId));
+      }
+
+      if (spotId) {
+        dispatch(fetchSpotBookings(parseInt(spotId)));
+      }
+
       if (spotInQuestion?.Owner.id === sessionUser.id) {
         setOwnerCatch(true);
       }
     };
 
     fetchData();
-  }, [dispatch, spotId, sessionUser.id, spotInQuestion]);
+  }, [spotId, sessionUser.id, spotInQuestion]);
+
 
 
 
@@ -63,7 +72,7 @@ const SpotBookings = () => {
           <div key={index} className="SpotBookingCardDiv">
             <h3>Booking {index + 1}</h3>
             <div className="SpotBookingContent">
-              
+
 
                 <div className="SpotBookingLi">Start Date: <span className="SpotBookingLiPopulated">{new Date(booking.startDate).toLocaleDateString()}</span></div>
                 <div className="SpotBookingLi">End Date: <span className="SpotBookingLiPopulated">{new Date(booking.endDate).toLocaleDateString()}</span></div>

@@ -9,6 +9,10 @@
 
 }
 
+.OwnerP {
+    margin-left: 32px;
+}
+
 .AllSpotBookingsDiv {
     display: flex;
     flex-direction: row;

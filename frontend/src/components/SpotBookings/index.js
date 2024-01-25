@@ -9,9 +9,10 @@ import './SpotBookings.css';
 const SpotBookings = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const spotBookings = useSelector((state) => state.bookingsState.spotBookings.Bookings);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   const spotInQuestion = useSelector((state) => state.spotsState.singleSpot);
+  const spotBookings = useSelector((state) => state.bookingsState.spotBookings.Bookings);
+  const spotPricePerDay = useSelector((state) => state.spotsState.singleSpot.price)
   const sessionUser = useSelector((state) => state.session.user);
   const { spotId } = useParams();
   const [ownerCatch, setOwnerCatch] = useState(false);
@@ -84,7 +85,7 @@ const SpotBookings = () => {
           </div>
         </>
       ) : (
-        <CreateBooking spotOwner={spotInQuestion.Owner} spotBookings={spotBookings} />
+        <CreateBooking spotBookings={spotBookings} spotPricePerDay={spotPricePerDay} />
         // <div className="AllSpotBookingsDiv">
         //   {spotBookings && spotBookings.map((booking, index) => (
         //     <div key={index} className="SpotBookingCardDiv">

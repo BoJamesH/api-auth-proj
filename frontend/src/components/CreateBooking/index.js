@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const CreateBooking = ({ spotOwner, spotBookings }) => {
+const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [bookingPrice, setBookingPrice] = useState(0);
 
-  // Your logic for preventing overlapping bookings goes here
+  useEffect(() => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const timeDiff = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+
+    const totalBookingPrice = diffDays * spotPricePerDay;
+    setBookingPrice(totalBookingPrice);
+  }, [startDate, endDate, spotPricePerDay]);
 
   const handleCreateBooking = () => {
-    // Implement your logic to create a new booking
-    console.log("Create booking:", startDate, endDate);
+    // Implement your logic to create a new booking, including the price
+    console.log("Create booking:", startDate, endDate, bookingPrice);
   };
 
   return (
@@ -31,6 +41,9 @@ const CreateBooking = ({ spotOwner, spotBookings }) => {
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
+      </div>
+      <div>
+        <p>Total Price: ${bookingPrice}</p>
       </div>
       <button onClick={handleCreateBooking}>Create Booking</button>
     </div>

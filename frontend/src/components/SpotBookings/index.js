@@ -12,7 +12,9 @@ const SpotBookings = () => {
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   const spotInQuestion = useSelector((state) => state.spotsState.singleSpot);
   const spotBookings = useSelector((state) => state.bookingsState.spotBookings.Bookings);
-  const spotPricePerDay = useSelector((state) => state.spotsState.singleSpot.price)
+  const spotPricePerDay = spotInQuestion.price
+
+  console.log(spotPricePerDay, 'SPOT PRICE PER DAY <<<<<')
   const sessionUser = useSelector((state) => state.session.user);
   const { spotId } = useParams();
   const [ownerCatch, setOwnerCatch] = useState(false);
@@ -44,23 +46,19 @@ const SpotBookings = () => {
     };
 
     fetchData();
-  }, [spotId, sessionUser.id, spotInQuestion]);
+  }, [dispatch, spotId, sessionUser.id, spotInQuestion]);
 
   const handleUpdate = () => {
     console.log("Update button clicked");
   };
 
-  if (spotInQuestion === null) {
+  if (spotInQuestion === null || !spotInQuestion) {
     return <p>Loading...</p>;
   }
 
-  if (spotBookings && spotBookings.length < 1) {
-    return (
-      <p>There are no current bookings for this property.</p>
-    );
-  }
-
   return (
+    <>
+    {spotInQuestion && spotPricePerDay ? (
     <div>
       <h2 className="SpotBookingsTitle">Bookings for {spotInQuestion ? spotInQuestion.name : null}</h2>
       {ownerCatch && <p className="OwnerP">You Own This Property</p>}
@@ -99,6 +97,10 @@ const SpotBookings = () => {
         // </div>
       )}
     </div>
+          ) : (
+            <p>Loading spot...</p>
+          )}
+      </>
   );
 }
 

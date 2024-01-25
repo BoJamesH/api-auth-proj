@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [bookingPrice, setBookingPrice] = useState(0);
   const [bookingConflict, setBookingConflict] = useState(null);
+  const secondPrice = useSelector(state => state.singleSpot)
 
   useEffect(() => {
     const start = new Date(startDate);
@@ -70,9 +72,14 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
       </div>
       {bookingConflict && (
         <div>
-          <p>Booking Conflict: Previous Booking for {bookingConflict.startDate} - {bookingConflict.endDate}</p>
+            <p>
+            Booking Conflict: Property Not Available{" "}
+            {new Date(bookingConflict.startDate).toLocaleDateString("en-GB")} -{" "}
+            {new Date(bookingConflict.endDate).toLocaleDateString("en-GB")}
+            </p>
         </div>
-      )}
+        )}
+
       <div>
         <p>Total Price: {isNaN(bookingPrice) ? "N/A" : `$${bookingPrice}`}</p>
       </div>

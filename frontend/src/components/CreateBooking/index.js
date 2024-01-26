@@ -3,6 +3,7 @@ import './CreateBooking.css'
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSpot } from '../../store/spots';
+import { createBooking } from "../../store/bookings";
 
 const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   const [startDate, setStartDate] = useState("");
@@ -64,16 +65,22 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     }
   }, [startDate, endDate, spotPricePerDay, spotBookings]);
 
-  const handleCreateBooking = () => {
-    if (bookingConflict) {
-      // Display conflict message with formatted dates
-      const conflictStartDate = new Date(bookingConflict.startDate).toLocaleDateString();
-      const conflictEndDate = new Date(bookingConflict.endDate).toLocaleDateString();
-      console.log(`Booking Conflict: Previous Booking for ${conflictStartDate} - ${conflictEndDate}`);
-    } else {
-      // Implement your logic to create a new booking, including the price
-      console.log("Create booking:", startDate, endDate, bookingPrice);
+  const handleCreateBooking = async (e, startDate, endDate, spotId) => {
+    e.preventDefault();
+    console.log("Create booking:", 'START DATE:', startDate, 'END DATE', endDate);
+    const newBooking = {
+      startDate: startDate,
+      endDate: endDate,
     }
+    try {
+      const response = await dispatch(createBooking(newBooking, spotId))
+      if (response.ok) {
+        console.log('SUCCESS!!! Booking created.')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    return
   };
 
   return (
@@ -145,7 +152,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
         <p className="TotalPriceP">Total Price:  <span className="TotalPriceSpan">{isNaN(bookingPrice) ? "N/A" : `$${bookingPrice}`}</span></p>
       </div>
       <button
-        onClick={handleCreateBooking}
+        onClick={(e) => handleCreateBooking(e, startDate, endDate, spot?.id)}
         disabled={bookingConflict !== null || dateError !== ""}
         className={(bookingConflict !== null || dateError !== "") ? "conflictButton" : "CreateBookingButton"}
       >

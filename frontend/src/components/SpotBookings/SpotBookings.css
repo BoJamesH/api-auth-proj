@@ -1,5 +1,5 @@
 .SpotBookingsTitle {
-    margin-left: 32px;
+    margin-left: 118px;
 }
 
 .CreateSpotBookingButton {
@@ -72,4 +72,8 @@ h3 {
 
 .SpotBookingCancel {
     height: 30px;
+}
+
+.CreateBookingsDiv {
+    margin-left: 62px;
 }

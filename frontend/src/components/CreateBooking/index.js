@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './CreateBooking.css'
 import { useParams, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchSpot } from '../../store/spots';
 
 const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
@@ -10,13 +9,14 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   const [endDate, setEndDate] = useState("");
   const [bookingPrice, setBookingPrice] = useState(0);
   const [bookingConflict, setBookingConflict] = useState(null);
+  const [dateError, setDateError] = useState("");
 
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const spot = useSelector((state) => state.spotsState.singleSpot);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
-  const sessionUser = useSelector((state) => state.session.user)
+  const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(fetchSpot(parseInt(spotId)));
@@ -49,6 +49,19 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
 
     // Set the booking conflict state
     setBookingConflict(conflict ? spotBookings[0] : null);
+
+    // Check for date error
+    const today = new Date();
+    const minimumStartDate = new Date(today);
+    minimumStartDate.setDate(today.getDate() + 2);
+
+    if (start < minimumStartDate) {
+      setDateError("Start date must be at least two days from now");
+    } else if (end < start) {
+      setDateError("End date cannot be before the start date");
+    } else {
+      setDateError("");
+    }
   }, [startDate, endDate, spotPricePerDay, spotBookings]);
 
   const handleCreateBooking = () => {
@@ -93,27 +106,34 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     </div>
     <div className="CreateBookingForm">
       <h2>Create Booking</h2>
-      <div>
+      <div className="CreateBookingDiv">
         <label htmlFor="startDate">Start Date:</label>
         <input
+          className="StartDateInput"
           type="date"
           id="startDate"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
       </div>
-      <div>
+      <div className="CreateBookingDiv">
         <label htmlFor="endDate">End Date:</label>
         <input
+          className="EndDateInput"
           type="date"
           id="endDate"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
       </div>
+      {dateError && (
+        <div className="ErrorDiv">
+          <p className="ErrorText">{dateError}</p>
+        </div>
+      )}
       {bookingConflict && (
-        <div>
-          <p>
+        <div className="ConflictDiv">
+          <p className="ConflictText">
             Booking Conflict: Property Currently Rented{" "}
             {new Date(bookingConflict.startDate).toLocaleDateString("en-US")} -{" "}
             {new Date(bookingConflict.endDate).toLocaleDateString("en-US")}
@@ -122,15 +142,15 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
       )}
 
       <div>
-        <p>Total Price: {isNaN(bookingPrice) ? "N/A" : `$${bookingPrice}`}</p>
+        <p className="TotalPriceP">Total Price:  <span className="TotalPriceSpan">{isNaN(bookingPrice) ? "N/A" : `$${bookingPrice}`}</span></p>
       </div>
       <button
         onClick={handleCreateBooking}
-        disabled={bookingConflict !== null}
-        className={bookingConflict !== null ? "conflictButton" : ""}
-        >
+        disabled={bookingConflict !== null || dateError !== ""}
+        className={(bookingConflict !== null || dateError !== "") ? "conflictButton" : "CreateBookingButton"}
+      >
         Create Booking
-    </button>
+      </button>
     </div>
     </>
   );

@@ -83,7 +83,9 @@ const SpotBookings = () => {
           </div>
         </>
       ) : (
+        <div className="CreateBookingsDiv">
         <CreateBooking spotBookings={spotBookings} spotPricePerDay={spotPricePerDay} />
+        </div>
         // <div className="AllSpotBookingsDiv">
         //   {spotBookings && spotBookings.map((booking, index) => (
         //     <div key={index} className="SpotBookingCardDiv">

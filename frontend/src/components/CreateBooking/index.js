@@ -1,10 +1,26 @@
 import React, { useState, useEffect } from "react";
+import './CreateBooking.css'
+import { useParams, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchSpot } from '../../store/spots';
 
 const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [bookingPrice, setBookingPrice] = useState(0);
   const [bookingConflict, setBookingConflict] = useState(null);
+
+  const { spotId } = useParams();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const spot = useSelector((state) => state.spotsState.singleSpot);
+  const isLoading = useSelector((state) => state.spotsState.isLoading);
+  const sessionUser = useSelector((state) => state.session.user)
+
+  useEffect(() => {
+    dispatch(fetchSpot(parseInt(spotId)));
+  }, [dispatch, spotId, isLoading]);
 
   useEffect(() => {
     const start = new Date(startDate);
@@ -48,6 +64,33 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   };
 
   return (
+    <>
+    <div className='CityStateCountry'>
+      {spot.city}, {spot.state}, {spot.country}
+    </div>
+    <div className='SpotDetailsImageDiv'>
+      <div className='LargeSpotImageDiv'>
+        <img
+          className='LargeSpotImage'
+          src={spot.SpotImages?.[0]?.url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'}
+          alt="Large spot image"
+        />
+      </div>
+      <span className='AllSmallSpotImages'>
+        {[...Array(4)].map((_, index) => {
+          const image = spot.SpotImages?.[index + 1];
+          return (
+            <span className="SmallSpotImageDiv" key={index}>
+              <img
+                className='SmallSpotImage'
+                src={image?.url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'}
+                alt={`Spot image ${index + 1}`}
+              />
+            </span>
+          );
+        })}
+      </span>
+    </div>
     <div className="CreateBookingForm">
       <h2>Create Booking</h2>
       <div>
@@ -70,19 +113,26 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
       </div>
       {bookingConflict && (
         <div>
-            <p>
+          <p>
             Booking Conflict: Property Currently Rented{" "}
-            {new Date(bookingConflict.startDate).toLocaleDateString("en-GB")} -{" "}
-            {new Date(bookingConflict.endDate).toLocaleDateString("en-GB")}
-            </p>
+            {new Date(bookingConflict.startDate).toLocaleDateString("en-US")} -{" "}
+            {new Date(bookingConflict.endDate).toLocaleDateString("en-US")}
+          </p>
         </div>
-        )}
+      )}
 
       <div>
         <p>Total Price: {isNaN(bookingPrice) ? "N/A" : `$${bookingPrice}`}</p>
       </div>
-      <button onClick={handleCreateBooking}>Create Booking</button>
+      <button
+        onClick={handleCreateBooking}
+        disabled={bookingConflict !== null}
+        className={bookingConflict !== null ? "conflictButton" : ""}
+        >
+        Create Booking
+    </button>
     </div>
+    </>
   );
 };
 

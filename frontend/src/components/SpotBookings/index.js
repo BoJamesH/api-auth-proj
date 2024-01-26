@@ -71,8 +71,8 @@ const SpotBookings = () => {
                 <div className="SpotBookingContent">
                   <div className="SpotBookingLi">Start Date: <span className="SpotBookingLiPopulated">{new Date(booking.startDate).toLocaleDateString()}</span></div>
                   <div className="SpotBookingLi">End Date: <span className="SpotBookingLiPopulated">{new Date(booking.endDate).toLocaleDateString()}</span></div>
-                  <div className="SpotBookedBy">Booked by: </div>
-                  <div className="SpotBookingLi">{booking.User.firstName} {booking.User.lastName}</div>
+                  {/* <div className="SpotBookedBy">Booked by: </div> */}
+                  {/* <div className="SpotBookingLi">{booking.User.firstName} {booking.User.lastName}</div> */}
                   <span className="SpotBookingOwnerButtons">
                     <button className="SpotBookingContactUser">CONTACT USER</button>
                     <button className="SpotBookingCancel">CANCEL BOOKING</button>

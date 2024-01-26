@@ -6,6 +6,7 @@ import { fetchSpot } from '../../store/spots';
 import { createBooking } from "../../store/bookings";
 
 const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
+  // NOTE: ADD MODAL FOR CONFIRMATION OF BOOKING, THEN START ON UPDATE BOOKING
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [bookingPrice, setBookingPrice] = useState(0);

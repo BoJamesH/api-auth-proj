@@ -6,7 +6,6 @@ import { fetchSpot } from '../../store/spots';
 import { createBooking } from "../../store/bookings";
 
 const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
-  // NOTE: ADD MODAL FOR CONFIRMATION OF BOOKING, THEN START ON UPDATE BOOKING
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [bookingPrice, setBookingPrice] = useState(0);
@@ -28,6 +27,11 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   useEffect(() => {
     const start = new Date(startDate);
     const end = new Date(endDate);
+
+    // Set time to midnight for accurate date comparison
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
     const timeDiff = Math.abs(end.getTime() - start.getTime());
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
@@ -41,16 +45,22 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
         const bookingStart = new Date(booking.startDate);
         const bookingEnd = new Date(booking.endDate);
 
+        // Set time to midnight for accurate date comparison
+        bookingStart.setHours(0, 0, 0, 0);
+        bookingEnd.setHours(0, 0, 0, 0);
+
         // Check if there is any overlap between the selected dates and existing bookings
         return (
-          (start >= bookingStart && start <= bookingEnd) ||
-          (end >= bookingStart && end <= bookingEnd) ||
-          (start <= bookingStart && end >= bookingEnd)
+          (start >= bookingStart && start < bookingEnd) ||
+          (end > bookingStart && end <= bookingEnd) ||
+          (start < bookingStart && end > bookingEnd)
         );
       });
 
+      conflict = conflictingBooking && !(start <= conflictingBooking.endDate && end >= conflictingBooking.startDate);
+
       // Set the booking conflict state
-      setBookingConflict(conflictingBooking || null);
+      setBookingConflict(conflict ? conflictingBooking : null);
     }
 
     // Ensure at least two days grace period for bookings
@@ -60,8 +70,8 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
 
     if (start < minimumStartDate) {
       setDateError("Start date must be at least two days from now");
-    } else if (end < start) {
-      setDateError("End date cannot be before the start date");
+    } else if (end <= start) {
+      setDateError("End date must be at least one day later than the start date");
     } else {
       setDateError("");
     }
@@ -72,17 +82,14 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   }, [startDate, endDate, spotPricePerDay, spotBookings]);
 
 
-
-
-    // Function to open the success modal
     const openSuccessModal = () => {
       console.log('OPENED SUCCESS MODAL!!!!')
       setIsSuccessModalOpen(true);
     };
 
-    // Function to close the success modal
     const closeSuccessModal = () => {
       console.log('CLOSED SUCCESS MODAL!!!!')
+      history.push(`/spots/details/${spotId}`)
       setIsSuccessModalOpen(false);
     };
 
@@ -163,7 +170,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
       {bookingConflict && (
         <div className="ConflictDiv">
           <p className="ConflictText">
-            Booking Conflict: Property Currently Rented{" "}
+            Booking conflict: property already reserved {" "}
             {new Date(bookingConflict.startDate).toLocaleDateString("en-US")} -{" "}
             {new Date(bookingConflict.endDate).toLocaleDateString("en-US")}
           </p>

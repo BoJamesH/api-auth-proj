@@ -33,7 +33,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     const totalBookingPrice = diffDays * spotPricePerDay;
     setBookingPrice(totalBookingPrice);
 
-    let conflict = false; // Declare conflict outside the if block
+    let conflict = false; 
 
     if (spotBookings) {
       conflict = spotBookings.some((booking) => {
@@ -52,7 +52,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     // Set the booking conflict state
     setBookingConflict(conflict ? spotBookings[0] : null);
 
-    // Check for date error
+    // Ensure at least two days grace period for bookings
     const today = new Date();
     const minimumStartDate = new Date(today);
     minimumStartDate.setDate(today.getDate() + 2);

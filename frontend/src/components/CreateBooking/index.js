@@ -97,7 +97,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     }
     return;
   };
-  
+
   return (
     <>
     <div className='CityStateCountry'>
@@ -174,9 +174,9 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
         Create Booking
       </button>
       {isSuccessModalOpen && (
-        <div className="success-modal">
+        <div className="SuccessModalDiv">
           <p>You are booked!</p>
-          <button onClick={closeSuccessModal}>OK</button>
+          <button onClick={closeSuccessModal} className="SuccessModalOKButton">OK</button>
         </div>
       )}
     </div>

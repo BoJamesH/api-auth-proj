@@ -44,3 +44,20 @@
 .ErrorText {
     color: red;
 }
+
+.SuccessModalDiv {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px purple;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+.SuccessModalOKButton {
+    width: 50px;
+}

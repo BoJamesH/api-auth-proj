@@ -13,7 +13,6 @@ const SpotBookings = () => {
   const spotInQuestion = useSelector((state) => state.spotsState.singleSpot);
   const spotBookings = useSelector((state) => state.bookingsState.spotBookings.Bookings);
   const spotPricePerDay = useSelector(state => state?.spotsState?.singleSpot?.price)
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
 
   console.log(spotPricePerDay, 'SPOT PRICE PER DAY <<<<<')
@@ -24,15 +23,7 @@ const SpotBookings = () => {
   const [spotToDelete, setSpotToDelete] = useState(null);
   const spotInQuestionMemoized = useMemo(() => spotInQuestion, [spotInQuestion]);
 
-    // Function to open the success modal
-    const openSuccessModal = () => {
-      setIsSuccessModalOpen(true);
-    };
 
-    // Function to close the success modal
-    const closeSuccessModal = () => {
-      setIsSuccessModalOpen(false);
-    };
 
 
   const openDeleteModal = () => {

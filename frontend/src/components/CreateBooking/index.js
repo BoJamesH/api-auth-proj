@@ -12,6 +12,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
   const [bookingPrice, setBookingPrice] = useState(0);
   const [bookingConflict, setBookingConflict] = useState(null);
   const [dateError, setDateError] = useState("");
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const { spotId } = useParams();
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     let conflict = false;
 
     if (spotBookings) {
-      conflict = spotBookings.some((booking) => {
+      const conflictingBooking = spotBookings.find((booking) => {
         const bookingStart = new Date(booking.startDate);
         const bookingEnd = new Date(booking.endDate);
 
@@ -47,10 +48,10 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
           (start <= bookingStart && end >= bookingEnd)
         );
       });
-    }
 
-    // Set the booking conflict state
-    setBookingConflict(conflict ? spotBookings[0] : null);
+      // Set the booking conflict state
+      setBookingConflict(conflictingBooking || null);
+    }
 
     // Ensure at least two days grace period for bookings
     const today = new Date();
@@ -66,24 +67,37 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     }
   }, [startDate, endDate, spotPricePerDay, spotBookings]);
 
+    // Function to open the success modal
+    const openSuccessModal = () => {
+      console.log('OPENED SUCCESS MODAL!!!!')
+      setIsSuccessModalOpen(true);
+    };
+
+    // Function to close the success modal
+    const closeSuccessModal = () => {
+      console.log('CLOSED SUCCESS MODAL!!!!')
+      setIsSuccessModalOpen(false);
+    };
+
   const handleCreateBooking = async (e, startDate, endDate, spotId) => {
     e.preventDefault();
     console.log("Create booking:", 'START DATE:', startDate, 'END DATE', endDate);
     const newBooking = {
       startDate: startDate,
       endDate: endDate,
-    }
-    try {
-      const response = await dispatch(createBooking(newBooking, spotId))
-      if (response.ok) {
-        console.log('SUCCESS!!! Booking created.')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-    return
-  };
+    };
 
+    try {
+      const response = await dispatch(createBooking(newBooking, spotId));
+        console.log('SUCCESS!!! Booking created.');
+        openSuccessModal(); // Open the success modal
+
+    } catch (error) {
+      console.log(error);
+    }
+    return;
+  };
+  
   return (
     <>
     <div className='CityStateCountry'>

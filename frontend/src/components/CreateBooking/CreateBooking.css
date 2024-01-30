@@ -51,12 +51,19 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    border: 2px purple;
+    border-radius: 10px;
+    border: 2px solid purple;
     width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+}
+
+.SuccessModalP {
+    font-size: 16px;
+}
 
 .SuccessModalOKButton {
     width: 50px;

@@ -65,7 +65,14 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     } else {
       setDateError("");
     }
+
+    // Cleanup function to reset the bookingConflict state when the component unmounts or when startDate/endDate changes
+    return () => setBookingConflict(null);
+
   }, [startDate, endDate, spotPricePerDay, spotBookings]);
+
+
+
 
     // Function to open the success modal
     const openSuccessModal = () => {
@@ -175,7 +182,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
       </button>
       {isSuccessModalOpen && (
         <div className="SuccessModalDiv">
-          <p>You are booked!</p>
+          <p className="SuccessModalP">Success! Booking Created</p>
           <button onClick={closeSuccessModal} className="SuccessModalOKButton">OK</button>
         </div>
       )}

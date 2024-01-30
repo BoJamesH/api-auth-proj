@@ -33,7 +33,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     const totalBookingPrice = diffDays * spotPricePerDay;
     setBookingPrice(totalBookingPrice);
 
-    let conflict = false; 
+    let conflict = false;
 
     if (spotBookings) {
       conflict = spotBookings.some((booking) => {
@@ -159,6 +159,12 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
       >
         Create Booking
       </button>
+      {isSuccessModalOpen && (
+        <div className="success-modal">
+          <p>You are booked!</p>
+          <button onClick={closeSuccessModal}>OK</button>
+        </div>
+      )}
     </div>
     </>
   );

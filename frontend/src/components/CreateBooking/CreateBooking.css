@@ -1,0 +1,71 @@
+.CreateBookingButton {
+    width: 300px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.conflictButton {
+    background-color: rgb(131, 113, 153);
+    width: 300px;
+    height: 30px;
+    font-size: 14px;
+}
+
+.CreateBookingForm {
+    margin-left: 58px;
+}
+
+.CreateBookingDiv {
+    margin-top: 20px;
+}
+
+.StartDateInput {
+    margin-left: 10px;
+}
+
+.EndDateInput {
+    margin-left: 20px;
+}
+
+.TotalPriceP {
+    font-weight: bold;
+}
+
+.TotalPriceSpan {
+    margin-left: 10px;
+    color: green;
+}
+
+.ConflictText {
+    color: red;
+}
+
+.ErrorText {
+    color: red;
+}
+
+.SuccessModalDiv {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    border: 3px solid rgb(28, 50, 146);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.SuccessModalP {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.SuccessModalOKButton {
+    width: 100px;
+}

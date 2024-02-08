@@ -11,7 +11,6 @@ const CurrentReviews = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user)
   const userReviews = useSelector((state) => state.reviewsState.userReviews);
-  // const userId = useSelector((state) => state.session.user.id);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
   const [showModal, setShowModal] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -78,7 +77,6 @@ const CurrentReviews = () => {
   return (
     <div>
       <h2 className="UserBookingsTitle">Manage Your Reviews</h2>
-      {/* <button className="CreateUserBookingButton">Create New Booking</button> */}
       <div className="AllUserBookingsDiv">
         {userReviews && userReviews.map(review => (
           <div key={review.id} className="UserBookingCardDiv">

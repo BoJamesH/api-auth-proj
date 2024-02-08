@@ -10,8 +10,8 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
+    justify-content: center; 
+    align-items: center;
     width: auto;
     height: auto;
 }

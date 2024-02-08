@@ -26,9 +26,8 @@ const CurrentSpots = () => {
 
 
   useEffect(() => {
-    // Check if the user is logged in
     if (!sessionUser) {
-      return; // Don't make the request if the user is not logged in
+      return;
     }
 
     if (spots.length === 0) {
@@ -41,9 +40,7 @@ const CurrentSpots = () => {
   };
 
   const handleDeleteSpotModal = (spotId) => {
-    // Set the spotId to delete in the state
     setSpotToDelete(spotId);
-    // Open the modal
     openDeleteModal();
   };
 
@@ -61,9 +58,6 @@ const CurrentSpots = () => {
       <button className="CurrentCreateSpotButton">List a New Property</button>
       </Link>
       </div>
-      {/* {spots && spots.length < 1 && (
-      <p className="CurrentLoading">Loading properties...</p>
-      )} */}
       {isLoading ? (
         <p className="CurrentLoading">Loading properties...</p>
       ) : spots.length > 0 ? (

@@ -1,21 +1,20 @@
-/* The class for the form container */
+
 .spot-form-div {
     width: 50%;
-    margin: 0 auto; /* Center the container horizontally */
+    margin: 0 auto;
   }
 
-  /* The class for the form itself */
+
   .spot-form {
-    width: 100%; /* Set the form width to 100% to take the full width of its container */
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: 10px;
   }
 
-  /* The class for the form introduction */
   .form-intro {
-    text-align: left; /* Center the text in the introduction */
-    margin-bottom: 20px; /* Add some spacing at the bottom of the introduction */
+    text-align: left;
+    margin-bottom: 20px;
     width: 50%;
     margin-left: 26%;
     margin-right: 25%
@@ -23,10 +22,9 @@
 
   .form-field {
     padding: 10px;
-    margin-top: 10px; /* Add some spacing between form fields */
+    margin-top: 10px;
   }
 
-  /* Adjust labels to sit on top of the form fields */
   label {
     font-weight: bold;
   }
@@ -34,20 +32,17 @@
   .form-group {
     display: flex;
     flex-direction: column;
-    /* margin-bottom: 20px;  */
   }
 
   .form-group label {
-    display: block; /* Set labels to display as blocks */
- /* Add some spacing between labels and form fields */
+    display: block;
   }
 
 .form-group-block {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap; /* Allow form elements to wrap in the block */
-    /* Distribute elements evenly in the block */
-    margin-bottom: 20px; /* Add more spacing between form groups in the block */
+    flex-wrap: wrap;
+    margin-bottom: 20px; 
 }
 
 .image-url-field {

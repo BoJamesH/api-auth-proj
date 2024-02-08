@@ -28,7 +28,6 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    // Set time to midnight for accurate date comparison
     start.setHours(0, 0, 0, 0);
     end.setHours(0, 0, 0, 0);
 
@@ -45,11 +44,9 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
         const bookingStart = new Date(booking.startDate);
         const bookingEnd = new Date(booking.endDate);
 
-        // Set time to midnight for accurate date comparison
         bookingStart.setHours(0, 0, 0, 0);
         bookingEnd.setHours(0, 0, 0, 0);
 
-        // Check if there is any overlap between the selected dates and existing bookings
         return (
           (start >= bookingStart && start < bookingEnd) ||
           (end > bookingStart && end <= bookingEnd) ||
@@ -59,11 +56,9 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
 
       conflict = conflictingBooking && !(start <= conflictingBooking.endDate && end >= conflictingBooking.startDate);
 
-      // Set the booking conflict state
       setBookingConflict(conflict ? conflictingBooking : null);
     }
 
-    // Ensure at least two days grace period for bookings
     const today = new Date();
     const minimumStartDate = new Date(today);
     minimumStartDate.setDate(today.getDate() + 2);
@@ -76,7 +71,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
       setDateError("");
     }
 
-    // Cleanup function to reset the bookingConflict state when the component unmounts or when startDate/endDate changes
+
     return () => setBookingConflict(null);
 
   }, [startDate, endDate, spotPricePerDay, spotBookings]);
@@ -104,7 +99,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
     try {
       const response = await dispatch(createBooking(newBooking, spotId));
         console.log('SUCCESS!!! Booking created.');
-        openSuccessModal(); // Open the success modal
+        openSuccessModal();
 
     } catch (error) {
       console.log(error);

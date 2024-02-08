@@ -25,13 +25,11 @@
     color: white;
   }
 
-  /* Customize the Yes button */
   button.YesButton {
     background-color: rgb(113, 69, 184);
     color: white;
   }
 
-  /* Customize the No button */
   button.NoButton {
     background-color: rgb(113, 69, 184);
     color: white;

@@ -9,7 +9,6 @@ const CurrentBookings = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user)
   const userBookings = useSelector((state) => state.bookingsState.userBookings.Bookings);
-  // const userId = useSelector((state) => state.session.user.id);
   const isLoading = useSelector((state) => state.spotsState.isLoading);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -27,7 +26,7 @@ const CurrentBookings = () => {
   useEffect(() => {
 
     if (!sessionUser) {
-      return; // Don't make the request if the user is not logged in
+      return;
     }
     const userId = sessionUser.id;
     dispatch(fetchUserBookings(parseInt(userId)));
@@ -52,7 +51,6 @@ const CurrentBookings = () => {
   return (
     <div>
       <h2 className="UserBookingsTitle">Manage Your Bookings</h2>
-      {/* <button className="CreateUserBookingButton">Create New Booking</button> */}
       <div className="AllUserBookingsDiv">
         {userBookings && userBookings.map(booking => (
           <div key={booking.id} className="UserBookingCardDiv">

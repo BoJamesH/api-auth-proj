@@ -1,6 +1,6 @@
 import { csrfFetch } from "./csrf";
 
-// Action type constraints
+
 export const LOAD_SPOTS = 'spots/LOAD_SPOTS'
 export const LOAD_SINGLE_SPOT = 'spots/LOAD_SINGLE_SPOT';
 export const CREATE_SPOT = '/spots/CREATE_SPOT'
@@ -10,8 +10,6 @@ export const UPDATE_SPOT = '/spots/UPDATE_SPOT'
 export const ADD_SPOT_IMAGES = '/spots/ADD_SPOT_IMAGES'
 export const CLEAR_SPOT_STATE = '/spot/CLEAR_SPOT_STATE'
 
-
-// Action creators
 
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
@@ -53,7 +51,7 @@ export const clearSpotState = () => ({
 })
 
 
-// Thunk action creators
+
 export const postSpot = (spotImages, spot) => async (dispatch) => {
   if (spotImages.length < 1) return 'You must submit at least one image.'
   try {
@@ -79,13 +77,6 @@ export const postSpot = (spotImages, spot) => async (dispatch) => {
 
 export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
   try {
-    // console.log('spotImages', spotImages)
-    // const imageObjects = spotImages.map((imageUrl) => ({
-    //   url: imageUrl,
-    //   preview: true,
-    // }));
-    // console.log('imageObjects', imageObjects)
-
     for (let spotImage of spotImages) {
       const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
@@ -148,8 +139,7 @@ export const updateSpot = (spotId, spot, spotImages) => async (dispatch) => {
     if (response.ok) {
       const newSpot = await response.json();
       await dispatch(postSpotImages(spotImages, spotId))
-      await dispatch(fetchSpot(spotId)) // DO I NEED THIS?
-      // await dispatch(postSpotImages(spotImages, spotId))
+      await dispatch(fetchSpot(spotId))
       return newSpot
     }
     } catch (error) {
@@ -158,12 +148,10 @@ export const updateSpot = (spotId, spot, spotImages) => async (dispatch) => {
   }
 }
 
-// Reducer
-
 const initialState = {
   spots: [],
   currentSpots: [],
-  singleSpot: null, // New slice of state to hold the single spot information
+  singleSpot: null,
   isLoading: true,
 };
 
@@ -178,14 +166,14 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_SINGLE_SPOT:
       return {
         ...state,
-        singleSpot: action.spot, // Store the single spot in the new slice of state
+        singleSpot: action.spot,
         isLoading: false,
       };
     case CREATE_SPOT:
       return {
         ...state,
-        spots: [...state.spots, action.spot], // Add the new spot to the list of spots
-        singleSpot: action.spot, // Set the newly created spot as the singleSpot
+        spots: [...state.spots, action.spot],
+        singleSpot: action.spot, 
         isLoading: false,
       };
     case LOAD_CURRENT_SPOTS:

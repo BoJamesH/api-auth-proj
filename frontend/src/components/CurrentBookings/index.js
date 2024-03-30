@@ -68,8 +68,8 @@ const CurrentBookings = () => {
               const twoDaysAhead = new Date();
               twoDaysAhead.setDate(startDate.getDate() + 2);
 
+              const isPastStartDate = currentDate > startDate;
               const isPastEndDate = currentDate > endDate;
-              const isTwoDaysAhead = currentDate < twoDaysAhead;
 
               return (
                 <div key={booking.id} className="UserBookingCardDiv">
@@ -117,13 +117,14 @@ const CurrentBookings = () => {
                         </span>
                       </li>
                       <span className="UserBookingButtonsSpan">
-                        {isTwoDaysAhead && (
                           <>
-                            <button className="UserBookingUpdateButton">
+                            <button
+                            className="UserBookingUpdateButton"
+                            hidden={isPastStartDate}>
                               Update Booking
                             </button>
                             <button
-                              hidden={!isTwoDaysAhead}
+                              hidden={isPastStartDate}
                               className="UserBookingDeleteButton"
                               onClick={() =>
                                 handleDeleteBookingModal(booking)
@@ -132,7 +133,6 @@ const CurrentBookings = () => {
                               Delete Booking
                             </button>
                           </>
-                        )}
                       </span>
                     </ul>
                   </div>

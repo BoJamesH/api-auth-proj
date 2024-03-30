@@ -84,7 +84,7 @@ const CreateBooking = ({ spotBookings, spotPricePerDay }) => {
 
     const closeSuccessModal = () => {
       console.log('CLOSED SUCCESS MODAL!!!!')
-      history.push(`/spots/details/${spotId}`)
+      history.push(`/bookings/current`)
       setIsSuccessModalOpen(false);
     };
 

@@ -65,8 +65,6 @@ const CurrentBookings = () => {
               const currentDate = new Date();
               const startDate = new Date(booking.startDate);
               const endDate = new Date(booking.endDate);
-              const twoDaysAhead = new Date();
-              twoDaysAhead.setDate(startDate.getDate() + 2);
 
               const isPastStartDate = currentDate > startDate;
               const isPastEndDate = currentDate > endDate;

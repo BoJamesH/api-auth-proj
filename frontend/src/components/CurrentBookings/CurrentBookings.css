@@ -37,14 +37,15 @@ h3 {
     width: 200px;
     border-radius: 10px;
     margin-bottom: 20px;
-    margin-right: 20px; 
+    margin-right: 20px;
     margin-left: 20px;
 }
 
 
 .UserBookingContent {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .UserBookingUl {
@@ -56,6 +57,12 @@ h3 {
 .UserBookingLi {
     margin: 10px;
 }
+
+.BookingCompleteSpan {
+    font-size: 16px;
+    color: red;
+}
+
 
 .UserBookingLiPopulated {
     color: rgb(28, 50, 146);

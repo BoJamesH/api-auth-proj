@@ -12,7 +12,7 @@ const ConfirmationModal = ({ onClose, onDelete, spotToDelete }) => {
 
   return (
     <div className="confirmationModal">
-      <p>Are you sure you want to delete this spot?</p>
+      <p className="deleteModalText">Are you sure you want to delete this spot?</p>
       <div className="modalButtons">
         <button className="YesButton"
           onClick={() => {

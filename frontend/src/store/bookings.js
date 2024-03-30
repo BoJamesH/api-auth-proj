@@ -7,6 +7,7 @@ export const LOAD_USER_BOOKINGS = 'bookings/LOAD_USER_BOOKINGS';
 export const LOAD_SPOT_BOOKINGS = 'bookings/LOAD_SPOT_BOOKINGS';
 export const CLEAR_BOOKINGS_STATE = '/spot/CLEAR_BOOKINGS_STATE';
 export const POST_BOOKING = 'bookings/POST_BOOKING';
+export const DESTROY_BOOKING = 'bookings/DESTROY_BOOKING';
 
 // Action creators
 export const loadUserBookings = (userBookings) => ({
@@ -26,6 +27,11 @@ export const clearBookingsState = () => ({
 export const postBooking = () => ({
   type: POST_BOOKING
 })
+
+export const destroyBooking = (booking) => ({
+  type: DESTROY_BOOKING,
+  booking,
+});
 
 export const fetchUserBookings = (userId) => async (dispatch) => {
     try {
@@ -56,7 +62,7 @@ export const fetchSpotBookings = (spotId) => async (dispatch) => {
       } else if (!response.ok) {
         throw new Error('Failed to fetch user bookings');
       } else {
-        const spotBookings = data; 
+        const spotBookings = data;
         dispatch(loadSpotBookings(spotBookings));
       }
     } catch (error) {
@@ -84,6 +90,20 @@ export const createBooking = (booking, spotId) => async (dispatch) => {
     return errors;
   }
 }
+
+export const deleteBooking = (bookingId, userId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete booking');
+    }
+    await dispatch(fetchUserBookings(userId))
+  } catch (error) {
+    console.error('Error deleting spot:', error);
+  }
+};
 
 
 const initialState = {

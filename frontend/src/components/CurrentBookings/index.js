@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserBookings } from "../../store/bookings";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import BookingDeleteModal from './BookingDeleteModal.js'
 import './CurrentBookings.css'
 
 const CurrentBookings = () => {
-  const history = useHistory()
+  // const history = useHistory()
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user)
   const userBookings = useSelector((state) => state.bookingsState.userBookings.Bookings);
@@ -36,11 +36,13 @@ const CurrentBookings = () => {
     }
     const userId = sessionUser.id;
     dispatch(fetchUserBookings(parseInt(userId)));
-  }, [dispatch, isLoading, sessionUser.id]);
+  }, [dispatch, isLoading, sessionUser]);
 
-  const handleUpdate = () => {
-    console.log("Update button clicked");
-  };
+  // const handleUpdate = () => {
+  //   console.log("Update button clicked");
+  // };
+
+  // UNCOMMENT FOR HANDLING UPDATE OF BOOKING (IF UPDATE IS IMPLEMENTED)
 
   if (userBookings && (userBookings.length < 1)) {
     return (

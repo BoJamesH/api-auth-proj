@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf";
-import { loadReviews } from "./reviews";
 import { fetchSpot } from "./spots";
 
 // Action types

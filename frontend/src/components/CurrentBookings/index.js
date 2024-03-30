@@ -23,8 +23,8 @@ const CurrentBookings = () => {
     setIsDeleteModalOpen(false);
   };
 
-  const handleDeleteBookingModal = (bookingId) => {
-    setBookingToDelete(bookingId);
+  const handleDeleteBookingModal = (bookingToDelete) => {
+    setBookingToDelete(bookingToDelete);
     openDeleteModal();
   };
 
@@ -81,7 +81,11 @@ const CurrentBookings = () => {
                       alt="Spot Preview"
                     />
                     <ul className="UserBookingUl">
-                    {isPastEndDate && <li className="BookingCompleteLi"> - Booking Complete</li>}
+                    {isPastEndDate &&
+                    <li className="UserBookingLi">
+                      <span className="BookingCompleteSpan">
+                        Booking Complete</span>
+                        </li>}
                       <li className="UserBookingLi">
                         Start Date:{" "}
                         <span className="UserBookingLiPopulated">
@@ -122,7 +126,7 @@ const CurrentBookings = () => {
                               hidden={!isTwoDaysAhead}
                               className="UserBookingDeleteButton"
                               onClick={() =>
-                                handleDeleteBookingModal(booking.id)
+                                handleDeleteBookingModal(booking)
                               }
                             >
                               Delete Booking

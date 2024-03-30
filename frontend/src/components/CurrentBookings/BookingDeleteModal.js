@@ -8,7 +8,8 @@ const BookingDeleteModal = ({ onClose, onDelete, bookingToDelete }) => {
   const userId = useSelector((state) => state.session.user.id)
 
   const handleDeleteBooking = () => {
-    dispatch(deleteBooking(bookingToDelete, userId));
+
+    dispatch(deleteBooking(bookingToDelete.id, userId));
   };
 
   return (

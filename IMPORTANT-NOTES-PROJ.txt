@@ -5,7 +5,7 @@
 - Ask question about bookings
 - Postbird
 
-To Do CheckList: 
+To Do CheckList:
 
 - REMEMBER TO EDIT STORE SHAPE
 - Fix create spot URL fields not being centered.
@@ -35,7 +35,7 @@ Also, whoever said the game doesn't have disturbing fucked up shit obviously has
 - Fix login issue, demo user isn't consistent FIXED
 - Set user issue, CLEAR STATE! - FIXED
 - Description must be 30 characters minimum in create and update spot - FIXED
-- Issue with log in/sign up on render: current spots is only for demo-lition 
+- Issue with log in/sign up on render: current spots is only for demo-lition
 (Sam Boyle) account for some unaccountable (lol) reason. - FIXED
 
 rgb(113, 69, 184); PURPLE
@@ -133,14 +133,12 @@ export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
   try {
     for (let spotImage of spotImages) {
       if (spotImage.id) {
-        // Update existing image
         const response = await csrfFetch(`/api/spots/${spotId}/images/${spotImage.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: spotImage.url, preview: spotImage.preview })
         });
       } else {
-        // Create new image
         const response = await csrfFetch(`/api/spots/${spotId}/images`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -201,7 +199,7 @@ export const postSpotImages = (spotImages, spotId) => async (dispatch) => {
 }
 
 .CreateDescription {
-    
+
 }
 
 label {

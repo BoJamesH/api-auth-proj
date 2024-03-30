@@ -58,26 +58,83 @@ const CurrentBookings = () => {
     <div>
       <h2 className="UserBookingsTitle">Manage Your Bookings</h2>
       <div className="AllUserBookingsDiv">
-        {userBookings && userBookings.map(booking => (
-          <div key={booking.id} className="UserBookingCardDiv">
-            <h3>{booking.Spot.name} Booking</h3>
-            <div className="UserBookingContent">
-              <img className="UserBookingPreviewImg" src={booking.Spot.previewImage} alt="Spot Preview" />
-              <ul className="UserBookingUl">
-                <li className="UserBookingLi">Start Date: <span className="UserBookingLiPopulated">{new Date(booking.startDate).toLocaleDateString()}</span></li>
-                <li className="UserBookingLi">End Date: <span className="UserBookingLiPopulated">{new Date(booking.endDate).toLocaleDateString()}</span></li>
-                <li className="UserBookingLi">Place: <span className="UserBookingLiPopulated">{booking.Spot.name}</span></li>
-                <li className="UserBookingLi">Address: <span className="UserBookingLiPopulated">{booking.Spot.address}</span></li>
-                <li className="UserBookingLi">Location: <span className="UserBookingLiPopulated">{booking.Spot.city}, {booking.Spot.state}</span></li>
-                <span className="UserBookingButtonsSpan">
-                  <button className="UserBookingUpdateButton">Update Booking</button>
-                  <button className="UserBookingDeleteButton" onClick={() => handleDeleteBookingModal(booking.id)}>Delete Booking</button>
+        {userBookings &&
+          userBookings
+            .sort((a, b) => new Date(b.startDate) - new Date(a.startDate)) // Sort bookings by most recent first
+            .map((booking) => {
+              const currentDate = new Date();
+              const startDate = new Date(booking.startDate);
+              const endDate = new Date(booking.endDate);
+              const twoDaysAhead = new Date();
+              twoDaysAhead.setDate(startDate.getDate() + 2);
 
-                </span>
-              </ul>
-            </div>
-          </div>
-        ))}
+              const isPastEndDate = currentDate > endDate;
+              const isTwoDaysAhead = currentDate < twoDaysAhead;
+
+              return (
+                <div key={booking.id} className="UserBookingCardDiv">
+                  <h3>{booking.Spot.name} Booking</h3>
+                  <div className="UserBookingContent">
+                    <img
+                      className="UserBookingPreviewImg"
+                      src={booking.Spot.previewImage}
+                      alt="Spot Preview"
+                    />
+                    <ul className="UserBookingUl">
+                    {isPastEndDate && <li className="BookingCompleteLi"> - Booking Complete</li>}
+                      <li className="UserBookingLi">
+                        Start Date:{" "}
+                        <span className="UserBookingLiPopulated">
+                          {startDate.toLocaleDateString()}
+                        </span>
+                      </li>
+                      <li className="UserBookingLi">
+                        End Date:{" "}
+                        <span className="UserBookingLiPopulated">
+                          {endDate.toLocaleDateString()}
+                        </span>
+                      </li>
+                      <li className="UserBookingLi">
+                        Place:{" "}
+                        <span className="UserBookingLiPopulated">
+                          {booking.Spot.name}
+                        </span>
+                      </li>
+                      <li className="UserBookingLi">
+                        Address:{" "}
+                        <span className="UserBookingLiPopulated">
+                          {booking.Spot.address}
+                        </span>
+                      </li>
+                      <li className="UserBookingLi">
+                        Location:{" "}
+                        <span className="UserBookingLiPopulated">
+                          {booking.Spot.city}, {booking.Spot.state}
+                        </span>
+                      </li>
+                      <span className="UserBookingButtonsSpan">
+                        {isTwoDaysAhead && (
+                          <>
+                            <button className="UserBookingUpdateButton">
+                              Update Booking
+                            </button>
+                            <button
+                              hidden={!isTwoDaysAhead}
+                              className="UserBookingDeleteButton"
+                              onClick={() =>
+                                handleDeleteBookingModal(booking.id)
+                              }
+                            >
+                              Delete Booking
+                            </button>
+                          </>
+                        )}
+                      </span>
+                    </ul>
+                  </div>
+                </div>
+              );
+            })}
       </div>
       {isDeleteModalOpen && (
         <BookingDeleteModal
@@ -86,9 +143,9 @@ const CurrentBookings = () => {
             handleDeleteBookingModal(bookingToDelete);
           }}
           bookingToDelete={bookingToDelete}
-          />
-          )}
-          </div>
+        />
+      )}
+    </div>
   );
 }
 

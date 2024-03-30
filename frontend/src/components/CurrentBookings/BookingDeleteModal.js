@@ -1,13 +1,15 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteBooking } from "../../store/bookings";
 import './BookingDeleteModal.css'
 
 const BookingDeleteModal = ({ onClose, onDelete, bookingToDelete }) => {
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.session.user.id)
 
-  // const handleDeleteBooking = () => {
-  //   // dispatch(deleteBooking(bookingToDelete));
-  // };
+  const handleDeleteBooking = () => {
+    dispatch(deleteBooking(bookingToDelete, userId));
+  };
 
   return (
     <div className="confirmationModal">
@@ -15,7 +17,7 @@ const BookingDeleteModal = ({ onClose, onDelete, bookingToDelete }) => {
       <div className="modalButtons">
         <button className="YesButton"
           onClick={() => {
-            // handleDeleteBooking();
+            handleDeleteBooking();
             onClose();
           }}
         >

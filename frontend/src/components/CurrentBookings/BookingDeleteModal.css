@@ -26,7 +26,12 @@
     color: white;
   }
 
-  button.YesButton {
+  .deleteModalText {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  /* button.YesButton {
     background-color: rgb(113, 69, 184);
     color: white;
   }
@@ -34,9 +39,4 @@
   button.NoButton {
     background-color: rgb(113, 69, 184);
     color: white;
-  }
-
-  .deleteModalText {
-    font-size: 16px;
-    font-weight: bold;
-  }
+  } */

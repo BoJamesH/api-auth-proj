@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserBookings } from "../../store/bookings";
 import { useHistory } from "react-router-dom";
+import BookingDeleteModal from './BookingDeleteModal.js'
 import './CurrentBookings.css'
 
 const CurrentBookings = () => {
@@ -12,7 +13,7 @@ const CurrentBookings = () => {
   const isLoading = useSelector((state) => state.spotsState.isLoading);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [spotToDelete, setSpotToDelete] = useState(null);
+  const [bookingToDelete, setBookingToDelete] = useState(null);
 
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true);
@@ -20,6 +21,11 @@ const CurrentBookings = () => {
 
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteBookingModal = (bookingId) => {
+    setBookingToDelete(bookingId);
+    openDeleteModal();
   };
 
 
@@ -65,7 +71,7 @@ const CurrentBookings = () => {
                 <li className="UserBookingLi">Location: <span className="UserBookingLiPopulated">{booking.Spot.city}, {booking.Spot.state}</span></li>
                 <span className="UserBookingButtonsSpan">
                   <button className="UserBookingUpdateButton">Update Booking</button>
-                  <button className="UserBookingDeleteButton">Delete Booking</button>
+                  <button className="UserBookingDeleteButton" onClick={() => handleDeleteBookingModal(booking.id)}>Delete Booking</button>
 
                 </span>
               </ul>
@@ -73,7 +79,16 @@ const CurrentBookings = () => {
           </div>
         ))}
       </div>
-    </div>
+      {isDeleteModalOpen && (
+        <BookingDeleteModal
+          onClose={closeDeleteModal}
+          onDelete={() => {
+            handleDeleteBookingModal(bookingToDelete);
+          }}
+          bookingToDelete={bookingToDelete}
+          />
+          )}
+          </div>
   );
 }
 

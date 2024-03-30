@@ -1,22 +1,21 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteSpot } from "../../../store/spots";
-import './DeleteModal.css'
+import './BookingDeleteModal.css'
 
-const ConfirmationModal = ({ onClose, onDelete, spotToDelete }) => {
+const BookingDeleteModal = ({ onClose, onDelete, bookingToDelete }) => {
   const dispatch = useDispatch();
 
-  const handleDeleteSpot = () => {
-    dispatch(deleteSpot(spotToDelete));
-  };
+  // const handleDeleteBooking = () => {
+  //   // dispatch(deleteBooking(bookingToDelete));
+  // };
 
   return (
     <div className="confirmationModal">
-      <p className="deleteModalText">Are you sure you want to delete this spot?</p>
+      <p className="deleteModalText">Are you sure you want to delete this booking?</p>
       <div className="modalButtons">
         <button className="YesButton"
           onClick={() => {
-            handleDeleteSpot();
+            // handleDeleteBooking();
             onClose();
           }}
         >
@@ -28,4 +27,4 @@ const ConfirmationModal = ({ onClose, onDelete, spotToDelete }) => {
   );
 };
 
-export default ConfirmationModal;
+export default BookingDeleteModal;

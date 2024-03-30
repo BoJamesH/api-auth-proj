@@ -1,4 +1,4 @@
-// frontend/src/store/session.js
+
 import { csrfFetch } from "./csrf";
 import { clearSpotState, loadSpots } from "./spots";
 import { fetchCurrentSpots } from "./spots";

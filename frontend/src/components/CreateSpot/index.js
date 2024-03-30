@@ -9,7 +9,7 @@ const SpotForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user)
-  // Form state
+
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -82,9 +82,6 @@ const SpotForm = () => {
 
 
   useEffect(() => {},[errors])
-  // useEffect(() => {
-  //   setErrors(null);
-  // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
 
   if (!sessionUser.id) {
     return (

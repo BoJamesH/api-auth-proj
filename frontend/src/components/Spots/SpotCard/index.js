@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom"; // Import useHistory hook
+import { useHistory } from "react-router-dom"; 
 import { fetchSpot } from "../../../store/spots";
 import '../../CurrentSpots/CurrentSpots.css'
 
 const SpotCard = ({ spotId }) => {
   const dispatch = useDispatch();
-  const history = useHistory(); // Get the history object
+  const history = useHistory();
   const spot = useSelector((state) => state.spotsState.spots.find((spot) => spot.id === parseInt(spotId)));
   const isLoading = useSelector((state) => state.spotsState.isLoading);
 

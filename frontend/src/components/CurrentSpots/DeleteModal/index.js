@@ -7,7 +7,6 @@ const ConfirmationModal = ({ onClose, onDelete, spotToDelete }) => {
   const dispatch = useDispatch();
 
   const handleDeleteSpot = () => {
-    // Call the deleteSpot thunk here with the spotToDelete ID
     dispatch(deleteSpot(spotToDelete));
   };
 
@@ -17,8 +16,8 @@ const ConfirmationModal = ({ onClose, onDelete, spotToDelete }) => {
       <div className="modalButtons">
         <button className="YesButton"
           onClick={() => {
-            handleDeleteSpot(); // Call the handleDeleteSpot function to trigger the thunk
-            onClose(); // Close the modal
+            handleDeleteSpot();
+            onClose();
           }}
         >
           Yes

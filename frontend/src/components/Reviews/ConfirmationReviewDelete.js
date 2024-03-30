@@ -16,8 +16,8 @@ const ConfirmationReviewDeleteModal = ({ onClose, onDelete, reviewToDelete, spot
       <div className="modalButtons">
         <button className="YesButton"
           onClick={() => {
-            handleDeleteReview(); // Call the handleDeleteSpot function to trigger the thunk
-            onClose(); // Close the modal
+            handleDeleteReview(); 
+            onClose();
           }}
         >
           Yes

@@ -1,5 +1,5 @@
 import { csrfFetch } from "./csrf";
-import { loadReviews } from "./reviews"; 
+import { loadReviews } from "./reviews";
 import { fetchSpot } from "./spots";
 
 // Action types
@@ -38,7 +38,7 @@ export const fetchUserBookings = (userId) => async (dispatch) => {
       } else if (!response.ok) {
         throw new Error('Failed to fetch user bookings');
       } else {
-        const userBookings = data; // Make sure the data structure matches
+        const userBookings = data;
         dispatch(loadUserBookings(userBookings));
       }
     } catch (error) {
@@ -56,7 +56,7 @@ export const fetchSpotBookings = (spotId) => async (dispatch) => {
       } else if (!response.ok) {
         throw new Error('Failed to fetch user bookings');
       } else {
-        const spotBookings = data; // Make sure the data structure matches
+        const spotBookings = data; 
         dispatch(loadSpotBookings(spotBookings));
       }
     } catch (error) {

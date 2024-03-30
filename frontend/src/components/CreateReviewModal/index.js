@@ -1,9 +1,9 @@
-// frontend/src/components/CreateReviewModal/index.js
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import ClickOutside from "./outsideClick";
 import { addReview } from "../../store/reviews";
-import "./CreateReviewModal.css"; // Update with your CSS file
+import "./CreateReviewModal.css";
 
 function CreateReviewModal({ showModal, setShowModal, spotId }) {
   const dispatch = useDispatch();
@@ -49,7 +49,6 @@ function CreateReviewModal({ showModal, setShowModal, spotId }) {
   };
 
   const handleMouseOut = () => {
-    // Reset the stars on mouseout
     const stars = document.querySelectorAll(".ReviewFormStar");
     stars.forEach((star, index) => {
       if (index < selectedStars) {

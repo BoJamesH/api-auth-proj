@@ -19,7 +19,6 @@ const UpdateSpot = () => {
     dispatch(fetchSpot(parseInt(spotId)));
   }, [dispatch, spotId]);
 
-  // Form state
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -72,7 +71,6 @@ const UpdateSpot = () => {
       name,
       description,
       price,
-      // SpotImages: imageUrls,
     };
     try {
       const response = await dispatch(updateSpot(spotToUpdate.id, newSpot, imageUrls));
@@ -94,9 +92,6 @@ const UpdateSpot = () => {
   };
 
   useEffect(() => {}, [errors])
-  // useEffect(() => {
-  //   setErrors(null);
-  // }, [address, city, state, country, lat, lng, name, description, price, imageUrls]);
 
   if (isLoading) {
     return <p>Loading your property...</p>;
@@ -199,7 +194,6 @@ const UpdateSpot = () => {
         <option value='District of Columbia'>District of Columbia</option>
       </select>
       </span>
-        {/* <input className='CreateFormField' type="text" value={state} onChange={(e) => setState(e.target.value)}  /> */}
         <div className='CreateFormErrors'>
         {errors.state && (<p>{errors.state}</p>)}
       </div>
@@ -240,7 +234,7 @@ const UpdateSpot = () => {
           className='CreateFormField'
           type="number"
           value={price}
-          onChange={handlePriceChange} // Use the new handler to handle price changes
+          onChange={handlePriceChange}
         />
       <div className='CreateFormErrors'>
       {errors.price && (<p>{errors.price}</p>)}
@@ -252,7 +246,7 @@ const UpdateSpot = () => {
         type='url'
         className='image-url-field'
         value={imageUrls[0] || ''}
-        onChange={(e) => handleAddImageUrl(e, 0)} // Pass index 0 to update the first image URL
+        onChange={(e) => handleAddImageUrl(e, 0)} 
         hidden={true}
       />
       <input

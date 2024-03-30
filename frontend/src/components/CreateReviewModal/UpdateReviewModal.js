@@ -1,9 +1,9 @@
-// frontend/src/components/CreateReviewModal/UpdateReviewModal.js
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "./outsideClick";
 import { editReview } from "../../store/reviews";
-import "./CreateReviewModal.css"; // Update with your CSS file
+import "./CreateReviewModal.css";
 
 function UpdateReviewModal({ showModal, setShowModal, reviewIdToUpdate, spotId }) {
   const dispatch = useDispatch();
@@ -15,9 +15,9 @@ function UpdateReviewModal({ showModal, setShowModal, reviewIdToUpdate, spotId }
   const [starsNotSelected, setStarsNotSelected] = useState(false)
 
   useEffect(() => {
-    setSelectedStars(reviewToUpdate.stars); // Set the initial selected stars
-    handleClick(reviewToUpdate.stars - 1); // Trigger handleClick to populate stars
-  }, [reviewToUpdate.stars]); // Add reviewToUpdate.stars as a dependency
+    setSelectedStars(reviewToUpdate.stars);
+    handleClick(reviewToUpdate.stars - 1);
+  }, [reviewToUpdate.stars]);
 
 
   const handleSubmit = async (e) => {
@@ -57,7 +57,6 @@ function UpdateReviewModal({ showModal, setShowModal, reviewIdToUpdate, spotId }
   };
 
   const handleMouseOut = () => {
-    // Reset the stars on mouseout
     const stars = document.querySelectorAll(".ReviewFormStar");
     stars.forEach((star, index) => {
       if (index < selectedStars) {

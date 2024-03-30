@@ -33,21 +33,6 @@
     width: 10px;
     height: 10px;
 }
-/*
-.priceCard {
-    margin-top: 50px;
-    display: flex;
-    flex-direction: row;
-} */
-
-/* .priceLine {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-} */
 
 .customPrice {
     font-weight: 600;
@@ -77,9 +62,9 @@
 
 .spotCardGrid {
     display: flex;
-    flex-wrap: wrap; /* Allow cards to wrap to the next line */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
+    flex-wrap: wrap; 
+    justify-content: center;
+    align-items: center;
   }
 
   .customSpotLocationRatingDiv {

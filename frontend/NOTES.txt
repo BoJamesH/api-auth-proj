@@ -1,0 +1,4 @@
+1)  Update bookings
+    - Use modal?
+    - Investigate update responses
+    - Investigate necessary store thunks
